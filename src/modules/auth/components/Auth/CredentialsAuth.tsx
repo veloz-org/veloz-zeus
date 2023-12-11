@@ -11,7 +11,7 @@ function CredentialsAuth() {
     "signup"
   );
 
-  setDarkMode(true);
+  setDarkMode(false);
 
   return (
     <FlexColStart className="w-full px-4">
