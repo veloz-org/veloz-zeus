@@ -2,6 +2,7 @@
 import { ppReg, ppB, ppEB, ppSB, ppL } from "@/config/font";
 import "./styles/globals.css";
 import NextAuthProvider from "@/Providers/NextAuthProvider";
+import ThemeContextProvider from "@/context/Theme";
 
 // main app layout similar to (_app.jsx) page in next (pages)
 
@@ -28,7 +29,9 @@ export default function RootLayout({
         </style>
       </head>
       <NextAuthProvider>
-        <body className={""}>{children}</body>
+        <body className="min-h-screen">
+          <ThemeContextProvider>{children}</ThemeContextProvider>
+        </body>
       </NextAuthProvider>
     </html>
   );

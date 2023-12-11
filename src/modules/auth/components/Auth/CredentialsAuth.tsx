@@ -2,12 +2,16 @@
 import { FlexColStart, FlexRowCenter, FlexRowStart } from "@/components/Flex";
 import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import { ThemeContext } from "@/context/Theme";
+import React, { useContext } from "react";
 
 function CredentialsAuth() {
+  const { setDarkMode } = useContext(ThemeContext);
   const [activeTab, setActiveTab] = React.useState<"signin" | "signup">(
     "signup"
   );
+
+  setDarkMode(true);
 
   return (
     <FlexColStart className="w-full px-4">
