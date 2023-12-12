@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import SideBar from "@/modules/protectedRoutes/components/Navigations/Sidebar";
+import SideBar from "@/modules/dashboard/components/Navigations/Sidebar";
 import { LayoutContext } from "@/context/LayoutContext";
 import TopBar from "./Navigations/TopBar";
 import { useSession } from "next-auth/react";
@@ -12,6 +12,7 @@ interface DashboardLayoutProps {
   activePage: string;
 }
 
+// use this component as a wrapper for all dashboard authenticated pages
 function DashboardLayout({
   children,
   activePage,
