@@ -1,3 +1,5 @@
+// Server / API Types definition.
+
 export enum RESPONSE_CODE {
   // Common Responses code
   INVALID_FIELDS,

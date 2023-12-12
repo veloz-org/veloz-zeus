@@ -8,7 +8,7 @@ import sendResponse from "./sendResponse";
 export default function CatchError(fn: Function) {
   return async function (req: Request) {
     try {
-      await fn(req);
+      return await fn(req);
     } catch (err: any) {
       const code = RESPONSE_CODE[err.code as any];
       console.log(`😥 Error [${code}]: ${err?.message}`);

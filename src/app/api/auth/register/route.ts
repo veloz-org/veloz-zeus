@@ -3,6 +3,5 @@ import UserController from "../../controllers/user.controller";
 
 const userController = new UserController();
 
-export const POST = async (req: NextRequest) => {
-  return await userController.register(req);
-};
+export const POST = async (req: NextRequest) =>
+  await userController.register(req);

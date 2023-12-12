@@ -4,18 +4,75 @@ import { RESPONSE_CODE } from "../types";
 import ZodValidation from "../utils/zodValidation";
 import { registerSchema } from "../utils/schema_validation";
 import { NextRequest } from "next/server";
+import prisma from "../config/prisma";
+import bcrypt from "bcryptjs";
+import PasswordManager from "../utils/passwordManage";
+import sendResponse from "../utils/sendResponse";
+
+type RegisterPayload = {
+  email: string;
+  username: string;
+  password: string;
+};
 
 export default class UserController {
   // register user (nextauth, jwt)
   public register = CatchError(async (req: NextRequest) => {
-    const payload = await req.json();
-    const validated = await ZodValidation(registerSchema, payload, req.url);
-    if (!validated) {
+    const payload = (await req.json()) as RegisterPayload;
+    // validate payload
+    await ZodValidation(registerSchema, payload, req.url);
+
+    // check if user already exist
+    const user = await prisma.user.findFirst({
+      where: {
+        email: payload.email,
+      },
+    });
+
+    if (user) {
       throw new HttpException(
-        RESPONSE_CODE.VALIDATION_ERROR,
-        "Validation error",
+        RESPONSE_CODE.USER_ALREADY_EXIST,
+        "User already exist",
         400
       );
     }
+
+    const users = await prisma.user.findMany();
+    const pwdHash = PasswordManager.hashPassword(payload.password);
+    const avatar = `https://api.dicebear.com/7.x/initials/svg?seed=${payload.username}`;
+
+    if (users.length === 0) {
+      // ! by default, first user would be created and have the ADMIN role
+      await prisma.user.create({
+        data: {
+          email: payload.email,
+          username: payload.username,
+          avatar,
+          auth_method: "credentials",
+          provider: "credentials",
+          role: "admin",
+          password_hash: pwdHash,
+        },
+      });
+    } else {
+      await prisma.user.create({
+        data: {
+          email: payload.email,
+          username: payload.username,
+          avatar,
+          auth_method: "credentials",
+          provider: "credentials",
+          password_hash: pwdHash,
+          role: "user",
+        },
+      });
+    }
+
+    return sendResponse.success(
+      RESPONSE_CODE.SIGNUP_SUCCESSFULL,
+      "Signup successful",
+      200,
+      null
+    );
   });
 }

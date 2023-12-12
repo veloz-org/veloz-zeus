@@ -3,9 +3,10 @@ import { FlexColStart, FlexRowCenter, FlexRowStart } from "@/components/Flex";
 import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { registerUsers } from "@/http/requests";
+import { ResponseData } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
-import React, { useContext } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 
 function CredentialsAuth() {
@@ -60,11 +61,13 @@ function SignInComp() {
 
     setLoading(false);
 
-    if (resp?.error) {
+    if (!resp?.ok) {
       toast.error("Invalid credentials");
+      return;
     }
 
-    console.log(resp);
+    // redirect to dashboard
+    window.location.href = "/dashboard";
   }
 
   return (
@@ -125,6 +128,30 @@ function SignupComp() {
   const registerMut = useMutation({
     mutationFn: async (data: any) => await registerUsers(data),
   });
+
+  const resetMutation = () => {
+    registerMut.reset();
+  };
+
+  const registerCallback = useCallback(() => {
+    if (registerMut.error) {
+      resetMutation();
+      const error = (registerMut.error as any)?.response?.data as ResponseData;
+      toast.error(error.message);
+    }
+    if (registerMut.data) {
+      resetMutation();
+      toast.success("Account created successfully");
+
+      // sign in user
+      signIn("credentials", {
+        email: form.email,
+        password: form.password,
+      });
+    }
+  }, [registerMut.error, registerMut.data, registerMut.isPending]);
+
+  useEffect(() => registerCallback(), [registerCallback]);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));

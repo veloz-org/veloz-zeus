@@ -30,4 +30,17 @@ model User {
     password_hash String?
     role          Role       @default(user)
     createdAt     DateTime   @default(now())
+
+    tokens RefreshToken[]
+}
+
+model RefreshToken {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    token     String   @unique
+    userId    String
+    createdAt DateTime @default(now())
+
+    user User @relation(fields: [userId], references: [uId])
+
+    @@index([userId])
 }
