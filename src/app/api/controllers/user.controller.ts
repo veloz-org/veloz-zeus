@@ -8,6 +8,7 @@ import prisma from "../config/prisma";
 import bcrypt from "bcryptjs";
 import PasswordManager from "../utils/passwordManage";
 import sendResponse from "../utils/sendResponse";
+import { isAuthenticated } from "../middlewares/auth";
 
 type RegisterPayload = {
   email: string;
@@ -15,9 +16,13 @@ type RegisterPayload = {
   password: string;
 };
 
+type ReqUserObj = {
+  id: string;
+};
+
 export default class UserController {
   // register user (nextauth, jwt)
-  public register = CatchError(async (req: NextRequest) => {
+  public async register(req: NextRequest) {
     const payload = (await req.json()) as RegisterPayload;
     // validate payload
     await ZodValidation(registerSchema, payload, req.url);
@@ -74,5 +79,23 @@ export default class UserController {
       200,
       null
     );
-  });
+  }
+
+  //   get users info
+  public async getUser(req: NextRequest) {
+    const user = (req as any)["user"] as ReqUserObj;
+    const userData = await prisma.user.findFirst({
+      where: {
+        uId: user.id,
+      },
+    });
+
+    return sendResponse.success(RESPONSE_CODE.SUCCESS, "Success", 200, {
+      id: userData?.uId,
+      email: userData?.email,
+      username: userData?.username,
+      avatar: userData?.avatar,
+      role: userData?.role,
+    });
+  }
 }
