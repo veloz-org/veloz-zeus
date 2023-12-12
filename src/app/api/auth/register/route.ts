@@ -1,11 +1,7 @@
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import UserController from "../../controllers/user.controller";
 
-export async function POST(req: Request) {
-  try {
-    const body = await req.json();
-    console.log({ body });
+const userController = new UserController();
 
-    return NextResponse.json({ msg: "hey" });
-  } catch (e: any) {}
-}
+export const POST = async (req: Request) => {
+  return await userController.register(req);
+};
