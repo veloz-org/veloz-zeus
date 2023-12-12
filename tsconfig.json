@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,18 +14,11 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@data/*": [
-        "./src/data/*"
-      ],
-      "@/components/*": [
-        "./src/components/*"
-      ],
-      "@/modules/*": [
-        "./src/modules/*"
-      ]
+      "@/*": ["./src/*"],
+      "@data/*": ["./src/data/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/modules/*": ["./src/modules/*"],
+      "@/api/*": ["./src/app/api/*"]
     },
     "forceConsistentCasingInFileNames": true,
     "plugins": [
@@ -45,7 +34,5 @@
     "tailwind.config.js",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
