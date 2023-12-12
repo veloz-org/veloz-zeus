@@ -3,7 +3,7 @@ import {
   FlexColStart,
   FlexColStartCenter,
 } from "@/components/Flex";
-import CredentialsAuth from "@/modules/auth/components/Auth/CredentialsAuth";
+import CredentialsAuth from "@/modules/auth/components/CredentialsAuth";
 import React from "react";
 
 function AuthPage() {
