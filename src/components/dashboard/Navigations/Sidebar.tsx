@@ -1,9 +1,10 @@
 import { FlexColStart, FlexRowStartCenter } from "@/components/Flex";
+import { DataContext } from "@/context/DataContext";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 
 interface SidebarProps {
   activePage: string;
@@ -25,6 +26,7 @@ const navigations = [
 ];
 
 function Sidebar({ activePage }: SidebarProps) {
+  const { userInfo } = useContext(DataContext);
   const navListStyle = (pageName: string, navName: string) => {
     const notActive = "text-gray-100 bg-none",
       Active = "text-white-100 bg-blue-100",
@@ -42,12 +44,17 @@ function Sidebar({ activePage }: SidebarProps) {
           src={"/images/logo/logo.png"}
           className=""
           alt="logo"
-          width={25}
+          width={40}
           height={0}
         />
-        <span className="font-ppSB text-white-100 text-2xl">Veloz</span>
+        <FlexColStart className="gap-1 leading-none">
+          <span className="font-ppSB text-white-100 text-[20px]">Veloz</span>
+          <span className="font-ppReg text-white-300 text-[10px]">
+            Dashboard ({userInfo?.role})
+          </span>
+        </FlexColStart>
       </FlexRowStartCenter>
-      <FlexColStart className="w-full px-5">
+      <FlexColStart className="w-full h-full px-5">
         {navigations.map((nav, i) => (
           <Link
             href={nav.link}

@@ -30,7 +30,7 @@ function DashboardLayout({
   return (
     <div
       className={twMerge(
-        "w-full relative h-screen overflow-y-auto hideScrollBar bg-white-200 dark:bg-dark-100",
+        "w-full relative h-screen overflow-y-auto hideScrollBar bg-white-105 dark:bg-dark-100",
         className
       )}
     >
