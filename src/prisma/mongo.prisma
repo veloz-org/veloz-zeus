@@ -1,0 +1,33 @@
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+    // relationMode = "prisma"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+enum Role {
+    user
+    admin
+}
+
+enum AuthMethod {
+    credentials
+    magicLink
+    oauth
+}
+
+model User {
+    id            String     @id @default(auto()) @map("_id") @db.ObjectId
+    uId           String     @unique @default(cuid())
+    username      String
+    email         String     @unique
+    avatar        String?
+    auth_method   AuthMethod @default(credentials)
+    provider      String?
+    password_hash String?
+    role          Role       @default(user)
+    createdAt     DateTime   @default(now())
+}
