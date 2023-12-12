@@ -1,7 +1,14 @@
+"use client";
+import { withAuth } from "@/lib/helpers";
+import DashboardLayout from "@/modules/protectedRoutes/components/DashboardLayout";
 import React from "react";
 
 function Dashboard() {
-  return <div>Dashboard</div>;
+  return (
+    <DashboardLayout activePage="dashboard" className="w-full h-screen">
+      dashboard
+    </DashboardLayout>
+  );
 }
 
-export default Dashboard;
+export default withAuth(Dashboard);
