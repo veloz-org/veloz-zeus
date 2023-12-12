@@ -10,16 +10,11 @@ export default function CatchError(fn: Function) {
     try {
       await fn(req);
     } catch (err: any) {
-      const code = RESPONSE_CODE[RESPONSE_CODE.INTERNAL_SERVER_ERROR];
+      const code = RESPONSE_CODE[err.code as any];
       console.log(`😥 Error [${code}]: ${err?.message}`);
       console.log(err);
       if (err instanceof HttpException) {
-        return sendResponse.error(
-          RESPONSE_CODE[err.code] as any,
-          err.message,
-          err.statusCode,
-          err
-        );
+        return sendResponse.error(err.code, err.message, err.statusCode, err);
       }
 
       return sendResponse.error(

@@ -8,17 +8,18 @@ class SendResponse {
   }
 
   error(code: RESPONSE_CODE, message: string, statusCode: number, data?: any) {
-    const response = {
-      errorStatus: true,
-      code: RESPONSE_CODE[code],
-      message: message ?? this.capitalizeWord("error-message"),
-      statusCode: statusCode ?? 400,
-      data,
-    };
-    return NextResponse.json({
-      statusCode: statusCode ?? 400,
-      body: response,
-    });
+    return NextResponse.json(
+      {
+        errorStatus: true,
+        code: RESPONSE_CODE[code],
+        message: message ?? this.capitalizeWord("error-message"),
+        statusCode: statusCode ?? 400,
+        data,
+      },
+      {
+        status: statusCode ?? 400,
+      }
+    );
   }
 
   success(
@@ -27,17 +28,18 @@ class SendResponse {
     statusCode: number,
     data?: any
   ) {
-    const response = {
-      errorStatus: false,
-      code: RESPONSE_CODE[code],
-      message: message ?? this.capitalizeWord("success-message"),
-      statusCode: statusCode ?? 200,
-      data: data ?? null,
-    };
-    return NextResponse.json({
-      statusCode: statusCode ?? 200,
-      body: response,
-    });
+    return NextResponse.json(
+      {
+        errorStatus: false,
+        code: RESPONSE_CODE[code],
+        message: message ?? this.capitalizeWord("success-message"),
+        statusCode: statusCode ?? 200,
+        data: data ?? null,
+      },
+      {
+        status: statusCode ?? 200,
+      }
+    );
   }
 }
 
