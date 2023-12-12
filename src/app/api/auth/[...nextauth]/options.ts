@@ -46,7 +46,7 @@ export const nextAuthOptions: NextAuthOptions = {
         }
 
         return {
-          id: user.id,
+          id: user.uId,
           email: user.email,
           image: user.avatar,
         };
