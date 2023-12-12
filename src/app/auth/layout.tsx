@@ -8,8 +8,8 @@ export default function RootLayout({
   pageProps: any;
 }) {
   return (
-    <html lang="en">
-      <body className="w-full min-h-screen  ">{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className="w-full min-h-screen">{children}</body>
     </html>
   );
 }
