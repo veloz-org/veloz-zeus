@@ -1,10 +1,13 @@
 "use client";
 import { ppReg, ppB, ppEB, ppSB, ppL } from "@/config/font";
 import "./styles/globals.css";
-import NextAuthProvider from "@/Providers/NextAuthProvider";
+import NextAuthProvider from "@/providers/NextAuthProvider";
 import ThemeContextProvider from "@/context/Theme";
+import { Toaster } from "react-hot-toast";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// main app layout similar to (_app.jsx) page in next (pages)
+// tanstack reqct query
+const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
@@ -28,11 +31,14 @@ export default function RootLayout({
           `}
         </style>
       </head>
-      <NextAuthProvider>
-        <body className="min-h-screen">
-          <ThemeContextProvider>{children}</ThemeContextProvider>
-        </body>
-      </NextAuthProvider>
+      <body className="min-h-screen" suppressHydrationWarning>
+        <QueryClientProvider client={queryClient}>
+          <NextAuthProvider>
+            <ThemeContextProvider>{children}</ThemeContextProvider>
+            <Toaster />
+          </NextAuthProvider>
+        </QueryClientProvider>
+      </body>
     </html>
   );
 }
