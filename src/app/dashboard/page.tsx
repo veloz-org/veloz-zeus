@@ -1,6 +1,6 @@
 "use client";
 import { withAuth } from "@/lib/helpers";
-import DashboardLayout from "@/modules/dashboard/components/DashboardLayout";
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import React from "react";
 
 function Dashboard() {
