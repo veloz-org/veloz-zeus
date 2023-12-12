@@ -6,9 +6,15 @@
     "dev": "next dev -p 4000",
     "build": "next build",
     "start": "next start -p 4000",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dbPush": "npx prisma db push",
+    "dbGenerate": "npx prisma generate"
+  },
+  "prisma": {
+    "schema": "./src/prisma/mongo.prisma"
   },
   "dependencies": {
+    "@prisma/client": "^5.7.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-query": "^5.13.4",
     "axios": "^1.6.2",
@@ -18,11 +24,13 @@
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "nprogress": "^0.2.0",
+    "prisma": "^5.7.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
     "tailwind-merge": "^2.1.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
