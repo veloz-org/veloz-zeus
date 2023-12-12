@@ -17,7 +17,7 @@
       "@/*": ["./src/*"],
       "@data/*": ["./src/data/*"],
       "@/components/*": ["./src/components/*"],
-      "@/modules/*": ["./src/modules/*"],
+      "@modules/*": ["./src/modules/*"],
       "@/api/*": ["./src/app/api/*"]
     },
     "forceConsistentCasingInFileNames": true,
