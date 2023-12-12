@@ -11,3 +11,11 @@ export type ResponseData = {
     error: any;
   };
 };
+
+export type UserInfo = {
+  username: string;
+  email: string;
+  avatar: string;
+  id: string;
+  role: string;
+};
