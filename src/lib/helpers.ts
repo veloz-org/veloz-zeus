@@ -14,7 +14,8 @@ export const withAuth = <P extends { children: React.ReactNode }>(
   WrappedComponent: React.ComponentType<P>
 ) => {
   const Wrapper: React.FC<P> = (props) => {
-    const { setUserInfo, userInfo } = useContext(DataContext);
+    const { setUserInfo, userInfo, setGlobalLoadingState } =
+      useContext(DataContext);
     const { status } = useSession();
     const userInfoMutation = useMutation({
       mutationFn: () => getUser(),
@@ -29,13 +30,17 @@ export const withAuth = <P extends { children: React.ReactNode }>(
           router.push("/auth");
         }
       } else {
-        if (Object.keys(userInfo).length === 0) userInfoMutation.mutate();
+        if (Object.keys(userInfo).length === 0) {
+          userInfoMutation.mutate();
+          setGlobalLoadingState(true);
+        }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, router]);
 
     React.useEffect(() => {
       if (!userInfoMutation?.data?.errorStatus) {
+        setGlobalLoadingState(false);
         // fetch user info if none exists and user is logged in
         const reqData = userInfoMutation.data?.data as UserInfo;
         if (reqData && Object.entries(reqData).length > 0) {
@@ -47,6 +52,7 @@ export const withAuth = <P extends { children: React.ReactNode }>(
           userInfoMutation.data?.data?.message ?? "Something went wrong"
         );
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
       userInfoMutation.isPending,
       userInfoMutation.data,

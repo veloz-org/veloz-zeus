@@ -75,3 +75,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+#loading-spinner {
+  animation: spinner 0.5s linear infinite;
+  border-radius: 30px;
+  /* transition: .2s ease; */
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

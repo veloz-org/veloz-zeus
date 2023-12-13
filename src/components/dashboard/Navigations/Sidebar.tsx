@@ -5,6 +5,7 @@ import {
   FlexRowCenterBtw,
   FlexRowStartCenter,
 } from "@/components/Flex";
+import { Spinner } from "@/components/Spinner";
 import Button from "@/components/ui/button";
 import { DataContext } from "@/context/DataContext";
 import { LayoutContext } from "@/context/LayoutContext";
@@ -41,7 +42,7 @@ const navigations = [
 ];
 
 function Sidebar({}: SidebarProps) {
-  const { userInfo, sidebarOpen } = useContext(DataContext);
+  const { userInfo, sidebarOpen, globalLoadingState } = useContext(DataContext);
   const { activePage } = useContext(LayoutContext);
 
   const navListStyle = (pageName: string, navName: string) => {
@@ -71,9 +72,13 @@ function Sidebar({}: SidebarProps) {
         />
         <FlexColStart className="gap-1 leading-none">
           <span className="font-ppSB text-white-100 text-[20px]">Veloz</span>
-          <span className="font-ppReg text-white-300 text-[10px]">
-            Dashboard ({userInfo?.role})
-          </span>
+          {globalLoadingState ? (
+            <Spinner size={12} />
+          ) : (
+            <span className="font-ppReg text-white-300 text-[10px]">
+              {userInfo?.role}
+            </span>
+          )}
         </FlexColStart>
       </FlexRowStartCenter>
       <FlexColStart className="w-full h-full px-5">
