@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LayoutContextProvider from "@/context/LayoutContext";
 import DataContextProvider from "@/context/DataContext";
+import NextTopLoader from "@/components/TopLoader";
 
 // tanstack reqct query
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ export default function RootLayout({
             <Toaster />
           </NextAuthProvider>
         </QueryClientProvider>
+        <NextTopLoader color="#3770fe" showSpinner />
       </body>
     </html>
   );
