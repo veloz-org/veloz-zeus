@@ -12,6 +12,15 @@ export function formatNumber(number: number) {
   return formatter.format(number);
 }
 
+// currencyFormatter
+export function currencyFormatter(number: number, currency: string) {
+  let formatter = Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency ?? "USD",
+  });
+  return formatter.format(number);
+}
+
 // format number to 100,000, 10,000,000, 1,000,000,000, etc
 export function numberWithCommas(x: number) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");

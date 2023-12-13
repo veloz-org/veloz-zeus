@@ -4,12 +4,12 @@ import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 
 const buttonVariants = cva(
-  "relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-md font-manropeB text-white-100",
+  "relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-sm font-ppReg text-white-100",
   {
     variants: {
       intent: {
         primary:
-          "bg-brand-green-primary hover:bg-brand-green-hover focus:bg-brand-green-focused active:bg-brand-green-pressed disabled:bg-brand-disabled disabled:cursor-not-allowed ",
+          "bg-blue-100 hover:bg-blue-100/90 focus:bg-blue-100 focus-within:text-white-100 active:bg-blue-100 disabled:bg-white-100/70 disabled:cursor-not-allowed text-white-100",
         secondary:
           "bg-white-100 text-brand-green-primary hover:bg-[#F4FBF6] focus:shadow-brand-green-shd active:bg-brand-green-shd disabled:bg-brand-disabled border-solid border-[2px] border-brand-green-primary ",
         success:
