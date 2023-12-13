@@ -57,7 +57,7 @@ function Sidebar({}: SidebarProps) {
   return (
     <FlexColStart
       className={cn(
-        "w-full h-full max-w-[220px] bg-dark-100 relative border-r-solid border-r-[1px] border-r-dark-400 hideScrollBar py-1 transition-all ease-in-out ",
+        "w-full h-full max-w-[220px] bg-dark-100 fixed top-0 left-0 md:relative border-r-solid border-r-[1px] border-r-dark-400 hideScrollBar py-1 transition-all ease-in-out z-[9999] ",
         sidebarOpen ? "w-[250px]" : "w-0 overflow-hidden"
       )}
     >
