@@ -41,7 +41,7 @@ export default function StatsCard({
 
   return (
     <button
-      className="w-[250px]"
+      className="w-[300px]"
       onClick={() => setActiveStatsCard && setActiveStatsCard(name)}
     >
       <FlexColStart
