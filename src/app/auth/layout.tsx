@@ -1,5 +1,3 @@
-"use client";
-
 export default function RootLayout({
   children,
   pageProps,
@@ -8,8 +6,8 @@ export default function RootLayout({
   pageProps: any;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="w-full min-h-screen">{children}</body>
-    </html>
+    <div className="w-full min-h-screen" suppressHydrationWarning>
+      {children}
+    </div>
   );
 }
