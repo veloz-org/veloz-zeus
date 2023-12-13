@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { twMerge } from "tailwind-merge";
 import SideBar from "@/components/dashboard/Navigations/Sidebar";
 import { LayoutContext } from "@/context/LayoutContext";
@@ -9,21 +9,12 @@ import { useSession } from "next-auth/react";
 interface DashboardLayoutProps {
   children?: React.ReactNode;
   className?: React.ComponentProps<"div">["className"];
-  activePage: string;
 }
 
 // use this component as a wrapper for all dashboard authenticated pages
-function DashboardLayout({
-  children,
-  activePage,
-  className,
-}: DashboardLayoutProps) {
-  const { setActivePage } = useContext(LayoutContext);
+function DashboardLayout({ children, className }: DashboardLayoutProps) {
+  const {} = useContext(LayoutContext);
   const { status } = useSession();
-
-  useEffect(() => {
-    activePage && setActivePage(activePage);
-  }, [activePage]);
 
   if (status === "loading" || status === "unauthenticated") return null;
 
@@ -35,7 +26,7 @@ function DashboardLayout({
       )}
     >
       <div className="w-full h-screen flex">
-        <SideBar activePage={activePage as string} />
+        <SideBar />
         <div className="w-full z-upper relative  overflow-hidden">
           <TopBar />
           {children}
