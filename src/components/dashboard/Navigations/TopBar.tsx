@@ -43,8 +43,10 @@ function TopBar() {
               ) : (
                 <FlexRowStartCenter className="w-full">
                   <Image
-                    src={userInfo.avatar}
-                    className="rounded-[50%] p-1 bg-white-200"
+                    src={userInfo?.avatar
+                      ?.replace(" ", "")
+                      .replace("svg", "png")}
+                    className="rounded-[50%] p-[1px] bg-white-200/50"
                     alt="logo"
                     width={35}
                     height={0}
