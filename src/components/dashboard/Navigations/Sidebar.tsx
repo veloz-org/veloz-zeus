@@ -1,32 +1,40 @@
-import { FlexColStart, FlexRowStartCenter } from "@/components/Flex";
+import {
+  FlexColCenter,
+  FlexColStart,
+  FlexRowCenterBtw,
+  FlexRowStartCenter,
+} from "@/components/Flex";
+import Button from "@/components/ui/button";
 import { DataContext } from "@/context/DataContext";
+import { LayoutContext } from "@/context/LayoutContext";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard } from "lucide-react";
+import { LayoutDashboard, Settings, WalletCards, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext } from "react";
 
 interface SidebarProps {
-  activePage: string;
+  // activePage: string;
 }
 
 const navigations = [
   {
     name: "Dashboard",
-    link: "/dashboard",
-  },
-  {
-    name: "Users",
-    link: "/users",
+    link: "/app/dashboard",
   },
   {
     name: "Settings",
-    link: "/settings",
+    link: "/app/settings",
+  },
+  {
+    name: "Billing",
+    link: "/app/billing",
   },
 ];
 
-function Sidebar({ activePage }: SidebarProps) {
+function Sidebar({}: SidebarProps) {
   const { userInfo } = useContext(DataContext);
+  const { activePage } = useContext(LayoutContext);
   const navListStyle = (pageName: string, navName: string) => {
     const notActive = "text-gray-100 bg-none",
       Active = "text-white-100 bg-blue-100",
@@ -57,6 +65,7 @@ function Sidebar({ activePage }: SidebarProps) {
       <FlexColStart className="w-full h-full px-5">
         {navigations.map((nav, i) => (
           <Link
+            key={i}
             href={nav.link}
             className={cn(
               "w-full h-auto group px-4 py-3 rounded-sm flex items-center justify-start gap-2 font-ppReg transition ease-in-out text-[14px]",
@@ -73,11 +82,49 @@ function Sidebar({ activePage }: SidebarProps) {
           </Link>
         ))}
       </FlexColStart>
+
+      {/* upgrade plan widget */}
+      <UpgradePlanWidget />
     </FlexColStart>
   );
 }
 
 export default Sidebar;
+
+function UpgradePlanWidget() {
+  return (
+    <FlexColCenter className="w-full px-5 py-4 absolute bottom-2">
+      <FlexColStart className="w-full bg-dark-200 p-3 rounded-md border-solid border-[.5px] border-gray-100/30 ">
+        <FlexRowCenterBtw>
+          <p className="text-white-300 text-[10px] leading-none font-ppL">
+            Current Plan
+          </p>
+          <span
+            className={cn(
+              "text-white-100 text-[10px] px-3 py-1 rounded-[30px] border-solid border-[1px] border-white-600 leading-none font-jbSB"
+            )}
+          >
+            Free
+            {/* {getPlanTitle(userPlan)} */}
+          </span>
+        </FlexRowCenterBtw>
+        <p className="text-gray-100 font-jbPR text-[10px] ">
+          Upgrade your account to get access to incredible features.
+        </p>
+        <FlexColCenter className="w-full mt-2">
+          <Button
+            className={cn(
+              "w-full bg-blue-100 hover:bg-blue-100/80 rounded-md py-2 h-[40px] font-ppSB text-[14px] gap-2"
+            )}
+          >
+            <Zap size={15} />{" "}
+            <span className="text-[13px] font-ppSB">Upgrade</span>
+          </Button>
+        </FlexColCenter>
+      </FlexColStart>
+    </FlexColCenter>
+  );
+}
 
 function renderNavIcons(name: string, style: string) {
   const _name = name.toLowerCase();
@@ -86,8 +133,33 @@ function renderNavIcons(name: string, style: string) {
     icon = (
       <LayoutDashboard
         size={15}
-        className={cn("group-hover:text-white-100 transition ease-in-out")}
-        fill={style}
+        className={cn(
+          "group-hover:text-white-100 transition ease-in-out",
+          style
+        )}
+      />
+    );
+  }
+  if (_name === "settings") {
+    icon = (
+      <Settings
+        size={20}
+        className={cn(
+          "group-hover:text-white-100 transition ease-in-out",
+          style
+        )}
+      />
+    );
+  }
+
+  if (_name === "billing") {
+    icon = (
+      <WalletCards
+        size={20}
+        className={cn(
+          "group-hover:text-white-100 transition ease-in-out",
+          style
+        )}
       />
     );
   }
