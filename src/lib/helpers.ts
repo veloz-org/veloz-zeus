@@ -2,22 +2,22 @@
 import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { DataContext } from "@/context/DataContext";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { UserInfo } from "@/types";
 import { useSession } from "next-auth/react";
 import { getUser } from "@/http/requests";
+import { Spinner } from "@/components/Spinner";
+import toast from "react-hot-toast";
 
 // withAuth HOC is used for pages that should only be accessed by authenticated users
 export const withAuth = <P extends { children: React.ReactNode }>(
   WrappedComponent: React.ComponentType<P>
 ) => {
   const Wrapper: React.FC<P> = (props) => {
-    const { setUserInfo } = useContext(DataContext);
+    const { setUserInfo, userInfo } = useContext(DataContext);
     const { status } = useSession();
-    const userInfoQuery = useQuery({
-      queryKey: ["userInfo"],
-      queryFn: () => getUser(),
-      enabled: status === "authenticated",
+    const userInfoMutation = useMutation({
+      mutationFn: () => getUser(),
     });
     const router = useRouter();
 
@@ -28,21 +28,29 @@ export const withAuth = <P extends { children: React.ReactNode }>(
         if (pathname !== "/auth") {
           router.push("/auth");
         }
+      } else {
+        if (Object.keys(userInfo).length === 0) userInfoMutation.mutate();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, router]);
 
     React.useEffect(() => {
-      // fetch user info if none exists and user is logged in
-      if (!userInfoQuery?.data?.errorStatus) {
-        const reqData = userInfoQuery.data?.data as UserInfo;
+      if (!userInfoMutation?.data?.errorStatus) {
+        // fetch user info if none exists and user is logged in
+        const reqData = userInfoMutation.data?.data as UserInfo;
         if (reqData && Object.entries(reqData).length > 0) {
           setUserInfo(reqData);
         }
+      } else {
+        setUserInfo(null as any);
+        toast.error(
+          userInfoMutation.data?.data?.message ?? "Something went wrong"
+        );
       }
     }, [
-      userInfoQuery.isLoading,
-      userInfoQuery.data,
-      userInfoQuery.error,
+      userInfoMutation.isPending,
+      userInfoMutation.data,
+      userInfoMutation.error,
       setUserInfo,
     ]);
 

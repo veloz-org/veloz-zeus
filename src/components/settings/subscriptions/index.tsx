@@ -91,14 +91,15 @@ function PricingPlanCard({
       </FlexRowStartBtw>
       <FlexRowStartBtw className="w-full mt-2">
         {!activePlan ? (
-          <Button className="h-[35px] bg-white-100 hover:bg-white-100/90 py-0 px-5 focus:bg-blue-100/60 focus:bg-white-100 focus-visible:text-white-100">
-            <span className="text-blue-100 text-[12px] font-ppSB">Upgrade</span>
+          <Button
+            intent={"primary"}
+            className="h-[35px] bg-white-100 text-blue-100 hover:bg-blue-201/80 py-0 px-5 "
+          >
+            <span className="text-[12px] font-ppSB">Upgrade</span>
           </Button>
         ) : (
-          <Button className="h-[35px] bg-blue-201 hover:bg-blue-201/90 py-0 px-5 border-solid border-[1px]  border-blue-101 focus:bg-blue-201/90 ">
-            <span className="text-blue-100 text-[10px] font-ppSB">
-              Cancel Plan
-            </span>
+          <Button className="h-[35px] bg-blue-201 hover:bg-blue-101 hover:text-white-100 py-0 px-5 border-solid border-[1px]  border-blue-101 text-blue-100  ">
+            <span className="text-[10px] font-ppSB">Cancel Plan</span>
           </Button>
         )}
       </FlexRowStartBtw>
