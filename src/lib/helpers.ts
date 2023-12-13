@@ -13,11 +13,12 @@ export const withAuth = <P extends { children: React.ReactNode }>(
 ) => {
   const Wrapper: React.FC<P> = (props) => {
     const { setUserInfo, userInfo } = useContext(DataContext);
+    const { data, status } = useSession();
     const userInfoQuery = useQuery({
       queryKey: ["userInfo"],
       queryFn: () => getUser(),
+      enabled: status === "authenticated",
     });
-    const { data, status } = useSession();
     const router = useRouter();
 
     useEffect(() => {
@@ -28,7 +29,7 @@ export const withAuth = <P extends { children: React.ReactNode }>(
           router.push("/auth");
         }
       }
-    }, [status, data?.user, router]);
+    }, [status, router]);
 
     React.useEffect(() => {
       // fetch user info if none exists and user is logged in
