@@ -59,7 +59,7 @@ export const withoutAuth = <P extends { children: React.ReactNode }>(
     useEffect(() => {
       // if user is logged in, redirect to dashboard
       if (status === "authenticated") {
-        router.push("/dashboard");
+        router.push("/app/dashboard");
       }
     }, [status, router]);
 
