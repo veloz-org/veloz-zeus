@@ -123,7 +123,7 @@ function UpgradePlanWidget() {
           </span>
         </FlexRowCenterBtw>
         <p className="text-gray-100 font-jbPR text-[10px] ">
-          Upgrade your account to get access to incredible features.
+          Get access to incredible features.
         </p>
         <FlexColCenter className="w-full mt-2">
           <Button
