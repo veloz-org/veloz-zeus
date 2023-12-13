@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 
 function CredentialsAuth() {
   const [activeTab, setActiveTab] = React.useState<"signin" | "signup">(
-    "signup"
+    "signin"
   );
 
   return (
@@ -214,7 +214,7 @@ function SignupComp() {
           />
           <Button
             intent={"dark"}
-            className="w-full "
+            className="w-full"
             isLoading={registerMut.isPending}
             onClick={handleSubmit as any}
           >
