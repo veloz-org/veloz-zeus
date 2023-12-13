@@ -1,3 +1,4 @@
+"use client";
 import {
   FlexColCenter,
   FlexColStart,
@@ -8,10 +9,17 @@ import Button from "@/components/ui/button";
 import { DataContext } from "@/context/DataContext";
 import { LayoutContext } from "@/context/LayoutContext";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Settings, WalletCards, Zap } from "lucide-react";
+import {
+  LayoutDashboard,
+  PanelRightClose,
+  PanelRightOpen,
+  Settings,
+  WalletCards,
+  Zap,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 interface SidebarProps {
   // activePage: string;
@@ -33,8 +41,9 @@ const navigations = [
 ];
 
 function Sidebar({}: SidebarProps) {
-  const { userInfo } = useContext(DataContext);
+  const { userInfo, sidebarOpen } = useContext(DataContext);
   const { activePage } = useContext(LayoutContext);
+
   const navListStyle = (pageName: string, navName: string) => {
     const notActive = "text-gray-100 bg-none",
       Active = "text-white-100 bg-blue-100",
@@ -46,8 +55,13 @@ function Sidebar({}: SidebarProps) {
   };
 
   return (
-    <FlexColStart className="w-full h-full max-w-[220px] bg-dark-100 relative border-r-solid border-r-[1px] border-r-dark-400 hideScrollBar py-1 ">
-      <FlexRowStartCenter className="w-full py-3 px-5">
+    <FlexColStart
+      className={cn(
+        "w-full h-full max-w-[220px] bg-dark-100 relative border-r-solid border-r-[1px] border-r-dark-400 hideScrollBar py-1 transition-all ease-in-out ",
+        sidebarOpen ? "w-[250px]" : "w-0 overflow-hidden"
+      )}
+    >
+      <FlexRowStartCenter className="relative w-full py-3 px-5">
         <Image
           src={"/images/logo/logo.png"}
           className=""

@@ -1,5 +1,6 @@
 "use client";
 import { LayoutContext } from "@/context/LayoutContext";
+import { withAuth } from "@/lib/helpers";
 import React from "react";
 
 function BillingPage() {
@@ -11,4 +12,4 @@ function BillingPage() {
   return <div>BillingPage</div>;
 }
 
-export default BillingPage;
+export default withAuth(BillingPage);

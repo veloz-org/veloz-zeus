@@ -12,17 +12,26 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DataContext } from "@/context/DataContext";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, PanelRightClose, PanelRightOpen } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useContext } from "react";
 
 function TopBar() {
-  const { userInfo } = useContext(DataContext);
+  const { userInfo, sidebarOpen, setSidebarOpen } = useContext(DataContext);
 
   return (
     <FlexRowCenterBtw className="w-full h-auto px-4 py-2 bg-white-100 shadow-sm">
-      <div></div>
+      <div className="w-auto">
+        {/* panel */}
+        <button className="" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          {sidebarOpen ? (
+            <PanelRightOpen size={15} className="text-dark-100" />
+          ) : (
+            <PanelRightClose size={15} className="text-dark-100" />
+          )}
+        </button>
+      </div>
       <FlexRowEnd className="w-1/4">
         <Popover>
           <PopoverTrigger>

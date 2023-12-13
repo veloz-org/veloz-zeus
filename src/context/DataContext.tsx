@@ -4,6 +4,8 @@ import { UserInfo } from "@/types";
 interface ContextValuesType {
   userInfo: UserInfo;
   setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
+  sidebarOpen: boolean;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const DataContext = createContext<ContextValuesType>(
@@ -12,10 +14,13 @@ export const DataContext = createContext<ContextValuesType>(
 
 function DataContextProvider({ children }: { children: ReactNode }) {
   const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const contextValues: ContextValuesType = {
     userInfo,
     setUserInfo,
+    sidebarOpen,
+    setSidebarOpen,
   };
 
   return (

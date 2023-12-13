@@ -1,5 +1,6 @@
 "use client";
 import { LayoutContext } from "@/context/LayoutContext";
+import { withAuth } from "@/lib/helpers";
 import React from "react";
 
 function SettingsPage() {
@@ -10,4 +11,4 @@ function SettingsPage() {
   return <div>SettingsPage</div>;
 }
 
-export default SettingsPage;
+export default withAuth(SettingsPage);

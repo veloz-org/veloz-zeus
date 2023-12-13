@@ -46,6 +46,8 @@ export default function RootLayout({
             <Toaster />
           </NextAuthProvider>
         </QueryClientProvider>
+
+        {/* Show loading state during page navigation */}
         <NextTopLoader color="#3770fe" showSpinner />
       </body>
     </html>
