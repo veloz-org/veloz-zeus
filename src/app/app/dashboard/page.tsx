@@ -1,6 +1,5 @@
 "use client";
 import { withAuth } from "@/lib/helpers";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import React from "react";
 import {
   FlexColCenter,

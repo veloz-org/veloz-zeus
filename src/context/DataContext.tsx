@@ -14,7 +14,7 @@ export const DataContext = createContext<ContextValuesType>(
 
 function DataContextProvider({ children }: { children: ReactNode }) {
   const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const contextValues: ContextValuesType = {
     userInfo,

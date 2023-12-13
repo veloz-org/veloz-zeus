@@ -1,9 +1,9 @@
 import { NextRequest } from "next/server";
-import UserController from "../../controllers/user.controller";
 import CatchError from "../../utils/_error";
+import AuthController from "../../controllers/auth.controller";
 
-const userController = new UserController();
+const authController = new AuthController();
 
 export const POST = CatchError(
-  async (req: NextRequest) => await userController.register(req)
+  async (req: NextRequest) => await authController.register(req)
 );

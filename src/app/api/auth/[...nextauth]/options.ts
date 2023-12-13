@@ -12,9 +12,6 @@ type CredentialsPayload = {
 };
 
 export const nextAuthOptions: NextAuthOptions = {
-  session: {
-    strategy: "jwt",
-  },
   providers: [
     CredentialsProvider({
       credentials: {
@@ -25,7 +22,7 @@ export const nextAuthOptions: NextAuthOptions = {
         const { email, password } = credentials as CredentialsPayload;
 
         // check if user exist
-        const user = await prisma.user.findFirst({
+        const user = await prisma.users.findFirst({
           where: {
             email,
           },
@@ -56,12 +53,4 @@ export const nextAuthOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth",
   },
-  // Database...
-  // Session...
-  // JWT...
-  // Events...
-  // Callbacks...
-  // Pages...
-  // Theme...
-  // Debug...
 };

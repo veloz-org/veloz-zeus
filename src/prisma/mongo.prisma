@@ -19,7 +19,20 @@ enum AuthMethod {
     oauth
 }
 
-model User {
+enum PlanType {
+    one_time
+    subscription
+}
+
+enum PlanDuration {
+    monthly
+    yearly
+    weekly
+    daily
+    forever
+}
+
+model Users {
     id            String     @id @default(auto()) @map("_id") @db.ObjectId
     uId           String     @unique @default(cuid())
     username      String
@@ -31,7 +44,11 @@ model User {
     role          Role       @default(user)
     createdAt     DateTime   @default(now())
 
-    tokens RefreshToken[]
+    tokens             RefreshToken[]
+    pricing_plan       Plans[]
+    plan_subscriptions PlanSubscriptions[]
+
+    @@map(name: "users")
 }
 
 model RefreshToken {
@@ -40,7 +57,43 @@ model RefreshToken {
     userId    String
     createdAt DateTime @default(now())
 
-    user User @relation(fields: [userId], references: [uId])
+    user Users @relation(fields: [userId], references: [uId])
 
     @@index([userId])
+    @@map(name: "refresh_tokens")
+}
+
+model Plans {
+    id          String       @id @default(auto()) @map("_id") @db.ObjectId
+    planId      String       @unique @default(cuid())
+    uId         String
+    name        String       @unique
+    description String
+    price       Int
+    currency    String
+    type        PlanType     @default(subscription)
+    features    String[]
+    duration    PlanDuration @default(monthly)
+    createdAt   DateTime     @default(now())
+
+    user               Users               @relation(fields: [uId], references: [uId])
+    plan_subscriptions PlanSubscriptions[]
+
+    @@index([uId])
+    @@map(name: "plans")
+}
+
+model PlanSubscriptions {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    uId         String
+    planId      String
+    plan_status String?  @default("active")
+    createdAt   DateTime @default(now())
+
+    user Users @relation(fields: [uId], references: [uId])
+    plan Plans @relation(fields: [planId], references: [planId])
+
+    @@index([uId])
+    @@index([planId])
+    @@map(name: "plan_subscriptions")
 }

@@ -14,9 +14,6 @@ interface DashboardLayoutProps {
 // use this component as a wrapper for all dashboard authenticated pages
 function DashboardLayout({ children, className }: DashboardLayoutProps) {
   const {} = useContext(LayoutContext);
-  const { status } = useSession();
-
-  if (status === "loading" || status === "unauthenticated") return null;
 
   return (
     <div

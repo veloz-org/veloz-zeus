@@ -4,6 +4,7 @@ import {
   FlexRowStart,
   FlexRowStartCenter,
 } from "@/components/Flex";
+import SubscriptionTab from "@/components/settings/subscriptions";
 import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LayoutContext } from "@/context/LayoutContext";
@@ -47,7 +48,7 @@ function SettingsPage() {
       </FlexColStart>
       <FlexColStart className="w-full px-4 mt-1">
         {/* Tabs */}
-        <FlexRowStartCenter className="w-fit border-b-solid border-b-[1px] border-b-white-600 gap-5 ">
+        <FlexRowStartCenter className="w-full pb-2 mb-6  gap-5 ">
           {Tabs.map((t) => (
             <button key={t.key} onClick={() => setActiveTab(t)}>
               <FlexRowStartCenter className="gap-1">
@@ -65,13 +66,6 @@ function SettingsPage() {
           ))}
         </FlexRowStartCenter>
 
-        {/* Loading */}
-        {/* {getSettingsQuery.isLoading && (
-          <FlexColCenter className="w-full">
-            <Spinner color="#fff" />
-          </FlexColCenter>
-        )} */}
-
         {/* General Tab Content */}
         {activeTab.key === "general" && (
           <FlexColStart className="w-full mt-4">
@@ -79,12 +73,8 @@ function SettingsPage() {
           </FlexColStart>
         )}
 
-        {/* Project Tab Content */}
-        {/* {activeTab === "project" && (
-          <FlexColStart className="w-auto">
-            
-          </FlexColStart>
-        )} */}
+        {/* Subscription Tab Content */}
+        {activeTab.key === "subscription" && <SubscriptionTab />}
       </FlexColStart>
     </FlexColStart>
   );

@@ -67,7 +67,7 @@ function SignInComp() {
     }
 
     // redirect to dashboard
-    window.location.href = "/dashboard";
+    window.location.href = "/app/dashboard";
   }
 
   return (
@@ -142,13 +142,8 @@ function SignupComp() {
     if (registerMut.data) {
       resetMutation();
       toast.success("Account created successfully");
-
-      // sign in user
-      signIn("credentials", {
-        email: form.email,
-        password: form.password,
-      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [registerMut.error, registerMut.data, registerMut.isPending]);
 
   useEffect(() => registerCallback(), [registerCallback]);

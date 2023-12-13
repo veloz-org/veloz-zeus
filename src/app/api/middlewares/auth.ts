@@ -14,7 +14,7 @@ export function isAuthenticated(fn: Function) {
     }
 
     // check if user exists
-    const user = await prisma.user.findFirst({
+    const user = await prisma.users.findFirst({
       where: { email: session.user?.email as string },
     });
     if (!user) {

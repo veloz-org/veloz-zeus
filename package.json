@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start -p 4000",
     "lint": "next lint",
-    "dbPush": "npx prisma db push",
-    "dbGenerate": "npx prisma generate"
+    "dbPush": "npx prisma db push && npx prisma generate"
   },
   "prisma": {
     "schema": "./src/prisma/mongo.prisma"

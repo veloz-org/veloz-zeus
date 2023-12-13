@@ -12,8 +12,8 @@ export const withAuth = <P extends { children: React.ReactNode }>(
   WrappedComponent: React.ComponentType<P>
 ) => {
   const Wrapper: React.FC<P> = (props) => {
-    const { setUserInfo, userInfo } = useContext(DataContext);
-    const { data, status } = useSession();
+    const { setUserInfo } = useContext(DataContext);
+    const { status } = useSession();
     const userInfoQuery = useQuery({
       queryKey: ["userInfo"],
       queryFn: () => getUser(),
@@ -39,7 +39,12 @@ export const withAuth = <P extends { children: React.ReactNode }>(
           setUserInfo(reqData);
         }
       }
-    }, [userInfoQuery.isLoading, userInfoQuery.data, userInfoQuery.error]);
+    }, [
+      userInfoQuery.isLoading,
+      userInfoQuery.data,
+      userInfoQuery.error,
+      setUserInfo,
+    ]);
 
     const wrappedComponent = React.createElement(WrappedComponent, props);
     return wrappedComponent;
