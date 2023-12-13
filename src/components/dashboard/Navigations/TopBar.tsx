@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/popover";
 import { DataContext } from "@/context/DataContext";
 import { ChevronDown } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useContext } from "react";
 
@@ -46,9 +47,17 @@ function TopBar() {
               </FlexRowStartCenter>
             </button>
           </PopoverTrigger>
-          <PopoverContent>
-            <FlexColStart className="w-full">
-              <span className="text-dark-100 font-ppSB">Content</span>
+          <PopoverContent className="w-full min-w-[200px] bg-white-100 px-1 py-1 m-0">
+            <FlexColStart className="w-full gap-1">
+              <button className="w-full text-dark-100 flex items-start justify-start rounded-md px-4 py-2 hover:bg-white-200/40 text-[12px] font-ppReg">
+                Settings
+              </button>
+              <button
+                className="w-full text-dark-100 flex items-start justify-start rounded-md px-4 py-2 hover:bg-red-305 hover:text-white-100 text-[12px] font-ppSB"
+                onClick={() => signOut()}
+              >
+                Logout
+              </button>
             </FlexColStart>
           </PopoverContent>
         </Popover>
