@@ -6,6 +6,7 @@ import {
   FlexRowStart,
   FlexRowStartCenter,
 } from "@/components/Flex";
+import { Spinner } from "@/components/Spinner";
 import {
   Popover,
   PopoverContent,
@@ -18,7 +19,8 @@ import Image from "next/image";
 import { useContext } from "react";
 
 function TopBar() {
-  const { userInfo, sidebarOpen, setSidebarOpen } = useContext(DataContext);
+  const { userInfo, sidebarOpen, setSidebarOpen, globalLoadingState } =
+    useContext(DataContext);
 
   return (
     <FlexRowCenterBtw className="w-full h-auto px-4 py-2 bg-white-100 shadow-sm">
@@ -36,24 +38,28 @@ function TopBar() {
         <Popover>
           <PopoverTrigger>
             <button className="w-fit">
-              <FlexRowStartCenter className="w-full">
-                <Image
-                  src={"/images/logo/logo.png"}
-                  className="rounded-[50%] p-1 bg-white-200"
-                  alt="logo"
-                  width={35}
-                  height={0}
-                />
-                <FlexColStart className="gap-1 leading-none">
-                  <span className="font-ppSB text-dark-100 text-[14px]">
-                    {userInfo?.username}
-                  </span>
-                  <span className="font-ppReg text-white-400 text-[10px]">
-                    {userInfo?.email}
-                  </span>
-                </FlexColStart>
-                <ChevronDown size={15} />
-              </FlexRowStartCenter>
+              {globalLoadingState ? (
+                <Spinner size={15} color="#000" />
+              ) : (
+                <FlexRowStartCenter className="w-full">
+                  <Image
+                    src={userInfo.avatar}
+                    className="rounded-[50%] p-1 bg-white-200"
+                    alt="logo"
+                    width={35}
+                    height={0}
+                  />
+                  <FlexColStart className="gap-1 leading-none">
+                    <span className="font-ppSB text-dark-100 text-[14px]">
+                      {userInfo?.username}
+                    </span>
+                    <span className="font-ppReg text-white-400 text-[10px]">
+                      {userInfo?.email}
+                    </span>
+                  </FlexColStart>
+                  <ChevronDown size={15} />
+                </FlexRowStartCenter>
+              )}
             </button>
           </PopoverTrigger>
           <PopoverContent className="w-full min-w-[200px] bg-white-100 px-1 py-1 m-0">
