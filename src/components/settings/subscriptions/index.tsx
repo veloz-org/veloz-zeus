@@ -36,13 +36,20 @@ function SubscriptionTab() {
             duration="monthly"
           />
         </FlexRowStartCenter>
-        <FlexRowStartCenter className="w-full mt-4">
-          <CheckCheck size={15} className="text-blue-100" />
-          <p className="text-dark-100 font-ppReg text-[12px]">
-            Your subscription is scheduled to be renewed on{" "}
-            <span className="font-ppSB">Sat Jan 13 2024</span>
-          </p>
-        </FlexRowStartCenter>
+        <br />
+        {Array(2)
+          .fill(1)
+          .map((_, i) => (
+            <FlexRowStartCenter className="w-full" key={i}>
+              <CheckCheck size={15} className="text-blue-100" />
+              <p className="text-dark-100 font-ppReg text-[12px]">
+                <span className="font-ppSB text-[10px] ">(Premium)</span> Your
+                subscription is scheduled to be renewed on{" "}
+                <span className="font-ppSB">Sat Jan 13 2024</span>
+              </p>
+            </FlexRowStartCenter>
+          ))}
+        <br />
         <button className="w-auto px-4 py-2 rounded-md flex items-center justify-start bg-white-201 gap-2 border-solid border-[1px]  border-blue-101 group hover:bg-blue-100  ">
           <Wallet
             size={15}
