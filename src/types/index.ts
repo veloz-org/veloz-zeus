@@ -1,5 +1,7 @@
 // Client Types Definition
 
+export type ValidPricingDuration = "daily" | "weekly" | "monthly" | "yearly";
+
 export type ResponseData = {
   errorStatus: boolean;
   message: string;
@@ -25,7 +27,7 @@ export interface PricingPlan {
   id: any;
   name: string;
   key: string;
-  duration: string;
+  duration: ValidPricingDuration;
   pricing: {
     currency: string;
     amount: number;
@@ -34,7 +36,7 @@ export interface PricingPlan {
 
 // pricing plan feature Types Definition
 export interface PricingPlanFeature {
-  plan_key: string;
+  id: string;
   features: {
     title: string;
     isAvailable: boolean;
