@@ -134,7 +134,6 @@ function PricingCard({
           </FlexRowStartCenter>
         ))}
       </FlexColStart>
-      <br />
     </FlexColStart>
   );
 }
