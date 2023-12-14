@@ -55,8 +55,8 @@ function Sidebar({}: SidebarProps) {
   return (
     <FlexColStart
       className={cn(
-        "w-full h-full max-w-[220px] bg-dark-100 fixed top-0 left-0 md:relative border-r-solid border-r-[1px] border-r-dark-400 hideScrollBar py-1 transition-all ease-in-out z-[9999] md:z-[1] ",
-        sidebarOpen ? "w-[250px]" : "w-0 overflow-hidden"
+        "w-0 h-full md:max-w-[220px] overflow-hidden bg-dark-100 fixed top-0 left-0 md:relative border-r-solid border-r-[1px] border-r-dark-400 hideScrollBar py-1 transition-all ease-in-out z-[9999] md:z-[1] ",
+        sidebarOpen ? "md:w-[250px]" : "w-0 overflow-hidden"
       )}
     >
       <FlexRowStartCenter className="relative w-full py-3 px-5">
@@ -108,6 +108,8 @@ function Sidebar({}: SidebarProps) {
 export default Sidebar;
 
 function UpgradePlanWidget() {
+  const { setPricingModalOpen } = useContext(LayoutContext);
+
   return (
     <FlexColCenter className="w-full px-5 py-4 absolute bottom-2">
       <FlexColStart className="w-full bg-dark-200 p-3 rounded-md border-solid border-[.5px] border-gray-100/30 ">
@@ -132,6 +134,10 @@ function UpgradePlanWidget() {
             className={cn(
               "w-full bg-blue-100 hover:bg-blue-100/80 rounded-md py-2 h-[40px] font-ppSB text-[14px] gap-2"
             )}
+            onClick={() => {
+              // fetch user subscriptions before opening modal
+              setPricingModalOpen(true);
+            }}
           >
             <Zap size={15} />{" "}
             <span className="text-[13px] font-ppSB">Upgrade</span>

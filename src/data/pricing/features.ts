@@ -18,15 +18,15 @@ const pricingPlanFeatures = [
       },
       {
         title: "Email Support",
-        isAvailable: true,
+        isAvailable: false,
       },
       {
         title: "Lifetime Updates",
-        isAvailable: true,
+        isAvailable: false,
       },
       {
-        title: "Free",
-        isAvailable: true,
+        title: "Advanced features",
+        isAvailable: false,
       },
     ],
   },

@@ -20,6 +20,7 @@ const Modal = ({
   onClose,
   fixed,
   scrollable,
+  isBlurBg,
 }: ModalProp) => {
   const [isVisible, setIsVisible] = useState(isOpen);
 
@@ -53,9 +54,10 @@ const Modal = ({
   return (
     <div
       className={twMerge(
-        `w-full hideScrollBar backdrop-blur bg-dark-100/40 bg-opacity-85 h-[100vh] ${
+        `w-full hideScrollBar bg-dark-100/40 h-[100vh] ${
           fixed ? "fixed z-[250px]" : "absolute"
         } top-0 left-0 z-[50] py-5`,
+        isBlurBg ? "backdrop-filter bg-opacity-85" : "",
         scrollable ? "overflow-y-auto hideScollBar" : "overflow-hidden"
       )}
       data-name="main-modal"
