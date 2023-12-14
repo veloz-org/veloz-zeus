@@ -8,12 +8,14 @@ import {
 import Modal from "@/components/Modal";
 import Button from "@/components/ui/button";
 import { DataContext } from "@/context/DataContext";
+import { pricingPlans } from "@/data/pricing/plan";
 import { cn, currencyFormatter } from "@/lib/utils";
 import { CheckCheck, Wallet } from "lucide-react";
 import React, { useContext } from "react";
 
 function SubscriptionTab() {
   const { userInfo } = useContext(DataContext);
+  const activePlanIds = ["basic_104548"];
   return (
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full">
@@ -21,20 +23,16 @@ function SubscriptionTab() {
 
         {/* pricing plans */}
         <FlexRowStartCenter className="w-full mt-2">
-          <PricingPlanCard
-            activePlan={"free"}
-            planName="Free"
-            planPrice={0}
-            currency="USD"
-            duration="monthly"
-          />
-          <PricingPlanCard
-            activePlan={null}
-            planName="Premium"
-            planPrice={0}
-            currency="USD"
-            duration="monthly"
-          />
+          {pricingPlans.map((plan, i) => (
+            <PricingPlanCard
+              key={i}
+              activePlan={activePlanIds.includes(plan.id) ? plan.key : null}
+              planName={plan.name}
+              planPrice={plan.pricing.amount}
+              currency={plan.pricing.currency}
+              duration={plan.duration as any}
+            />
+          ))}
         </FlexRowStartCenter>
         <br />
         {Array(2)
