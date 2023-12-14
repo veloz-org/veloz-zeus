@@ -2,7 +2,7 @@ import { PricingPlanFeature } from "@/types";
 
 const pricingPlanFeatures = [
   {
-    plan_key: "free",
+    id: "free_84507",
     features: [
       {
         title: "1 User",
@@ -31,7 +31,7 @@ const pricingPlanFeatures = [
     ],
   },
   {
-    plan_key: "basic",
+    id: "basic_104548",
     features: [
       {
         title: "1 User",
@@ -60,7 +60,7 @@ const pricingPlanFeatures = [
     ],
   },
   {
-    plan_key: "premium",
+    id: "premium_123918",
     features: [
       {
         title: "5 User",
@@ -72,35 +72,6 @@ const pricingPlanFeatures = [
       },
       {
         title: "20GB Storage",
-        isAvailable: true,
-      },
-      {
-        title: "Email Support",
-        isAvailable: true,
-      },
-      {
-        title: "Lifetime Updates",
-        isAvailable: true,
-      },
-      {
-        title: "Free",
-        isAvailable: true,
-      },
-    ],
-  },
-  {
-    plan_key: "enterprise",
-    features: [
-      {
-        title: "Unlimited User",
-        isAvailable: true,
-      },
-      {
-        title: "Unlimited Projects",
-        isAvailable: true,
-      },
-      {
-        title: "Unlimited Storage",
         isAvailable: true,
       },
       {
