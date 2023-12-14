@@ -1,7 +1,15 @@
-import { FlexColStart, FlexRowStart, FlexRowStartBtw } from "@/components/Flex";
+import {
+  FlexColStart,
+  FlexColStartCenter,
+  FlexRowStart,
+  FlexRowStartBtw,
+  FlexRowStartCenter,
+} from "@/components/Flex";
+import Modal from "@/components/Modal";
 import Button from "@/components/ui/button";
 import { DataContext } from "@/context/DataContext";
 import { cn, currencyFormatter } from "@/lib/utils";
+import { CheckCheck, Wallet } from "lucide-react";
 import React, { useContext } from "react";
 
 function SubscriptionTab() {
@@ -10,30 +18,40 @@ function SubscriptionTab() {
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full">
         <p className="text-dark-100 font-ppSB text-[15px] ">Plan</p>
-        {userInfo.role === "admin" && (
-          <p className="text-white-400 font-ppReg text-[11px] ">
-            You currently dont have a plan.
-            <button className="text-dark-100 font-ppSB underline ml-1">
-              Create Plan
-            </button>
-          </p>
-        )}
-        <FlexRowStart className="w-full mt-4">
+
+        {/* pricing plans */}
+        <FlexRowStartCenter className="w-full mt-2">
           <PricingPlanCard
-            activePlan={userInfo.role === "admin" ? null : "free"}
+            activePlan={"free"}
             planName="Free"
             planPrice={0}
             currency="USD"
             duration="monthly"
           />
           <PricingPlanCard
-            activePlan={"premium"}
+            activePlan={null}
             planName="Premium"
-            planPrice={10}
+            planPrice={0}
             currency="USD"
             duration="monthly"
           />
-        </FlexRowStart>
+        </FlexRowStartCenter>
+        <FlexRowStartCenter className="w-full mt-4">
+          <CheckCheck size={15} className="text-blue-100" />
+          <p className="text-dark-100 font-ppReg text-[12px]">
+            Your subscription is scheduled to be renewed on{" "}
+            <span className="font-ppSB">Sat Jan 13 2024</span>
+          </p>
+        </FlexRowStartCenter>
+        <button className="w-auto px-4 py-2 rounded-md flex items-center justify-start bg-white-201 gap-2 border-solid border-[1px]  border-blue-101 group hover:bg-blue-100  ">
+          <Wallet
+            size={15}
+            className="group-hover:text-white-100 text-blue-100"
+          />
+          <span className="text-blue-100 group-hover:text-white-100 font-ppReg text-[12px] ">
+            Manage Billing
+          </span>
+        </button>
       </FlexColStart>
     </FlexColStart>
   );
@@ -90,7 +108,16 @@ function PricingPlanCard({
         </p>
       </FlexRowStartBtw>
       <FlexRowStartBtw className="w-full mt-2">
-        {!activePlan ? (
+        <a
+          href="/#pricing"
+          className={cn(
+            "font-ppReg text-[10px] underline",
+            activePlan ? "text-blue-100" : "text-white-100"
+          )}
+        >
+          Learn more about this plan
+        </a>
+        {/* {!activePlan ? (
           <Button
             intent={"primary"}
             className="h-[35px] bg-white-100 text-blue-100 hover:bg-blue-201/80 py-0 px-5 "
@@ -101,7 +128,7 @@ function PricingPlanCard({
           <Button className="h-[35px] bg-blue-201 hover:bg-blue-101 hover:text-white-100 py-0 px-5 border-solid border-[1px]  border-blue-101 text-blue-100  ">
             <span className="text-[10px] font-ppSB">Cancel Plan</span>
           </Button>
-        )}
+        )} */}
       </FlexRowStartBtw>
     </FlexColStart>
   );

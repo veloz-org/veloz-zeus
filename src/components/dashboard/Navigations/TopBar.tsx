@@ -40,7 +40,7 @@ function TopBar() {
             <button className="w-fit">
               {globalLoadingState ? (
                 <Spinner size={15} color="#000" />
-              ) : (
+              ) : !globalLoadingState && userInfo ? (
                 <FlexRowStartCenter className="w-full">
                   <Image
                     src={userInfo?.avatar
@@ -61,7 +61,7 @@ function TopBar() {
                   </FlexColStart>
                   <ChevronDown size={15} />
                 </FlexRowStartCenter>
-              )}
+              ) : null}
             </button>
           </PopoverTrigger>
           <PopoverContent className="w-full min-w-[200px] bg-white-100 px-1 py-1 m-0">

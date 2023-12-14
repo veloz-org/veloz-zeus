@@ -19,3 +19,24 @@ export type UserInfo = {
   id: string;
   role: string;
 };
+
+// pricing plan Types Definition
+export interface PricingPlan {
+  id: any;
+  name: string;
+  key: string;
+  duration: string;
+  pricing: {
+    currency: string;
+    amount: number;
+  };
+}
+
+// pricing plan feature Types Definition
+export interface PricingPlanFeature {
+  plan_key: string;
+  features: {
+    title: string;
+    isAvailable: boolean;
+  }[];
+}

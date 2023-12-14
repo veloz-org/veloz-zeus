@@ -2,11 +2,10 @@
 import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { DataContext } from "@/context/DataContext";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { UserInfo } from "@/types";
 import { useSession } from "next-auth/react";
 import { getUser } from "@/http/requests";
-import { Spinner } from "@/components/Spinner";
 import toast from "react-hot-toast";
 
 // withAuth HOC is used for pages that should only be accessed by authenticated users
@@ -30,7 +29,7 @@ export const withAuth = <P extends { children: React.ReactNode }>(
           router.push("/auth");
         }
       } else {
-        if (Object.keys(userInfo).length === 0) {
+        if (!userInfo) {
           userInfoMutation.mutate();
           setGlobalLoadingState(true);
         }

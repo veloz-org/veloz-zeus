@@ -2,8 +2,8 @@ import React, { ReactNode, createContext, useContext, useState } from "react";
 import { UserInfo } from "@/types";
 
 interface ContextValuesType {
-  userInfo: UserInfo;
-  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
+  userInfo: UserInfo | null;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo | null>>;
   sidebarOpen: boolean;
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   globalLoadingState: boolean;
@@ -15,7 +15,7 @@ export const DataContext = createContext<ContextValuesType>(
 );
 
 function DataContextProvider({ children }: { children: ReactNode }) {
-  const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // this should be used for global loading state (e.g. when fetching data) that

@@ -32,6 +32,30 @@ enum PlanDuration {
     forever
 }
 
+// Define the SubscriptionStatus enum in lowercase
+enum SubscriptionStatus {
+    // Currently in a trial period.
+    on_trial
+
+    // Active with ongoing payments.
+    active
+
+    // Payment collection paused.
+    paused
+
+    // Renewal payment failed, with retries.
+    past_due
+
+    // Unsuccessful payment recovery after 4 attempts.
+    unpaid
+
+    // Future payments cancelled, but still on a grace period.
+    cancelled
+
+    // Subscription has expired.
+    expired
+}
+
 model Users {
     id            String     @id @default(auto()) @map("_id") @db.ObjectId
     uId           String     @unique @default(cuid())
@@ -44,9 +68,8 @@ model Users {
     role          Role       @default(user)
     createdAt     DateTime   @default(now())
 
-    tokens             RefreshToken[]
-    pricing_plan       Plans[]
-    plan_subscriptions PlanSubscriptions[]
+    tokens        RefreshToken[]
+    subscriptions Subscriptions[]
 
     @@map(name: "users")
 }
@@ -63,37 +86,21 @@ model RefreshToken {
     @@map(name: "refresh_tokens")
 }
 
-model Plans {
-    id          String       @id @default(auto()) @map("_id") @db.ObjectId
-    planId      String       @unique @default(cuid())
-    uId         String
-    name        String       @unique
-    description String
-    price       Int
-    currency    String
-    type        PlanType     @default(subscription)
-    features    String[]
-    duration    PlanDuration @default(monthly)
-    createdAt   DateTime     @default(now())
-
-    user               Users               @relation(fields: [uId], references: [uId])
-    plan_subscriptions PlanSubscriptions[]
-
-    @@index([uId])
-    @@map(name: "plans")
-}
-
-model PlanSubscriptions {
-    id          String   @id @default(auto()) @map("_id") @db.ObjectId
-    uId         String
-    planId      String
-    plan_status String?  @default("active")
-    createdAt   DateTime @default(now())
+model Subscriptions {
+    id              String             @id @default(auto()) @map("_id") @db.ObjectId
+    uId             String
+    planId          String
+    order_id        String
+    store_id        String
+    subscription_id String?
+    status          SubscriptionStatus @default(on_trial)
+    ends_at         DateTime?
+    renews_at       DateTime?
+    createdAt       DateTime           @default(now())
 
     user Users @relation(fields: [uId], references: [uId])
-    plan Plans @relation(fields: [planId], references: [planId])
 
     @@index([uId])
     @@index([planId])
-    @@map(name: "plan_subscriptions")
+    @@map(name: "subscriptions")
 }
