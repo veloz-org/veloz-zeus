@@ -13,7 +13,7 @@ import { cn, currencyFormatter } from "@/lib/utils";
 import { CheckCheck, Wallet } from "lucide-react";
 import React, { useContext } from "react";
 
-function SubscriptionTab() {
+function BillingTab() {
   const { userInfo } = useContext(DataContext);
   const activePlanIds = ["basic_104548"];
   return (
@@ -62,7 +62,7 @@ function SubscriptionTab() {
   );
 }
 
-export default SubscriptionTab;
+export default BillingTab;
 
 type PricingPlanCardProps = {
   activePlan: string | "free" | null;

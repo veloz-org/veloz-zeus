@@ -35,10 +35,6 @@ const navigations = [
     name: "Settings",
     link: "/app/settings",
   },
-  {
-    name: "Billing",
-    link: "/app/billing",
-  },
 ];
 
 function Sidebar({}: SidebarProps) {

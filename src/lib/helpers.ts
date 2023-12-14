@@ -3,12 +3,12 @@ import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { DataContext } from "@/context/DataContext";
 import { useMutation } from "@tanstack/react-query";
-import { UserInfo } from "@/types";
+import { ResponseData, UserInfo } from "@/types";
 import { useSession } from "next-auth/react";
 import { getUser } from "@/http/requests";
 import toast from "react-hot-toast";
 
-// withAuth HOC is used for pages that should only be accessed by authenticated users
+// withAuth HOC is used within DashboardLayout that should only be accessed by authenticated users
 export const withAuth = <P extends { children: React.ReactNode }>(
   WrappedComponent: React.ComponentType<P>
 ) => {
@@ -29,7 +29,7 @@ export const withAuth = <P extends { children: React.ReactNode }>(
           router.push("/auth");
         }
       } else {
-        if (!userInfo) {
+        if (!userInfo && status === "authenticated") {
           userInfoMutation.mutate();
           setGlobalLoadingState(true);
         }
@@ -38,6 +38,15 @@ export const withAuth = <P extends { children: React.ReactNode }>(
     }, [status, router]);
 
     React.useEffect(() => {
+      if (userInfoMutation?.error) {
+        const data = (userInfoMutation?.error as any)?.response
+          ?.data as ResponseData;
+        const code = data?.code;
+        if (code === "UNAUTHORISED") {
+          toast.error("Unauthorised");
+          router.push("/auth");
+        }
+      }
       if (!userInfoMutation?.data?.errorStatus) {
         setGlobalLoadingState(false);
         // fetch user info if none exists and user is logged in
@@ -60,7 +69,8 @@ export const withAuth = <P extends { children: React.ReactNode }>(
     ]);
 
     const wrappedComponent = React.createElement(WrappedComponent, props);
-    return wrappedComponent;
+
+    return status === "loading" ? null : wrappedComponent;
   };
 
   return Wrapper;

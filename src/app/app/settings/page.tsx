@@ -4,16 +4,11 @@ import {
   FlexRowStart,
   FlexRowStartCenter,
 } from "@/components/Flex";
-import SubscriptionTab from "@/components/settings/subscriptions";
-import Button from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import BillingTab from "@/components/settings/billing";
 import { LayoutContext } from "@/context/LayoutContext";
-import { withAuth } from "@/lib/helpers";
 import { cn } from "@/lib/utils";
-import { Copy, RotateCw, Settings, Wallet } from "lucide-react";
-import { settings } from "nprogress";
+import { Settings, Wallet } from "lucide-react";
 import React, { useState } from "react";
-import toast from "react-hot-toast";
 
 const Tabs = [
   {
@@ -21,8 +16,8 @@ const Tabs = [
     key: "general",
   },
   {
-    title: "Subscription",
-    key: "subscription",
+    title: "Billing",
+    key: "billing",
   },
 ] as const;
 
@@ -74,13 +69,13 @@ function SettingsPage() {
         )}
 
         {/* Subscription Tab Content */}
-        {activeTab.key === "subscription" && <SubscriptionTab />}
+        {activeTab.key === "billing" && <BillingTab />}
       </FlexColStart>
     </FlexColStart>
   );
 }
 
-export default withAuth(SettingsPage);
+export default SettingsPage;
 
 function renderTabIcon(tab: SettingsTabs, activeTab: SettingsTabs) {
   const { key } = tab;
@@ -97,13 +92,13 @@ function renderTabIcon(tab: SettingsTabs, activeTab: SettingsTabs) {
     );
   }
 
-  if (key === "subscription") {
+  if (key === "billing") {
     icon = (
       <Wallet
         size={15}
         className={cn(
           "group-hover:text-dark-100",
-          activeTab.key === "subscription" ? "text-dark-100" : "text-gray-100"
+          activeTab.key === "billing" ? "text-dark-100" : "text-gray-100"
         )}
       />
     );

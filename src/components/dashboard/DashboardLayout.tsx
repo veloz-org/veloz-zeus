@@ -5,6 +5,7 @@ import SideBar from "@/components/dashboard/Navigations/Sidebar";
 import { LayoutContext } from "@/context/LayoutContext";
 import TopBar from "./Navigations/TopBar";
 import { useSession } from "next-auth/react";
+import { withAuth } from "@/lib/helpers";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
@@ -14,6 +15,12 @@ interface DashboardLayoutProps {
 // use this component as a wrapper for all dashboard authenticated pages
 function DashboardLayout({ children, className }: DashboardLayoutProps) {
   const {} = useContext(LayoutContext);
+  const { status } = useSession();
+
+  if (status === "loading") return null;
+  if (status === "unauthenticated") {
+    if (window) window.location.href = "/auth";
+  }
 
   return (
     <div
@@ -33,4 +40,4 @@ function DashboardLayout({ children, className }: DashboardLayoutProps) {
   );
 }
 
-export default DashboardLayout;
+export default withAuth(DashboardLayout);
