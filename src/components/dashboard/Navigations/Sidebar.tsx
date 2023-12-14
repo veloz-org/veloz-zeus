@@ -39,7 +39,8 @@ const navigations = [
 ];
 
 function Sidebar({}: SidebarProps) {
-  const { userInfo, sidebarOpen, globalLoadingState } = useContext(DataContext);
+  const { userInfo, setSidebarOpen, sidebarOpen, globalLoadingState } =
+    useContext(DataContext);
   const { activePage } = useContext(LayoutContext);
 
   const navListStyle = (pageName: string, navName: string) => {
@@ -56,7 +57,7 @@ function Sidebar({}: SidebarProps) {
     <FlexColStart
       className={cn(
         "w-0 h-full md:max-w-[220px] overflow-hidden bg-dark-100 fixed top-0 left-0 md:relative border-r-solid border-r-[1px] border-r-dark-400 hideScrollBar py-1 transition-all ease-in-out z-[9999] md:z-[1] ",
-        sidebarOpen ? "md:w-[250px]" : "w-0 overflow-hidden"
+        sidebarOpen ? "w-[250px]" : "w-0 overflow-hidden"
       )}
     >
       <FlexRowStartCenter className="relative w-full py-3 px-5">
@@ -77,6 +78,18 @@ function Sidebar({}: SidebarProps) {
             </span>
           )}
         </FlexColStart>
+
+        {/* only visible on mobile screen */}
+        <button
+          className="md:hidden absolute top-1 right-2"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          {sidebarOpen ? (
+            <PanelRightOpen size={15} className="text-white-100" />
+          ) : (
+            <PanelRightClose size={15} className="text-white-100" />
+          )}
+        </button>
       </FlexRowStartCenter>
       <FlexColStart className="w-full h-full px-5">
         {navigations.map((nav, i) => (
