@@ -6,6 +6,7 @@ import { LayoutContext } from "@/context/LayoutContext";
 import TopBar from "./Navigations/TopBar";
 import { useSession } from "next-auth/react";
 import { withAuth } from "@/lib/helpers";
+import PricingPlanModal from "../PricingPlanModal";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
@@ -34,6 +35,7 @@ function DashboardLayout({ children, className }: DashboardLayoutProps) {
         <div className="w-full z-upper relative  overflow-hidden">
           <TopBar />
           {children}
+          <PricingPlanModal />
         </div>
       </div>
     </div>

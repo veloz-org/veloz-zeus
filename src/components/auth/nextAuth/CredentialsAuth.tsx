@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { registerUsers } from "@/http/requests";
 import { ResponseData } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import React, { useCallback, useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 
@@ -13,6 +13,13 @@ function CredentialsAuth() {
   const [activeTab, setActiveTab] = React.useState<"signin" | "signup">(
     "signin"
   );
+  const { status } = useSession();
+
+  if (status === "loading") return null;
+
+  if (status === "authenticated") {
+    window.location.href = "/app/dashboard";
+  }
 
   return (
     <FlexColStart className="w-full px-4">

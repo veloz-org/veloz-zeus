@@ -5,6 +5,7 @@ import {
   FlexRowCenterBtw,
   FlexRowStartCenter,
 } from "@/components/Flex";
+import Modal from "@/components/Modal";
 import { Spinner } from "@/components/Spinner";
 import Button from "@/components/ui/button";
 import { DataContext } from "@/context/DataContext";
