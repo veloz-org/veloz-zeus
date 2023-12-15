@@ -53,9 +53,9 @@ export default class SubscriptionController {
     }
 
     // create the checkout url
-    const checkoutUrl = await LQS.createCheckout({
+    const checkoutUrl = await LQS.createCheckout(plan.product_id, {
       user_id: user.id,
-      plan_id: plan_id,
+      plan_id,
     });
 
     if (checkoutUrl.error) {
