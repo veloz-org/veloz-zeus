@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useContext } from "react";
 import Modal from "./Modal";
 import {
   FlexColCenter,
@@ -12,8 +13,12 @@ import { ArrowLeftToLine, CheckCheck, X, Zap } from "lucide-react";
 import Button from "./ui/button";
 import { cn, currencyFormatter } from "@/lib/utils";
 import { pricingPlans } from "@/data/pricing/plan";
-import { ValidPricingDuration } from "@/types";
+import { ResponseData, ValidPricingDuration } from "@/types";
 import pricingPlanFeatures from "@/data/pricing/features";
+import { DataContext } from "@/context/DataContext";
+import { useMutation } from "@tanstack/react-query";
+import { subscribeToPlan } from "@/http/requests";
+import toast from "react-hot-toast";
 
 type Props = {
   closeModal: () => void;
@@ -21,6 +26,43 @@ type Props = {
 
 // show pricing modal on dashboard when upgrade button is clicked.
 function PricingPlanModal({ closeModal }: Props) {
+  const { userInfo } = useContext(DataContext);
+  const [subscribeLoading, setSubscribeLoading] = React.useState<
+    {
+      id: string;
+      loading: boolean;
+    }[]
+  >([]);
+  const subscribePlanMut = useMutation({
+    mutationFn: async (data: any) => await subscribeToPlan(data),
+  });
+
+  const subscribe = (plan_id: string) => {
+    subscribePlanMut.mutate({ plan_id });
+
+    // set loading state to true for the plan (UI) being subscribed to.
+    setSubscribeLoading((prev) => [...prev, { id: plan_id, loading: true }]);
+  };
+
+  React.useEffect(() => {
+    if (subscribePlanMut.error) {
+      setSubscribeLoading([]);
+      const errMsg = (subscribePlanMut.error as any)?.response?.data?.message;
+      toast.error(errMsg);
+    }
+    if (subscribePlanMut.data) {
+      setSubscribeLoading([]);
+      const { data } = subscribePlanMut.data as ResponseData;
+      const url = data?.url;
+      window.location.href = url;
+    }
+  }, [
+    subscribePlanMut.data,
+    subscribePlanMut.error,
+    subscribePlanMut.isPending,
+  ]);
+
+  // console.log({ userInfo });
   return (
     <FlexColStart className="w-full h-screen absolute top-0 right-0 z-[100] bg-white-100 p-0 overflow-y-scroll">
       <FlexRowStart className="px-4 py-4">
@@ -45,7 +87,7 @@ function PricingPlanModal({ closeModal }: Props) {
           Choose the plan that works for you.
         </p>
       </FlexColCenter>
-      <FlexRowStart className="w-full flex-wrap p-6 ">
+      <FlexRowStart className="w-full flex-wrap p-3 ">
         {pricingPlans.map((plan, i) => (
           <PricingCard
             key={i}
@@ -55,6 +97,8 @@ function PricingPlanModal({ closeModal }: Props) {
             duration={plan.duration}
             id={plan.id}
             subscribed_plans={[""]}
+            subscribeToPlan={subscribe}
+            loading={subscribeLoading}
           />
         ))}
       </FlexRowStart>
@@ -71,6 +115,11 @@ type PricingCardProps = {
   currency: string;
   amount: number;
   subscribed_plans: string[];
+  subscribeToPlan: (planId: string) => void;
+  loading: {
+    id: string;
+    loading: boolean;
+  }[];
 };
 
 function PricingCard({
@@ -80,10 +129,14 @@ function PricingCard({
   currency,
   amount,
   subscribed_plans,
+  subscribeToPlan,
+  loading,
 }: PricingCardProps) {
   const hasSubscribedToPlan = subscribed_plans?.includes(id);
 
   const features = pricingPlanFeatures.find((d) => d.id === id)?.features;
+
+  const _loading = loading.find((d) => d.id === id);
 
   return (
     <FlexColStart
@@ -105,12 +158,14 @@ function PricingCard({
       <FlexColCenter className="w-full px-5 py-3">
         <Button
           className={cn(
-            "w-full py-0 h-[40px] hover:bg-blue-100/70 bg-blue-100 text-white-100 disabled:bg-blue-201 border-solid border-transparent",
+            "w-full py-0 h-[40px] hover:bg-blue-100/70 bg-blue-100 text-white-100 disabled:bg-white-400/40 border-solid border-transparent",
             hasSubscribedToPlan
               ? "border-[2px] border-blue-101 bg-blue-201 text-white-400 "
               : ""
           )}
-          //   disabled
+          onClick={() => subscribeToPlan(id)}
+          disabled={_loading?.loading && _loading.id === id}
+          isLoading={_loading?.loading && _loading.id === id}
         >
           <FlexRowStartCenter>
             {hasSubscribedToPlan ? <CheckCheck size={20} /> : <Zap size={20} />}
