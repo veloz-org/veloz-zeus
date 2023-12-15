@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import prisma from "../../config/prisma";
+import prisma from "../../../../prisma/prisma";
 import PasswordManager from "../../utils/passwordManage";
 
 type CredentialsPayload = {
