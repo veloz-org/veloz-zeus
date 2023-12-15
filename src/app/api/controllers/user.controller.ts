@@ -1,7 +1,7 @@
 import { RESPONSE_CODE } from "../types";
 import {} from "../utils/schema_validation";
 import { NextRequest } from "next/server";
-import prisma from "../config/prisma";
+import prisma from "../../../prisma/prisma";
 import sendResponse from "../utils/sendResponse";
 
 type ReqUserObj = {
