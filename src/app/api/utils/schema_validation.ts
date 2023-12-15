@@ -25,3 +25,10 @@ export const registerSchema = zod.object({
   // .min(6)
   // .max(20),
 });
+
+// create checkout schema
+export const createCheckoutSchema = zod.object({
+  plan_id: zod.string({
+    required_error: "Plan id is required",
+  }),
+});
