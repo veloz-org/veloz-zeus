@@ -3,7 +3,7 @@ import { RESPONSE_CODE } from "../types";
 import ZodValidation from "../utils/zodValidation";
 import { registerSchema } from "../utils/schema_validation";
 import { NextRequest } from "next/server";
-import prisma from "../config/prisma";
+import prisma from "../../../prisma/prisma";
 import PasswordManager from "../utils/passwordManage";
 import sendResponse from "../utils/sendResponse";
 
