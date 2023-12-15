@@ -32,8 +32,8 @@ export interface PricingPlan {
     currency: string;
     amount: number;
   };
-  variant_id: string;
-  product_id: string;
+  variant_id: number;
+  product_id: number;
 }
 
 // pricing plan feature Types Definition
