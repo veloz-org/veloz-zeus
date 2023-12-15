@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "../auth/[...nextauth]/options";
 import HttpException from "../utils/exception";
 import { RESPONSE_CODE } from "../types";
-import prisma from "../config/prisma";
+import prisma from "../../../prisma/prisma";
 import { NextResponse } from "next/server";
 
 export function isAuthenticated(fn: Function) {
