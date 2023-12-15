@@ -1,13 +1,14 @@
 import axios from "axios";
 import env from "../config/env";
-import { lemonsqueezyConfig } from "../config";
+import { LemonsqueezyConfig } from "../config";
+import { pricingPlans } from "@/data/pricing/plan";
 
 const IN_TEST_MODE = process.env.NODE_ENV === "development";
 
 // create lemonsqueezy checkout
 export default class LemonsqueezyServices {
   // create checkout
-  public async createCheckout(custom_data?: object) {
+  public async createCheckout(prod_id: number, custom_data?: object) {
     const custom_redirect_url = `${env.BASE_URL}/app/settings`;
 
     const payload = {
@@ -30,7 +31,7 @@ export default class LemonsqueezyServices {
           store: {
             data: {
               type: "stores",
-              id: lemonsqueezyConfig.store_id,
+              id: LemonsqueezyConfig.store_id,
             },
           },
           variant: {},
@@ -46,8 +47,16 @@ export default class LemonsqueezyServices {
         return variants;
       }
 
+      // filter out variant
+      const _variant = variants?.data?.find(
+        (v: any) => String(v.product_id) === String(prod_id)
+      );
+
       payload.data.relationships.variant = {
-        data: variants?.data as any,
+        data: {
+          type: _variant.type,
+          id: _variant.variant_id,
+        },
       };
 
       const url = `https://api.lemonsqueezy.com/v1/checkouts`;
@@ -69,7 +78,8 @@ export default class LemonsqueezyServices {
     return response;
   }
 
-  private async getProductVariants() {
+  //   get subscription variants
+  public async getProductVariants() {
     let response = { error: null, data: null } as any;
     try {
       const url = `https://api.lemonsqueezy.com/v1/variants`;
@@ -82,9 +92,14 @@ export default class LemonsqueezyServices {
       const resp = res.data;
 
       const variantData = resp?.data.map((v: any) => {
+        const prodId = v.attributes.product_id;
         return {
           type: v.type,
-          id: v.id,
+          variant_id: v.id,
+          duration: v.attributes.interval,
+          product_id: prodId,
+          isSubscription: v.attributes.is_subscription,
+          plan: pricingPlans.find((p) => p.product_id === prodId)?.name ?? null,
         };
       });
       response.data = variantData as {
@@ -113,12 +128,16 @@ export default class LemonsqueezyServices {
       });
       const resp = res.data;
 
-      console.log({ resp });
+      const data = resp?.data.map((p: any) => {
+        return {
+          prod_id: p?.id,
+          name: p?.attributes?.name,
+          price: p?.attributes?.price,
+          price_formatted: p?.attributes?.price_formatted,
+        };
+      });
 
-      //   response.data = variantData as {
-      //     type: string;
-      //     id: string;
-      //   }[];
+      response.data = data;
       return response;
     } catch (e: any) {
       const msg = e.response?.data?.errors[0].detail ?? e.message;
@@ -126,5 +145,28 @@ export default class LemonsqueezyServices {
       response.error = `Error creating checkout.` as any;
       return response;
     }
+  }
+
+  async getLemonsqueezyStores() {
+    const api = `https://api.lemonsqueezy.com/v1/stores`;
+    const res = await axios.get(api, {
+      headers: {
+        Authorization: `Bearer ${env.LEMONSQUEEZY_API_KEY}`,
+      },
+    });
+
+    const data = res.data;
+
+    if (data?.data) {
+      const stores = data?.data;
+      const _stores = stores.map((s: any) => {
+        return {
+          id: s.id,
+          name: s.attributes.name,
+        };
+      });
+      return _stores;
+    }
+    return [];
   }
 }
