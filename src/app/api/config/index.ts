@@ -1,6 +1,6 @@
-// serverside config
+// SERVERSIDE CONFIGURATIONS
 
 // LEMONSQUEEZY CONFIG
-export const lemonsqueezyConfig = {
+export const LemonsqueezyConfig = {
   store_id: "59319", // your store id
 };
