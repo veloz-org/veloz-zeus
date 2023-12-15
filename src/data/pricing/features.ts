@@ -2,7 +2,7 @@ import { PricingPlanFeature } from "@/types";
 
 const pricingPlanFeatures = [
   {
-    id: "free_84507",
+    id: "lite_84507",
     features: [
       {
         title: "1 User",
