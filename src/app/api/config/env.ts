@@ -2,7 +2,7 @@
 const env = {
   BASE_URL:
     process.env.NODE_ENV === "development"
-      ? "http://localhost:4000/api"
+      ? "http://localhost:4000"
       : "https://api.velozweb.dev",
   LEMONSQUEEZY_API_KEY: process.env.LEMONSQUEEZY_API_KEY,
 };
