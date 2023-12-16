@@ -46,8 +46,10 @@ function BillingTab() {
   return (
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full">
-        <p className="text-dark-100 font-ppSB text-[15px] ">Plan</p>
-        <p className="text-white-400 font-ppReg text-[12px] ">
+        <p className="text-dark-100 dark:text-white-100 font-ppSB text-[15px] ">
+          Plan
+        </p>
+        <p className="text-white-400 dark:text-white-300 font-ppReg text-[12px] ">
           {userInfo?.subscriptions.length === 0
             ? "No active subscription plan."
             : "Manage your subscription plans."}
@@ -130,14 +132,16 @@ function PricingPlanCard({
     <FlexColStart
       className={cn(
         "w-full max-w-[250px] py-3 px-4 rounded-md border-solid border-transparent",
-        activePlan ? "bg-blue-201 border-[2px] border-blue-101 " : "bg-blue-101"
+        activePlan
+          ? "bg-blue-201 dark:bg-dark-102 border-[2px] border-blue-101 "
+          : "bg-blue-101"
       )}
     >
       <FlexRowStartBtw className="w-full">
         <p
           className={cn(
-            "text-dark-100 font-ppSB text-[13px] ",
-            activePlan ? "text-dark-100" : "text-white-100"
+            "text-dark-100 dark:text-white-100 font-ppSB text-[13px] ",
+            activePlan ? "text-dark-100 dark:text-white-100" : "text-white-100"
           )}
         >
           {planName}
@@ -145,13 +149,17 @@ function PricingPlanCard({
         <p
           className={cn(
             "font-ppL text-[13px] ",
-            !activePlan ? "text-white-100/70" : "text-white-400"
+            !activePlan
+              ? "text-white-100/70 dark:text-white-300"
+              : "text-white-400"
           )}
         >
           <span
             className={cn(
               "font-ppSB",
-              activePlan ? "text-dark-100" : " text-white-100"
+              activePlan
+                ? "text-dark-100 dark:text-white-300"
+                : " text-white-100"
             )}
           >
             {currencyFormatter(planPrice, currency)}
@@ -181,9 +189,9 @@ function PricingPlanCard({
           <Button
             intent={"primary"}
             className={cn(
-              "h-[35px] bg-blue-201 group hover:bg-blue-101 hover:text-white-100 py-0 px-5 border-solid border-[1px]  border-blue-101  ",
+              "h-[35px] bg-blue-201 group hover:bg-blue-101 hover:text-white-100 py-0 px-5 border-solid border-[1px]  border-blue-101 ",
               activePlan
-                ? " disabled:text-white-400 hover:bg-blue-101 hover:text-white-100 text-blue-100"
+                ? " disabled:text-white-400 hover:bg-blue-101 hover:text-white-100 text-blue-100 dark:bg-blue-101 dark:text-white-100 dark:hover:bg-blue-101/80 dark:disabled:text-white-100/40"
                 : "disabled:bg-blue-201/40 disabled:text-white-100 hover:bg-blue-201/40 text-blue-101"
             )}
             onClick={() => getCustomerPortal(String(product_id))}
@@ -191,7 +199,7 @@ function PricingPlanCard({
           >
             <Wallet
               size={15}
-              className="group-disabled:text-white-400 group-hover:text-white-100 text-blue-100"
+              className="group-disabled:text-white-400 dark:group-disabled:text-white-100/40 dark:text-white-100 group-hover:text-white-100 text-blue-100"
             />
             <span className="font-ppReg text-[12px] ">Manage Billing</span>
           </Button>

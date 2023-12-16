@@ -54,7 +54,7 @@ function Dashboard() {
         <p className="">Loading...</p>
       ) : (
         <FlexColStart className="w-full">
-          <FlexRowStartCenter className="w-full h-auto flex-wrap py-3 px-2 gap-3">
+          <FlexRowStartCenter className="w-full h-auto flex-wrap py-3 px-3 md:px-7 gap-3">
             {dashboardStats.map((stat, i) => (
               <StatsCard
                 key={i}
@@ -68,8 +68,8 @@ function Dashboard() {
               />
             ))}
           </FlexRowStartCenter>
-          <FlexColStart className="w-full h-full p-2">
-            <FlexColCenter className="w-full h-full max-h-[300px] bg-white-300/50 text-center">
+          <FlexColStart className="w-full h-full px-3 md:px-7 py-4">
+            <FlexColCenter className="w-full h-full max-h-[300px] bg-white-300/50 dark:bg-dark-200 text-center">
               <p className="text-white-400 font-ppReg text-sm">
                 Place Content Here
               </p>

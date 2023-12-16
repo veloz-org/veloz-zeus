@@ -36,7 +36,9 @@ function SettingsPage() {
   return (
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full px-4 py-5">
-        <h1 className="text-dark-100 text-2xl font-ppSB">Settings</h1>
+        <h1 className="text-dark-100 dark:text-white-200 text-2xl font-ppSB">
+          Settings
+        </h1>
         <p className="text-gray-100 leading-none font-ppL text-[13px]">
           Manage your account settings.
         </p>
@@ -50,8 +52,10 @@ function SettingsPage() {
                 {renderTabIcon(t, activeTab)}
                 <span
                   className={cn(
-                    " font-ppSB text-[12px] group-hover:text-dark-100 transition-all",
-                    activeTab.key === t.key ? "text-dark-100" : "text-gray-100"
+                    " font-ppSB text-[12px] group-hover:text-dark-100 dark:group-hover:text-white-100 dark:text-white-300 transition-all",
+                    activeTab.key === t.key
+                      ? "text-dark-100 dark:text-white-100"
+                      : "text-gray-100"
                   )}
                 >
                   {t.title}
@@ -85,8 +89,10 @@ function renderTabIcon(tab: SettingsTabs, activeTab: SettingsTabs) {
       <Settings
         size={15}
         className={cn(
-          "group-hover:text-dark-100",
-          activeTab.key === "general" ? "text-dark-100" : "text-gray-100"
+          "group-hover:text-dark-100 dark:text-white-300",
+          activeTab.key === "general"
+            ? "text-dark-100 dark:text-white-100"
+            : "text-gray-100"
         )}
       />
     );
@@ -97,8 +103,10 @@ function renderTabIcon(tab: SettingsTabs, activeTab: SettingsTabs) {
       <Wallet
         size={15}
         className={cn(
-          "group-hover:text-dark-100",
-          activeTab.key === "billing" ? "text-dark-100" : "text-gray-100"
+          "group-hover:text-dark-100 dark:text-white-300",
+          activeTab.key === "billing"
+            ? "text-dark-100 dark:text-white-100"
+            : "text-gray-100"
         )}
       />
     );
