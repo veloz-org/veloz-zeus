@@ -10,6 +10,7 @@ import { Spinner } from "@/components/Spinner";
 import Button from "@/components/ui/button";
 import { DataContext } from "@/context/DataContext";
 import { LayoutContext } from "@/context/LayoutContext";
+import { ThemeContext } from "@/context/Theme";
 import { pricingPlans } from "@/data/pricing/plan";
 import { getSubscriptions } from "@/http/requests";
 import { cn } from "@/lib/utils";
@@ -47,6 +48,7 @@ function Sidebar({}: SidebarProps) {
   const { userInfo, setSidebarOpen, sidebarOpen, globalLoadingState } =
     useContext(DataContext);
   const { activePage } = useContext(LayoutContext);
+  const { darkMode } = useContext(ThemeContext);
 
   const navListStyle = (pageName: string, navName: string) => {
     const notActive = "text-gray-100 bg-none",
@@ -76,7 +78,7 @@ function Sidebar({}: SidebarProps) {
         <FlexColStart className="gap-1 leading-none">
           <span className="font-ppSB text-white-100 text-[20px]">Veloz</span>
           {globalLoadingState ? (
-            <Spinner size={12} />
+            <Spinner size={12} color={darkMode ? "#6b77f1" : "#fff"} />
           ) : (
             <span className="font-ppReg text-white-300 text-[10px]">
               {userInfo?.role}

@@ -25,8 +25,6 @@ function DashboardLayout({ children, className }: DashboardLayoutProps) {
     if (window) window.location.href = "/auth";
   }
 
-  setDarkMode(true);
-
   return (
     <div
       className={twMerge(

@@ -14,7 +14,13 @@ import {
 } from "@/components/ui/popover";
 import { DataContext } from "@/context/DataContext";
 import { ThemeContext } from "@/context/Theme";
-import { ChevronDown, PanelRightClose, PanelRightOpen } from "lucide-react";
+import {
+  ChevronDown,
+  Moon,
+  PanelRightClose,
+  PanelRightOpen,
+  SunMoon,
+} from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useContext } from "react";
@@ -74,9 +80,7 @@ function TopBar() {
           </PopoverTrigger>
           <PopoverContent className="w-full min-w-[200px] bg-white-100 dark:bg-dark-100 dark:shadow-xl px-1 py-1 m-0 border-solid border-[1px] border-white-300/20 ">
             <FlexColStart className="w-full gap-1">
-              <button className="w-full text-dark-100 dark:text-white-200 flex items-start justify-start rounded-md px-4 py-2 hover:bg-white-200/40 text-[12px] font-ppReg  ">
-                Settings
-              </button>
+              <ThemeSwitch />
               <button
                 className="w-full text-dark-100 dark:text-red-305 flex items-start justify-start rounded-md px-4 py-2 hover:bg-red-305 hover:dark:text-white-100 hover:text-white-100 text-[12px] font-ppSB"
                 onClick={() => signOut()}
@@ -92,3 +96,33 @@ function TopBar() {
 }
 
 export default TopBar;
+
+function ThemeSwitch() {
+  const { toggleDarkMode, darkMode } = useContext(ThemeContext);
+
+  return (
+    <FlexRowStartCenter>
+      <p className="w-full text-dark-100 dark:text-white-200 flex items-start justify-start rounded-md px-4 py-2 text-[12px] font-ppReg  ">
+        Theme
+      </p>
+      <button
+        className="w-full text-dark-100 dark:text-white-200 flex items-start justify-start rounded-md text-[12px]"
+        onClick={() => {
+          toggleDarkMode();
+        }}
+      >
+        {darkMode ? (
+          <SunMoon
+            size={25}
+            className="p-1 border-solid border-[.5px] border-white-300/40 rounded-[50%] text-dark-100 dark:text-white-100 dark:bg-blue-101 scale-[.89] hover:scale-[.95] transition-all"
+          />
+        ) : (
+          <Moon
+            size={25}
+            className="p-1 border-solid border-[.5px] border-white-300/40 rounded-[50%] text-dark-100 bg-white-300/60 scale-[.89] hover:scale-[.95] transition-all"
+          />
+        )}
+      </button>
+    </FlexRowStartCenter>
+  );
+}
