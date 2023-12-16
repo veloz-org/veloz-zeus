@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { WebhookPayload } from "./types";
+import { LS_WebhookPayload } from "./types";
 import type { ServerResponse, IncomingMessage } from "http";
 import crypto from "crypto";
 import { RESPONSE_CODE } from "../../types";
@@ -7,7 +7,7 @@ import { RESPONSE_CODE } from "../../types";
 type Response = {
   errorMsg: string | null;
   success: boolean;
-  data: WebhookPayload;
+  data: LS_WebhookPayload;
 };
 
 type LemonsqueezyWebhookResponse = Promise<Response>;
@@ -48,7 +48,7 @@ export default async function LemonsqueezyWebhookHandler(
       return response;
     }
 
-    const payload: WebhookPayload = JSON.parse(rawBody);
+    const payload: LS_WebhookPayload = JSON.parse(rawBody);
 
     sendSuccessResponse(res, response);
     console.log("✅ Webhook received");
