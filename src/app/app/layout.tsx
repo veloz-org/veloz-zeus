@@ -1,5 +1,5 @@
 "use client";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import DashboardLayout from "@/components/dashboard/Layouts/DashboardLayout";
 import React from "react";
 
 // root layout meant for authenticated pages

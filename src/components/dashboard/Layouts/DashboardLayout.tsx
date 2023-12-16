@@ -3,10 +3,10 @@ import React, { useContext } from "react";
 import { twMerge } from "tailwind-merge";
 import SideBar from "@/components/dashboard/Navigations/Sidebar";
 import { LayoutContext } from "@/context/LayoutContext";
-import TopBar from "./Navigations/TopBar";
+import TopBar from "../Navigations/TopBar";
 import { useSession } from "next-auth/react";
 import { withAuth } from "@/lib/helpers";
-import PricingPlanModal from "../PricingPlanModal";
+import PricingPlanModal from "../../PricingPlanModal";
 import { ThemeContext } from "@/context/Theme";
 
 interface DashboardLayoutProps {
