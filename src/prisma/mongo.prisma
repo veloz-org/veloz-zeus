@@ -87,20 +87,35 @@ model RefreshToken {
 }
 
 model Subscriptions {
-    id              String             @id @default(auto()) @map("_id") @db.ObjectId
-    uId             String
-    planId          String
-    order_id        String
-    store_id        String
+    id         String  @id @default(auto()) @map("_id") @db.ObjectId
+    uId        String
+    user_name  String?
+    user_email String?
+
+    product_id   String
+    product_name String?
+    variant_id   String?
+    variant_name String?
+
+    order_id String
+    store_id String
+
     subscription_id String?
-    status          SubscriptionStatus @default(on_trial)
-    ends_at         DateTime?
-    renews_at       DateTime?
-    createdAt       DateTime           @default(now())
+    customer_id     String?
+
+    card_brand     String?
+    card_last_four String?
+
+    status SubscriptionStatus @default(on_trial)
+
+    ends_at   DateTime?
+    renews_at DateTime?
+    createdAt DateTime  @default(now())
+
+    test_mode Boolean @default(false)
 
     user Users @relation(fields: [uId], references: [uId])
 
     @@index([uId])
-    @@index([planId])
     @@map(name: "subscriptions")
 }
