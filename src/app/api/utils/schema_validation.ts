@@ -28,7 +28,7 @@ export const registerSchema = zod.object({
 
 // create checkout schema
 export const createCheckoutSchema = zod.object({
-  plan_id: zod.string({
-    required_error: "Plan id is required",
+  product_id: zod.number({
+    required_error: "Subscription product id is required",
   }),
 });
