@@ -45,7 +45,9 @@ export default function StatsCard({
       onClick={() => setActiveStatsCard && setActiveStatsCard(name)}
     >
       <FlexColStart
-        className={cn("w-full rounded-md bg-white-100 px-4 py-5 shadow-sm ")}
+        className={cn(
+          "w-full rounded-md bg-white-100 dark:bg-dark-102 px-4 py-5 shadow-sm "
+        )}
         style={{
           backgroundColor: isCardActive ? defaultCardColor : "",
         }}
@@ -57,7 +59,7 @@ export default function StatsCard({
           <FlexColStart className="w-full">
             <span
               className={cn(
-                "text-white-100 text-[12px] font-ppReg",
+                "text-white-100 dark:text-white-100/80 text-[12px] font-ppReg",
                 isCardActive ? "text-white-100" : "text-white-400"
               )}
             >
@@ -65,7 +67,7 @@ export default function StatsCard({
             </span>
             <h1
               className={cn(
-                "text-white-100 text-3xl font-ppSB",
+                "text-white-100 dark:text-white-100 text-3xl font-ppSB",
                 isCardActive ? "text-white-100" : "text-dark-100"
               )}
             >
@@ -132,7 +134,7 @@ function renderStatIcon(name: string, activeCardName: string) {
       <Users
         size={35}
         className={cn(
-          "p-2 rounded-md transition ease-in-out",
+          "p-2 rounded-md dark:bg-dark-200 transition ease-in-out",
           isCardActive
             ? "bg-white-200/40 text-white-100"
             : "bg-white-300/40 text-blue-100"
@@ -145,7 +147,7 @@ function renderStatIcon(name: string, activeCardName: string) {
       <ArrowDownUp
         size={35}
         className={cn(
-          "p-2 rounded-md transition ease-in-out",
+          "p-2 rounded-md dark:bg-dark-200 transition ease-in-out",
           isCardActive
             ? "bg-white-200/40 text-white-100"
             : "bg-white-300/40 text-blue-100"
@@ -158,7 +160,7 @@ function renderStatIcon(name: string, activeCardName: string) {
       <Weight
         size={35}
         className={cn(
-          "p-2 rounded-md transition ease-in-out",
+          "p-2 rounded-md dark:bg-dark-200 transition ease-in-out",
           isCardActive
             ? "bg-white-200/40 text-white-100"
             : "bg-white-300/40 text-blue-100"

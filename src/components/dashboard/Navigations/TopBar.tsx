@@ -24,8 +24,6 @@ function TopBar() {
   const { userInfo, sidebarOpen, setSidebarOpen, globalLoadingState } =
     useContext(DataContext);
 
-  console.log({ darkMode });
-
   return (
     <FlexRowCenterBtw className="w-full h-auto px-4 py-2 bg-white-100 dark:bg-dark-100 shadow-sm border-b-solid border-b-[1px] border-b-transparent dark:border-b-white-600 ">
       <div className="w-auto">
@@ -56,7 +54,7 @@ function TopBar() {
                     src={userInfo?.avatar
                       ?.replace(" ", "")
                       .replace("svg", "png")}
-                    className="rounded-[50%] p-[1px] bg-white-200/50"
+                    className="rounded-[50%] p-[1px] bg-white-200/50 dark:bg-blue-101"
                     alt="logo"
                     width={35}
                     height={0}
