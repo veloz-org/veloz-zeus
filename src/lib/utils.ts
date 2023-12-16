@@ -36,7 +36,7 @@ export function generateSubscriptionRenewalMessage(
   renews_at: string
 ) {
   if (status === "active") {
-    return `Renews on ${dayjs(renews_at).format(`ddd MMM D, YYYY`)}`;
+    return `Renew on ${dayjs(renews_at).format(`ddd MMM D, YYYY`)}`;
   } else if (status === "on_trial") {
     return `Trial ends on ${dayjs(renews_at).format("ddd MMM DD, YYYY")}`;
   } else if (status === "cancelled") {

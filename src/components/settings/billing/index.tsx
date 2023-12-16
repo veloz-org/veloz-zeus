@@ -72,7 +72,7 @@ function BillingTab() {
           ))}
         </FlexRowStart>
         <br />
-        {(userInfo as any)?.subscriptions?.length > 0 && (
+        {/* {(userInfo as any)?.subscriptions?.length > 0 && (
           <button
             className="w-auto px-4 py-2 rounded-md flex items-center justify-start bg-white-201 gap-2 border-solid border-[1px]  border-blue-101 group hover:bg-blue-100  "
             onClick={() =>
@@ -87,7 +87,7 @@ function BillingTab() {
               Manage Billing
             </span>
           </button>
-        )}
+        )} */}
       </FlexColStart>
     </FlexColStart>
   );
