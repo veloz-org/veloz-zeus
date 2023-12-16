@@ -15,6 +15,7 @@ export type ResponseData = {
 };
 
 export type UserInfo = {
+  full_name: string;
   username: string;
   email: string;
   avatar: string;
