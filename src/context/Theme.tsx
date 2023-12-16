@@ -26,7 +26,6 @@ export default function ThemeContextProvider({ children }: ThemeProviderProps) {
 
   useEffect(() => {
     setDarkMode(colorTheme === "dark" ? true : false);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
