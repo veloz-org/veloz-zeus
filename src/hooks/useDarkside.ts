@@ -1,9 +1,10 @@
+"use client";
 import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
 export default function useDarkSide() {
-  const [theme, setTheme] = useState(localStorage.theme ?? "light");
+  const [theme, setTheme] = useState<Theme>("light");
   const colorTheme: Theme = theme;
 
   useEffect(() => {
@@ -19,9 +20,11 @@ export default function useDarkSide() {
     ) {
       // @ts-expect-error
       document?.querySelector("html").classList.add("dark");
+      setTheme("dark");
     } else {
       // @ts-expect-error
       document?.querySelector("html").classList.remove("dark");
+      setTheme("light");
     }
   }, [theme]);
 
