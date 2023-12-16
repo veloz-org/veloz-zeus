@@ -1,4 +1,4 @@
-type SubscriptionEventNames =
+type LS_SubscriptionEventNames =
   | "subscription_created"
   | "subscription_cancelled"
   | "subscription_resumed"
@@ -7,30 +7,30 @@ type SubscriptionEventNames =
   | "subscription_paused"
   | "subscription_unpaused";
 
-type SubscriptionInvoiceEventNames =
+type LS_LS_SubscriptionInvoiceEventNames =
   | "subscription_payment_success"
   | "subscription_payment_failed"
   | "subscription_payment_recovered";
 
-type OrderEventNames = "order_created" | "order_refunded";
+type LS_OrderEventNames = "order_created" | "order_refunded";
 
 type LicenseKeyEventNames = "license_key_created";
 
-export type WebhookPayload<CustomData = any> = {
-  data: Subscription | SubscriptionInvoice | Order | LicenseKey;
+export type LS_WebhookPayload<CustomData = any> = {
+  data: LS_Subscription | LS_SubscriptionInvoice | LS_Order | LicenseKey;
   meta: {
     event_name:
-      | SubscriptionEventNames
-      | SubscriptionInvoiceEventNames
-      | OrderEventNames
+      | LS_SubscriptionEventNames
+      | LS_LS_SubscriptionInvoiceEventNames
+      | LS_OrderEventNames
       | LicenseKeyEventNames;
     custom_data?: CustomData;
   };
 };
 
-export type EventName = WebhookPayload["meta"]["event_name"];
+export type EventName = LS_WebhookPayload["meta"]["event_name"];
 
-export type SubscriptionInvoice = {
+export type LS_SubscriptionInvoice = {
   type: "subscription-invoices";
   id: string;
   attributes: {
@@ -83,7 +83,7 @@ export type SubscriptionInvoice = {
   };
 };
 
-export type Subscription = {
+export type LS_Subscription = {
   type: "subscriptions";
   id: string;
   attributes: {
@@ -97,7 +97,7 @@ export type Subscription = {
     variant_name: string;
     user_name: string;
     user_email: string;
-    status: SubscriptionStatus;
+    status: LS_SubscriptionStatus;
     status_formatted: string;
     pause: any | null;
     cancelled: boolean;
@@ -107,6 +107,8 @@ export type Subscription = {
       update_payment_method: string;
     };
     renews_at: string;
+    card_brand: string;
+    card_last_four: string;
     /**
      * If the subscription has as status of cancelled or expired, this will be an ISO-8601 formatted date-time string indicating when the subscription expires (or expired). For all other status values, this will be null.
      */
@@ -117,7 +119,7 @@ export type Subscription = {
   };
 };
 
-export type Order = {
+export type LS_Order = {
   type: "orders";
   id: string;
   attributes: {
@@ -186,7 +188,7 @@ export type LicenseKey = {
   };
 };
 
-type SubscriptionStatus =
+type LS_SubscriptionStatus =
   | "on_trial"
   | "active"
   | "paused"
