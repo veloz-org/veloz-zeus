@@ -5,7 +5,7 @@ import HttpException from "../../utils/exception";
 import prisma from "../../../../prisma/prisma";
 import { NextRequest } from "next/server";
 import crypto from "node:crypto";
-import { LS_WebhookPayload } from "../../lib/lemonsqueezy/types";
+import { LS_WebhookPayload } from "../../types/lemonsqueezy_types";
 import env from "../../config/env";
 
 export const GET = (req: NextRequest) => {
