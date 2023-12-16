@@ -60,6 +60,7 @@ model Users {
     id            String     @id @default(auto()) @map("_id") @db.ObjectId
     uId           String     @unique @default(cuid())
     username      String
+    fullname      String?
     email         String     @unique
     avatar        String?
     auth_method   AuthMethod @default(credentials)
