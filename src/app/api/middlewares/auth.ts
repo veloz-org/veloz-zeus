@@ -5,6 +5,7 @@ import HttpException from "../utils/exception";
 import { RESPONSE_CODE } from "../types";
 import prisma from "../../../prisma/prisma";
 import { NextResponse } from "next/server";
+import env from "../config/env";
 
 export function isAuthenticated(fn: Function) {
   return async (req: NextApiRequest) => {
@@ -18,11 +19,10 @@ export function isAuthenticated(fn: Function) {
       where: { email: session.user?.email as string },
     });
     if (!user) {
-      // redirect
       throw new HttpException(
         RESPONSE_CODE.UNAUTHORIZED,
         `Unauthorized, Invalid Token`,
-        404
+        403
       );
     }
 
