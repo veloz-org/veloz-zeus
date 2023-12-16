@@ -47,29 +47,45 @@ function BillingTab() {
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full">
         <p className="text-dark-100 font-ppSB text-[15px] ">Plan</p>
-
+        <p className="text-white-400 font-ppReg text-[12px] ">
+          {userInfo?.subscriptions.length === 0
+            ? "No active subscription plan."
+            : "Manage your subscription plans."}
+        </p>
         {/* pricing plans */}
-        <FlexRowStart className="w-full mt-2">
-          {pricingPlans.map((plan, i) => (
-            <PricingPlanCard
-              key={i}
-              activePlan={
-                subscribed_plans.includes(String(plan.product_id))
-                  ? plan.key
-                  : null
-              }
-              product_id={plan.product_id}
-              planName={plan.name}
-              planPrice={plan.pricing.amount}
-              currency={plan.pricing.currency}
-              duration={plan.duration as any}
-              subscriptions={userInfo?.subscriptions as any}
-              getCustomerPortal={(prodId) => {
-                getCustomerPortalMut.mutate({ product_id: prodId });
-              }}
-              loading={getCustomerPortalMut.isPending}
-            />
-          ))}
+        <FlexRowStart className="w-full mt-2 flex-wrap">
+          {userInfo &&
+            userInfo?.subscriptions.length > 0 &&
+            pricingPlans
+              .filter((p) => {
+                const subscriptions = userInfo.subscriptions.map(
+                  (s) => s.product_id
+                );
+                return (
+                  userInfo.role === "admin" ||
+                  subscriptions.includes(String(p.product_id))
+                );
+              })
+              .map((plan, i) => (
+                <PricingPlanCard
+                  key={i}
+                  activePlan={
+                    subscribed_plans.includes(String(plan.product_id))
+                      ? plan.key
+                      : null
+                  }
+                  product_id={plan.product_id}
+                  planName={plan.name}
+                  planPrice={plan.pricing.amount}
+                  currency={plan.pricing.currency}
+                  duration={plan.duration as any}
+                  subscriptions={userInfo?.subscriptions as any}
+                  getCustomerPortal={(prodId) => {
+                    getCustomerPortalMut.mutate({ product_id: prodId });
+                  }}
+                  loading={getCustomerPortalMut.isPending}
+                />
+              ))}
         </FlexRowStart>
         <br />
         {/* {(userInfo as any)?.subscriptions?.length > 0 && (
