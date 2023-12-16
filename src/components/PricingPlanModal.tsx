@@ -29,7 +29,7 @@ function PricingPlanModal({ closeModal }: Props) {
   const { userInfo } = useContext(DataContext);
   const [subscribeLoading, setSubscribeLoading] = React.useState<
     {
-      id: string;
+      id: any;
       loading: boolean;
     }[]
   >([]);
@@ -37,11 +37,9 @@ function PricingPlanModal({ closeModal }: Props) {
     mutationFn: async (data: any) => await subscribeToPlan(data),
   });
 
-  const subscribe = (plan_id: string) => {
-    subscribePlanMut.mutate({ plan_id });
-
-    // set loading state to true for the plan (UI) being subscribed to.
-    setSubscribeLoading((prev) => [...prev, { id: plan_id, loading: true }]);
+  const subscribe = (product_id: number) => {
+    subscribePlanMut.mutate({ product_id });
+    setSubscribeLoading((prev) => [...prev, { id: product_id, loading: true }]);
   };
 
   React.useEffect(() => {
@@ -96,6 +94,7 @@ function PricingPlanModal({ closeModal }: Props) {
             amount={plan?.pricing.amount}
             duration={plan.duration}
             id={plan.id}
+            product_id={plan.product_id}
             subscribed_plans={[""]}
             subscribeToPlan={subscribe}
             loading={subscribeLoading}
@@ -110,12 +109,13 @@ export default PricingPlanModal;
 
 type PricingCardProps = {
   id: string;
+  product_id: number;
   name: string;
   duration: ValidPricingDuration;
   currency: string;
   amount: number;
   subscribed_plans: string[];
-  subscribeToPlan: (planId: string) => void;
+  subscribeToPlan: (planId: number) => void;
   loading: {
     id: string;
     loading: boolean;
@@ -124,6 +124,7 @@ type PricingCardProps = {
 
 function PricingCard({
   id,
+  product_id,
   name,
   duration,
   currency,
@@ -134,9 +135,10 @@ function PricingCard({
 }: PricingCardProps) {
   const hasSubscribedToPlan = subscribed_plans?.includes(id);
 
+  const product = pricingPlans.find((d) => d.id === id);
   const features = pricingPlanFeatures.find((d) => d.id === id)?.features;
 
-  const _loading = loading.find((d) => d.id === id);
+  const _loading = loading.find((d) => String(d.id) === String(product_id));
 
   return (
     <FlexColStart
@@ -163,9 +165,13 @@ function PricingCard({
               ? "border-[2px] border-blue-101 bg-blue-201 text-white-400 "
               : ""
           )}
-          onClick={() => subscribeToPlan(id)}
-          disabled={_loading?.loading && _loading.id === id}
-          isLoading={_loading?.loading && _loading.id === id}
+          onClick={() => subscribeToPlan(product?.product_id as number)}
+          disabled={
+            _loading?.loading && String(_loading.id) === String(product_id)
+          }
+          isLoading={
+            _loading?.loading && String(_loading.id) === String(product_id)
+          }
         >
           <FlexRowStartCenter>
             {hasSubscribedToPlan ? <CheckCheck size={20} /> : <Zap size={20} />}
