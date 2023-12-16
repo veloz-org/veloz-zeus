@@ -127,7 +127,7 @@ export default Sidebar;
 
 function UpgradePlanWidget() {
   const { setPricingModalOpen, pricingModalOpen } = useContext(LayoutContext);
-  const { setSubscribedPlans } = useContext(DataContext);
+  const { setSubscribedPlans, userInfo } = useContext(DataContext);
   const getSubscriptionMut = useMutation({
     mutationFn: async () => getSubscriptions(),
   });
@@ -152,6 +152,20 @@ function UpgradePlanWidget() {
     getSubscriptionMut.isPending,
   ]);
 
+  const activeSubscriptions = userInfo?.subscriptions?.filter(
+    (s) => s.status === "active"
+  );
+  // get the highest level of subscription plan
+  const HIGHEST_SUBSCRIPTION_KEY = "premium";
+  const activeSubscriptionsLevel = activeSubscriptions
+    ?.map((s) => {
+      const plan = pricingPlans.find(
+        (p) => String(p.product_id) === String(s.product_id)
+      );
+      return plan;
+    })
+    .filter((p) => p?.key === HIGHEST_SUBSCRIPTION_KEY);
+
   return (
     <FlexColCenter className="w-full px-5 py-4 absolute bottom-2">
       <FlexColStart className="w-full bg-dark-200 p-3 rounded-md border-solid border-[.5px] border-gray-100/30 ">
@@ -165,7 +179,10 @@ function UpgradePlanWidget() {
             )}
             onClick={() => getSubscriptionMut.mutate()}
             isLoading={getSubscriptionMut.isPending}
-            disabled={getSubscriptionMut.isPending}
+            disabled={
+              getSubscriptionMut.isPending ||
+              (activeSubscriptionsLevel as any[])?.length > 0
+            }
           >
             <Zap size={15} />{" "}
             <span className="text-[13px] font-ppSB">Upgrade</span>
