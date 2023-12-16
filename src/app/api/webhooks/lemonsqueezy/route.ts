@@ -62,12 +62,11 @@ export const POST = CatchError(async (req: NextRequest) => {
         throw new HttpException(RESPONSE_CODE.USER_NOT_FOUND, msg, 404);
       }
 
-      // check if user is already subscribed
-      // We have 0/1 chance of this happenening, but we still need to check. (🤑)
+      // prevent duplicate subscription
       const userSubscription = await prisma.subscriptions.findFirst({
         where: {
           uId: user_id,
-          status: "active",
+          subscription_id: data.id,
         },
       });
 

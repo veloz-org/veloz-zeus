@@ -17,3 +17,9 @@ export const subscribeToPlan = async (data: any) => {
   const resp = await $axios.post("/subscription", data);
   return resp.data;
 };
+
+// get subscriptions
+export const getSubscriptions = async () => {
+  const resp = await $axios.get("/subscription");
+  return resp.data;
+};

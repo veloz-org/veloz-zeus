@@ -8,6 +8,10 @@ interface ContextValuesType {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   globalLoadingState: boolean;
   setGlobalLoadingState: React.Dispatch<React.SetStateAction<boolean>>;
+  subscribed_plans: string[];
+  setSubscribedPlans: React.Dispatch<React.SetStateAction<string[]>>;
+  current_plan: string;
+  setCurrentPlan: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const DataContext = createContext<ContextValuesType>(
@@ -17,6 +21,8 @@ export const DataContext = createContext<ContextValuesType>(
 function DataContextProvider({ children }: { children: ReactNode }) {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [subscribed_plans, setSubscribedPlans] = useState<string[]>([]);
+  const [current_plan, setCurrentPlan] = useState<string>("" as string);
 
   // this should be used for global loading state (e.g. when fetching data) that
   // should be used across the app/pages
@@ -29,6 +35,10 @@ function DataContextProvider({ children }: { children: ReactNode }) {
     setSidebarOpen,
     setGlobalLoadingState,
     globalLoadingState,
+    subscribed_plans,
+    setSubscribedPlans,
+    setCurrentPlan,
+    current_plan,
   };
 
   return (

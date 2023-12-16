@@ -10,7 +10,11 @@ import { Spinner } from "@/components/Spinner";
 import Button from "@/components/ui/button";
 import { DataContext } from "@/context/DataContext";
 import { LayoutContext } from "@/context/LayoutContext";
+import { pricingPlans } from "@/data/pricing/plan";
+import { getSubscriptions } from "@/http/requests";
 import { cn } from "@/lib/utils";
+import { ResponseData, UserSubscriptions } from "@/types";
+import { useMutation } from "@tanstack/react-query";
 import {
   LayoutDashboard,
   PanelRightClose,
@@ -22,6 +26,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 
 interface SidebarProps {
   // activePage: string;
@@ -121,25 +126,36 @@ function Sidebar({}: SidebarProps) {
 export default Sidebar;
 
 function UpgradePlanWidget() {
-  const { setPricingModalOpen } = useContext(LayoutContext);
+  const { setPricingModalOpen, pricingModalOpen } = useContext(LayoutContext);
+  const { setSubscribedPlans } = useContext(DataContext);
+  const getSubscriptionMut = useMutation({
+    mutationFn: async () => getSubscriptions(),
+  });
+
+  // Get user subscriptions on mount
+  React.useEffect(() => {
+    if (getSubscriptionMut.error) {
+      const errMsg = (getSubscriptionMut.error as any)?.response?.data?.message;
+      toast.error(errMsg);
+    }
+    if (getSubscriptionMut.data) {
+      const { data } = getSubscriptionMut.data as ResponseData;
+      const _subscriptions = data as UserSubscriptions[];
+      const planProdIds = _subscriptions?.map((plan: any) => plan.product_id);
+      setSubscribedPlans(planProdIds);
+      setPricingModalOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    getSubscriptionMut.data,
+    getSubscriptionMut.error,
+    getSubscriptionMut.isPending,
+  ]);
 
   return (
     <FlexColCenter className="w-full px-5 py-4 absolute bottom-2">
       <FlexColStart className="w-full bg-dark-200 p-3 rounded-md border-solid border-[.5px] border-gray-100/30 ">
-        <FlexRowCenterBtw>
-          <p className="text-white-300 text-[10px] leading-none font-ppL">
-            Current Plan
-          </p>
-          <span
-            className={cn(
-              "text-white-100 text-[10px] px-3 py-1 rounded-[30px] border-solid border-[1px] border-white-600 leading-none font-jbSB"
-            )}
-          >
-            Free
-            {/* {getPlanTitle(userPlan)} */}
-          </span>
-        </FlexRowCenterBtw>
-        <p className="text-gray-100 font-jbPR text-[10px] ">
+        <p className="text-white-100/50 text-center font-jbPR text-[10px] ">
           Get access to incredible features.
         </p>
         <FlexColCenter className="w-full mt-2">
@@ -147,10 +163,9 @@ function UpgradePlanWidget() {
             className={cn(
               "w-full bg-blue-100 hover:bg-blue-100/80 rounded-md py-2 h-[40px] font-ppSB text-[14px] gap-2"
             )}
-            onClick={() => {
-              // fetch user subscriptions before opening modal
-              setPricingModalOpen(true);
-            }}
+            onClick={() => getSubscriptionMut.mutate()}
+            isLoading={getSubscriptionMut.isPending}
+            disabled={getSubscriptionMut.isPending}
           >
             <Zap size={15} />{" "}
             <span className="text-[13px] font-ppSB">Upgrade</span>

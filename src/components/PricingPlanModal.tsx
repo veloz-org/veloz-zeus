@@ -26,7 +26,7 @@ type Props = {
 
 // show pricing modal on dashboard when upgrade button is clicked.
 function PricingPlanModal({ closeModal }: Props) {
-  const { userInfo } = useContext(DataContext);
+  const { userInfo, subscribed_plans } = useContext(DataContext);
   const [subscribeLoading, setSubscribeLoading] = React.useState<
     {
       id: any;
@@ -95,7 +95,7 @@ function PricingPlanModal({ closeModal }: Props) {
             duration={plan.duration}
             id={plan.id}
             product_id={plan.product_id}
-            subscribed_plans={[""]}
+            subscribed_plans={subscribed_plans}
             subscribeToPlan={subscribe}
             loading={subscribeLoading}
           />
@@ -133,7 +133,7 @@ function PricingCard({
   subscribeToPlan,
   loading,
 }: PricingCardProps) {
-  const hasSubscribedToPlan = subscribed_plans?.includes(id);
+  const hasSubscribedToPlan = subscribed_plans?.includes(String(product_id));
 
   const product = pricingPlans.find((d) => d.id === id);
   const features = pricingPlanFeatures.find((d) => d.id === id)?.features;
@@ -162,10 +162,13 @@ function PricingCard({
           className={cn(
             "w-full py-0 h-[40px] hover:bg-blue-100/70 bg-blue-100 text-white-100 disabled:bg-white-400/40 border-solid border-transparent",
             hasSubscribedToPlan
-              ? "border-[2px] border-blue-101 bg-blue-201 text-white-400 "
+              ? "border-[2px] border-blue-101 bg-blue-201 cursor-not-allowed text-dark-100 hover:bg-blue-201/50 "
               : ""
           )}
-          onClick={() => subscribeToPlan(product?.product_id as number)}
+          onClick={() =>
+            !hasSubscribedToPlan &&
+            subscribeToPlan(product?.product_id as number)
+          }
           disabled={
             _loading?.loading && String(_loading.id) === String(product_id)
           }

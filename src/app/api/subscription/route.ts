@@ -10,3 +10,10 @@ export const POST = CatchError(
     async (req: NextRequest) => await subscriptionController.subscribe(req)
   )
 );
+
+export const GET = CatchError(
+  isAuthenticated(
+    async (req: NextRequest) =>
+      await subscriptionController.getSubscriptions(req)
+  )
+);

@@ -44,3 +44,24 @@ export interface PricingPlanFeature {
     isAvailable: boolean;
   }[];
 }
+
+export type UserSubscriptions = {
+  id: string;
+  status: LS_SubscriptionStatus;
+  product_id: string;
+  product_name: string;
+  variant_id: string;
+  variant_name: string;
+  ends_at: string;
+  renews_at: string;
+  created_at: string;
+};
+
+export type LS_SubscriptionStatus =
+  | "on_trial"
+  | "active"
+  | "paused"
+  | "past_due"
+  | "unpaid"
+  | "cancelled"
+  | "expired";
