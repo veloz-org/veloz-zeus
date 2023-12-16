@@ -1,5 +1,8 @@
 import { RESPONSE_CODE } from "../types";
-import { getCustomerPortalUrlSchema } from "../utils/schema_validation";
+import {
+  getCustomerPortalUrlSchema,
+  updateUserDetailsSchema,
+} from "../utils/schema_validation";
 import { NextRequest } from "next/server";
 import prisma from "../../../prisma/prisma";
 import sendResponse from "../utils/sendResponse";
@@ -47,9 +50,38 @@ export default class UserController {
       id: userData?.uId,
       email: userData?.email,
       username: userData?.username,
+      full_name: userData?.fullname ?? "",
       avatar: userData?.avatar,
       role: userData?.role,
       subscriptions: _subscriptions,
     });
+  }
+
+  // update user info
+  public async updateDetails(req: NextRequest) {
+    const user = (req as any)["user"] as ReqUserObj;
+    const payload = (await req.json()) as {
+      username: string;
+      full_name: string;
+      email: string;
+    };
+
+    // validate payload
+    await ZodValidation(updateUserDetailsSchema, payload, req.url);
+
+    await prisma.users.update({
+      where: { uId: user.id },
+      data: {
+        username: payload.username,
+        fullname: payload.full_name,
+        email: payload.email,
+      },
+    });
+
+    return sendResponse.success(
+      RESPONSE_CODE.SUCCESS,
+      "Updated successfully.",
+      200
+    );
   }
 }
