@@ -29,3 +29,9 @@ export const getCustomerPortal = async (data: any) => {
   const resp = await $axios.post("/subscription/portal", data);
   return resp.data;
 };
+
+// update user details
+export const updateUserDetails = async (data: any) => {
+  const resp = await $axios.patch("/user", data);
+  return resp.data;
+};
