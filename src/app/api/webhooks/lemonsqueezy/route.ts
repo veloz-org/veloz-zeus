@@ -162,9 +162,40 @@ export const POST = CatchError(async (req: NextRequest) => {
       });
 
       if (!subscription) {
-        const msg = `Subscription with id ${sub_id} not found`;
-        console.log(`❌ ${msg}`);
-        throw new HttpException(RESPONSE_CODE.SUBSCRIPTION_NOT_FOUND, msg, 404);
+        // create it
+        const newSubscription = await prisma.subscriptions.create({
+          data: {
+            status,
+            user_email,
+            user_name,
+            test_mode,
+            ends_at,
+            renews_at,
+            customer_id: String(customer_id),
+            order_id: String(order_id),
+            product_id: String(product_id),
+            product_name,
+            variant_id: String(variant_id),
+            variant_name,
+            store_id: String(store_id),
+            card_brand,
+            card_last_four,
+            subscription_id: sub_id,
+            user: {
+              connect: { uId: custom_data.user_id },
+            },
+          },
+        });
+
+        // check if subscription was created
+        if (!newSubscription) {
+          const msg = `Error creating new subscription with id ${sub_id}`;
+          console.log(`❌ ${msg}`);
+          throw new HttpException(RESPONSE_CODE.ERROR, msg, 400);
+        }
+
+        console.log(`✅ New Subscription created with id ${sub_id}`);
+        return;
       }
 
       // update subscription
