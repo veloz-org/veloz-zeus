@@ -5,6 +5,7 @@ import {
   FlexRowStartCenter,
 } from "@/components/Flex";
 import BillingTab from "@/components/settings/billing";
+import GeneralSettingsTab from "@/components/settings/general/page";
 import { LayoutContext } from "@/context/LayoutContext";
 import { cn } from "@/lib/utils";
 import { Settings, Wallet } from "lucide-react";
@@ -66,11 +67,7 @@ function SettingsPage() {
         </FlexRowStartCenter>
 
         {/* General Tab Content */}
-        {activeTab.key === "general" && (
-          <FlexColStart className="w-full mt-4">
-            <p className="text-dark-100">Welcome</p>
-          </FlexColStart>
-        )}
+        {activeTab.key === "general" && <GeneralSettingsTab />}
 
         {/* Subscription Tab Content */}
         {activeTab.key === "billing" && <BillingTab />}
