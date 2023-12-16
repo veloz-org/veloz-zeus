@@ -8,3 +8,9 @@ const userController = new UserController();
 export const GET = CatchError(
   isAuthenticated(async (req: NextRequest) => await userController.getUser(req))
 );
+
+export const PATCH = CatchError(
+  isAuthenticated(
+    async (req: NextRequest) => await userController.updateDetails(req)
+  )
+);
