@@ -17,20 +17,24 @@ export default class SubscriptionController {
   //   get users info
   public async subscribe(req: NextRequest) {
     const user = (req as any)["user"] as ReqUserObj;
-    const payload = (await req.json()) as { plan_id: string };
+    const payload = (await req.json()) as { product_id: number };
+
+    // product_id is actually related to the pricing "plan" in ../data/plan.ts
 
     // validate request body
     await ZodValidation(createCheckoutSchema, payload, req.url);
 
-    const { plan_id } = payload;
+    const { product_id } = payload;
 
     // check if plan exists
-    const plan = pricingPlans.find((p) => p.id === plan_id);
+    const product = pricingPlans.find(
+      (p) => String(p.product_id) === String(product_id)
+    );
 
-    if (!plan) {
+    if (!product) {
       return sendResponse.error(
         RESPONSE_CODE.PLAN_NOT_FOUND,
-        "Plan not found",
+        "Subscription plan not found",
         404
       );
     }
@@ -39,7 +43,7 @@ export default class SubscriptionController {
     const userSubscription = await prisma.subscriptions.findFirst({
       where: {
         uId: user.id,
-        planId: plan_id,
+        product_id: String(product_id),
         status: "active",
       },
     });
@@ -53,9 +57,8 @@ export default class SubscriptionController {
     }
 
     // create the checkout url
-    const checkoutUrl = await LQS.createCheckout(plan.product_id, {
+    const checkoutUrl = await LQS.createCheckout(product.product_id, {
       user_id: user.id,
-      plan_id,
     });
 
     if (checkoutUrl.error) {
