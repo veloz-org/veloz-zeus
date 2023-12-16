@@ -16,7 +16,6 @@ interface DashboardLayoutProps {
 
 // use this component as a wrapper for all dashboard authenticated pages
 function DashboardLayout({ children, className }: DashboardLayoutProps) {
-  const { setDarkMode } = useContext(ThemeContext);
   const { pricingModalOpen, setPricingModalOpen } = useContext(LayoutContext);
   const { status } = useSession();
 

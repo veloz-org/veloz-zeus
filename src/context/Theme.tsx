@@ -1,3 +1,4 @@
+import useDarkSide from "@/hooks/useDarkside";
 import React, { useEffect, useState } from "react";
 
 interface ThemeProviderProps {
@@ -13,38 +14,21 @@ interface ThemeContextProps {
 export const ThemeContext = React.createContext<ThemeContextProps>(null as any);
 
 export default function ThemeContextProvider({ children }: ThemeProviderProps) {
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    const isDarkMode = localStorage.getItem("darkMode") === "true";
-    setDarkMode(isDarkMode);
-  }, []);
-
-  useEffect(() => {
-    if (darkMode) {
-      localStorage.setItem("darkMode", "true");
-    } else {
-      localStorage.setItem("darkMode", "false");
-    }
-  }, [darkMode]);
-
-  useEffect(() => {
-    if (
-      localStorage.getItem("darkMode") === "true" ||
-      (!("darkMode" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      // @ts-expect-error
-      document?.querySelector("html").classList.add("dark");
-    } else {
-      // @ts-expect-error
-      document?.querySelector("html").classList.remove("dark");
-    }
-  }, [darkMode]);
+  const { colorTheme, theme, setTheme } = useDarkSide();
+  const [darkMode, setDarkMode] = useState(
+    colorTheme === "dark" ? true : false
+  );
 
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode);
+    setTheme(colorTheme === "dark" ? "light" : "dark");
   };
+
+  useEffect(() => {
+    setDarkMode(colorTheme === "dark" ? true : false);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [theme]);
 
   const providerValue: ThemeContextProps = {
     darkMode,
