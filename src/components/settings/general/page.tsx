@@ -1,7 +1,175 @@
-import React from "react";
+import { FlexColStart } from "@/components/Flex";
+import Button from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { DataContext } from "@/context/DataContext";
+import { getUser, updateUserDetails } from "@/http/requests";
+import { ResponseData, UserInfo } from "@/types";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import React, { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
+type UserDetails = {
+  email: string;
+  username: string;
+  full_name: string;
+};
 
 function GeneralSettingsTab() {
-  return <div>GeneralSettingsTab</div>;
+  const { userInfo, setUserInfo, setSubscribedPlans, setGlobalLoadingState } =
+    useContext(DataContext);
+  const [userDetails, setUserDetails] = useState<UserDetails>({
+    email: "",
+    username: "",
+    full_name: "",
+  });
+  const router = useRouter();
+  const updateUserDetailsMut = useMutation({
+    mutationFn: async (data: any) => await updateUserDetails(data),
+  });
+  const fetchUserDetailsQuery = useQuery({
+    queryKey: ["fetchUserDetails"],
+    queryFn: async () => getUser(),
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserDetails((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // check if input value is different from user details
+  const hasChanged = (name: any) => {
+    const detail = userDetails[name as keyof UserDetails];
+    const info = userInfo?.[name as keyof UserInfo];
+    if (typeof info === "undefined") return false;
+    return detail.toLowerCase() !== (info as string)?.toLowerCase();
+  };
+
+  useEffect(() => {
+    setUserDetails({
+      email: userInfo?.email as string,
+      username: userInfo?.username ?? ("" as string),
+      full_name: userInfo?.full_name ?? ("" as string),
+    });
+  }, [userInfo]);
+
+  // user info fetch
+  React.useEffect(() => {
+    if (fetchUserDetailsQuery?.error) {
+      const data = (fetchUserDetailsQuery?.error as any)?.response
+        ?.data as ResponseData;
+      const code = data?.code;
+      if (code === "UNAUTHORISED") {
+        toast.error("Unauthorised");
+        router.push("/auth");
+      }
+    }
+    if (!fetchUserDetailsQuery?.data?.errorStatus) {
+      setGlobalLoadingState(false);
+      // fetch user info if none exists and user is logged in
+      const reqData = fetchUserDetailsQuery.data?.data as UserInfo;
+      if (reqData && Object.entries(reqData).length > 0) {
+        // set subscribed plans
+        const planProdIds = reqData.subscriptions?.map(
+          (plan: any) => plan.product_id
+        );
+        setSubscribedPlans(planProdIds);
+        setUserInfo(reqData);
+      }
+    } else {
+      setUserInfo(null as any);
+      toast.error(
+        fetchUserDetailsQuery.data?.data?.message ?? "Something went wrong"
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    fetchUserDetailsQuery.isPending,
+    fetchUserDetailsQuery.data,
+    fetchUserDetailsQuery.error,
+  ]);
+
+  //  user info update
+  React.useEffect(() => {
+    if (updateUserDetailsMut?.error) {
+      const data = (updateUserDetailsMut?.error as any)?.response
+        ?.data as ResponseData;
+      toast.error(data?.message ?? "Something went wrong!.");
+    }
+    if (updateUserDetailsMut.data) {
+      toast.success("Updated.");
+      fetchUserDetailsQuery.refetch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    updateUserDetailsMut.data,
+    updateUserDetailsMut.isPending,
+    updateUserDetailsMut.error,
+  ]);
+
+  return (
+    <FlexColStart className="w-full h-full relative">
+      <FlexColStart className="w-full">
+        <h1 className="text-dark-100 font-ppSB text-[15px] ">My Details</h1>
+        <p className="text-white-400 font-ppReg text-[12px] ">
+          Manage profile details
+        </p>
+      </FlexColStart>
+      <FlexColStart className="w-full gap-5">
+        <FlexColStart className="w-auto">
+          <label className="font-ppReg text-white-400 text-[11px]">
+            Full Name
+          </label>
+          <Input
+            className="w-full min-w-[350px] text-[12px] font-ppReg "
+            placeholder="Full Name"
+            value={userDetails.full_name}
+            name={"full_name"}
+            onChange={handleInputChange}
+            disabled={fetchUserDetailsQuery.isPending}
+          />
+        </FlexColStart>
+        <FlexColStart className="w-auto">
+          <label className="font-ppReg text-white-400 text-[11px]">
+            Username
+          </label>
+          <Input
+            className="w-full min-w-[350px] text-[12px] font-ppReg "
+            placeholder="Username"
+            value={userDetails.username}
+            name={"username"}
+            onChange={handleInputChange}
+            disabled={fetchUserDetailsQuery.isPending}
+          />
+        </FlexColStart>
+        <FlexColStart className="w-auto">
+          <label className="font-ppReg text-white-400 text-[11px]">Email</label>
+          <Input
+            className="w-full min-w-[350px] text-[12px] font-ppReg "
+            placeholder="Email"
+            value={userDetails.email}
+            name={"email"}
+            disabled
+          />
+        </FlexColStart>
+        <FlexColStart>
+          <Button
+            className="w-full h-[40px] py-0 disabled:bg-blue-101/40 disabled:text-white-100"
+            intent={"primary"}
+            disabled={
+              !hasChanged("full_name") &&
+              !hasChanged("username") &&
+              !hasChanged("email")
+            }
+            onClick={() => updateUserDetailsMut.mutate(userDetails)}
+            isLoading={updateUserDetailsMut.isPending}
+          >
+            <span className="text-[12px] font-ppReg">Update Changes</span>
+          </Button>
+        </FlexColStart>
+      </FlexColStart>
+    </FlexColStart>
+  );
 }
 
 export default GeneralSettingsTab;
