@@ -23,3 +23,9 @@ export const getSubscriptions = async () => {
   const resp = await $axios.get("/subscription");
   return resp.data;
 };
+
+// get customer portal url
+export const getCustomerPortal = async (data: any) => {
+  const resp = await $axios.post("/subscription/portal", data);
+  return resp.data;
+};

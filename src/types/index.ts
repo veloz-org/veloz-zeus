@@ -20,6 +20,7 @@ export type UserInfo = {
   avatar: string;
   id: string;
   role: string;
+  subscriptions: UserSubscriptions[];
 };
 
 // pricing plan Types Definition

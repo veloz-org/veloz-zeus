@@ -169,4 +169,21 @@ export default class LemonsqueezyServices {
     }
     return [];
   }
+
+  async getCustomerPortalUrl(customer_id: string) {
+    const api = `https://api.lemonsqueezy.com/v1/customers/${customer_id}`;
+    const res = await axios.get(api, {
+      headers: {
+        Authorization: `Bearer ${env.LEMONSQUEEZY_API_KEY}`,
+      },
+    });
+
+    const data = res.data;
+
+    if (data?.data) {
+      const url = data?.data?.attributes?.urls?.customer_portal;
+      return url;
+    }
+    return null;
+  }
 }

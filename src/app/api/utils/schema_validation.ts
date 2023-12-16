@@ -32,3 +32,10 @@ export const createCheckoutSchema = zod.object({
     required_error: "Subscription product id is required",
   }),
 });
+
+// get customer portal url
+export const getCustomerPortalUrlSchema = zod.object({
+  product_id: zod.string({
+    required_error: "Customer id is required",
+  }),
+});

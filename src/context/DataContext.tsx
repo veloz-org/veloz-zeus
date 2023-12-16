@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext, useContext, useState } from "react";
-import { UserInfo } from "@/types";
+import { UserInfo, UserSubscriptions } from "@/types";
 
 interface ContextValuesType {
   userInfo: UserInfo | null;
@@ -12,6 +12,8 @@ interface ContextValuesType {
   setSubscribedPlans: React.Dispatch<React.SetStateAction<string[]>>;
   current_plan: string;
   setCurrentPlan: React.Dispatch<React.SetStateAction<string>>;
+  subscriptions: UserSubscriptions[];
+  setSubscriptions: React.Dispatch<React.SetStateAction<UserSubscriptions[]>>;
 }
 
 export const DataContext = createContext<ContextValuesType>(
@@ -21,6 +23,7 @@ export const DataContext = createContext<ContextValuesType>(
 function DataContextProvider({ children }: { children: ReactNode }) {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [subscriptions, setSubscriptions] = useState<UserSubscriptions[]>([]);
   const [subscribed_plans, setSubscribedPlans] = useState<string[]>([]);
   const [current_plan, setCurrentPlan] = useState<string>("" as string);
 
@@ -39,6 +42,8 @@ function DataContextProvider({ children }: { children: ReactNode }) {
     setSubscribedPlans,
     setCurrentPlan,
     current_plan,
+    subscriptions,
+    setSubscriptions,
   };
 
   return (

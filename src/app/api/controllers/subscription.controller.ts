@@ -1,11 +1,15 @@
 import { RESPONSE_CODE } from "../types";
-import { createCheckoutSchema } from "../utils/schema_validation";
+import {
+  createCheckoutSchema,
+  getCustomerPortalUrlSchema,
+} from "../utils/schema_validation";
 import { NextRequest } from "next/server";
 import prisma from "../../../prisma/prisma";
 import sendResponse from "../utils/sendResponse";
 import ZodValidation from "../utils/zodValidation";
 import { pricingPlans } from "@/data/pricing/plan";
 import LemonsqueezyServices from "../services/lemonsqeezy.service";
+import HttpException from "../utils/exception";
 
 type ReqUserObj = {
   id: string;
@@ -107,5 +111,40 @@ export default class SubscriptionController {
       200,
       _subscriptions
     );
+  }
+
+  public async getCustomerPortal(req: NextRequest) {
+    const user = (req as any)["user"] as ReqUserObj;
+    const payload = (await req.json()) as { product_id: string };
+
+    // validate payload
+    await ZodValidation(getCustomerPortalUrlSchema, payload, req.url);
+
+    const subscription = await prisma.subscriptions.findFirst({
+      where: { product_id: payload?.product_id, uId: user.id },
+    });
+
+    if (!subscription) {
+      return sendResponse.error(
+        RESPONSE_CODE.ERROR,
+        "Subscription not found",
+        404
+      );
+    }
+
+    // get customer portal url
+    const url = await LQS.getCustomerPortalUrl(
+      subscription.customer_id as string
+    );
+
+    if (!url) {
+      throw new HttpException(
+        RESPONSE_CODE.ERROR,
+        "Error getting customer portal url",
+        400
+      );
+    }
+
+    return sendResponse.success(RESPONSE_CODE.SUCCESS, "Success", 200, url);
   }
 }

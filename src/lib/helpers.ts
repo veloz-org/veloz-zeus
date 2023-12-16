@@ -13,7 +13,7 @@ export const withAuth = <P extends { children: React.ReactNode }>(
   WrappedComponent: React.ComponentType<P>
 ) => {
   const Wrapper: React.FC<P> = (props) => {
-    const { setUserInfo, userInfo, setGlobalLoadingState } =
+    const { setUserInfo, userInfo, setGlobalLoadingState, setSubscribedPlans } =
       useContext(DataContext);
     const { status } = useSession();
     const userInfoMutation = useMutation({
@@ -52,6 +52,11 @@ export const withAuth = <P extends { children: React.ReactNode }>(
         // fetch user info if none exists and user is logged in
         const reqData = userInfoMutation.data?.data as UserInfo;
         if (reqData && Object.entries(reqData).length > 0) {
+          // set subscribed plans
+          const planProdIds = reqData.subscriptions?.map(
+            (plan: any) => plan.product_id
+          );
+          setSubscribedPlans(planProdIds);
           setUserInfo(reqData);
         }
       } else {
