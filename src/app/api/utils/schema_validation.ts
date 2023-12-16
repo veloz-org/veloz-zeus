@@ -39,3 +39,21 @@ export const getCustomerPortalUrlSchema = zod.object({
     required_error: "Customer id is required",
   }),
 });
+
+// update user details
+export const updateUserDetailsSchema = zod.object({
+  username: zod
+    .string({
+      required_error: "Username is required",
+    })
+    .min(3)
+    .max(50),
+  email: zod
+    .string({
+      required_error: "Email is required",
+    })
+    .email(),
+  full_name: zod.string({
+    required_error: "Avatar is required",
+  }),
+});
