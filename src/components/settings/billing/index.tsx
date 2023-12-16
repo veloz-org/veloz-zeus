@@ -88,22 +88,6 @@ function BillingTab() {
               ))}
         </FlexRowStart>
         <br />
-        {/* {(userInfo as any)?.subscriptions?.length > 0 && (
-          <button
-            className="w-auto px-4 py-2 rounded-md flex items-center justify-start bg-white-201 gap-2 border-solid border-[1px]  border-blue-101 group hover:bg-blue-100  "
-            onClick={() =>
-              getCustomerPortalMut.mutate({ product_id: "149209" })
-            }
-          >
-            <Wallet
-              size={15}
-              className="group-hover:text-white-100 text-blue-100"
-            />
-            <span className="text-blue-100 group-hover:text-white-100 font-ppReg text-[12px] ">
-              Manage Billing
-            </span>
-          </button>
-        )} */}
       </FlexColStart>
     </FlexColStart>
   );

@@ -7,6 +7,7 @@ import TopBar from "./Navigations/TopBar";
 import { useSession } from "next-auth/react";
 import { withAuth } from "@/lib/helpers";
 import PricingPlanModal from "../PricingPlanModal";
+import { ThemeContext } from "@/context/Theme";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
@@ -15,6 +16,7 @@ interface DashboardLayoutProps {
 
 // use this component as a wrapper for all dashboard authenticated pages
 function DashboardLayout({ children, className }: DashboardLayoutProps) {
+  const { setDarkMode } = useContext(ThemeContext);
   const { pricingModalOpen, setPricingModalOpen } = useContext(LayoutContext);
   const { status } = useSession();
 
@@ -22,6 +24,8 @@ function DashboardLayout({ children, className }: DashboardLayoutProps) {
   if (status === "unauthenticated") {
     if (window) window.location.href = "/auth";
   }
+
+  setDarkMode(true);
 
   return (
     <div
