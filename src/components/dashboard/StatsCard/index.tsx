@@ -68,7 +68,7 @@ export default function StatsCard({
             <h1
               className={cn(
                 "text-white-100 dark:text-white-100 text-3xl font-ppSB",
-                isCardActive ? "text-white-100" : "text-dark-100"
+                isCardActive ? "text-white-100" : "text-dark-105"
               )}
             >
               {numberWithCommas(value)}

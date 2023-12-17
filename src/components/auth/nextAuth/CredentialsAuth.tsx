@@ -34,7 +34,7 @@ function CredentialsAuth() {
           onClick={() =>
             setActiveTab(activeTab === "signin" ? "signup" : "signin")
           }
-          className="text-dark-100 dark:text-white-100 font-ppReg underline text-[12px] cursor-pointer"
+          className="text-dark-105 dark:text-white-100 font-ppReg underline text-[12px] cursor-pointer"
         >
           {activeTab === "signin" ? " Sign-up" : " Sign-in"}
         </span>

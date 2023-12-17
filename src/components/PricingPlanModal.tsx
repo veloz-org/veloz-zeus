@@ -78,7 +78,7 @@ function PricingPlanModal({ closeModal }: Props) {
         </button>
       </FlexRowStart>
       <FlexColCenter className="w-full text-center pb-5 py-2 mt-5">
-        <h1 className="text-dark-100 font-ppSB text-2xl">
+        <h1 className="text-dark-105 font-ppSB text-2xl">
           Purchase a subscription
         </h1>
         <p className="text-white-400 text-[12px] font-ppReg">
@@ -162,7 +162,7 @@ function PricingCard({
           className={cn(
             "w-full py-0 h-[40px] hover:bg-blue-100/70 bg-blue-100 text-white-100 disabled:bg-white-400/40 border-solid border-transparent",
             hasSubscribedToPlan
-              ? "border-[2px] border-blue-101 bg-blue-201 cursor-not-allowed text-dark-100 hover:bg-blue-201/50 "
+              ? "border-[2px] border-blue-101 bg-blue-201 cursor-not-allowed text-dark-105 hover:bg-blue-201/50 "
               : ""
           )}
           onClick={() =>
@@ -192,7 +192,7 @@ function PricingCard({
             ) : (
               <X size={15} className="text-red-305" />
             )}
-            <span className="text-dark-100 font-ppReg text-[13px] ">
+            <span className="text-dark-105 font-ppReg text-[13px] ">
               {f.title}
             </span>
           </FlexRowStartCenter>

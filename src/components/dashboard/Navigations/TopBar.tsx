@@ -37,12 +37,12 @@ function TopBar() {
           {sidebarOpen ? (
             <PanelRightOpen
               size={15}
-              className="text-dark-100 dark:text-white-200"
+              className="text-dark-105 dark:text-white-200"
             />
           ) : (
             <PanelRightClose
               size={15}
-              className="text-dark-100 dark:text-white-200"
+              className="text-dark-105 dark:text-white-200"
             />
           )}
         </button>
@@ -66,7 +66,7 @@ function TopBar() {
                   height={0}
                 />
                 <FlexColStart className="gap-1 leading-none">
-                  <span className="font-ppSB text-dark-100 dark:text-white-200 text-[14px]">
+                  <span className="font-ppSB text-dark-105 dark:text-white-200 text-[14px]">
                     {userInfo?.username}
                   </span>
                   <span className="font-ppReg text-white-400 text-[10px]">
@@ -81,7 +81,7 @@ function TopBar() {
             <FlexColStart className="w-full gap-1">
               <ThemeSwitch />
               <button
-                className="w-full text-dark-100 dark:text-red-305 flex items-start justify-start rounded-md px-4 py-2 hover:bg-red-305 hover:dark:text-white-100 hover:text-white-100 text-[12px] font-ppSB"
+                className="w-full text-dark-105 dark:text-red-305 flex items-start justify-start rounded-md px-4 py-2 hover:bg-red-305 hover:dark:text-white-100 hover:text-white-100 text-[12px] font-ppSB"
                 onClick={() => signOut()}
               >
                 Logout
@@ -101,22 +101,22 @@ function ThemeSwitch() {
 
   return (
     <FlexRowStartCenter>
-      <p className="w-full text-dark-100 dark:text-white-200 flex items-start justify-start rounded-md px-4 py-2 text-[12px] font-ppReg  ">
+      <p className="w-full text-dark-105 dark:text-white-200 flex items-start justify-start rounded-md px-4 py-2 text-[12px] font-ppReg  ">
         Theme
       </p>
       <button
-        className="w-full text-dark-100 dark:text-white-200 flex items-start justify-start rounded-md text-[12px]"
+        className="w-full text-dark-105 dark:text-white-200 flex items-start justify-start rounded-md text-[12px]"
         onClick={() => toggleTheme()}
       >
         {theme === "dark" ? (
           <SunMoon
             size={25}
-            className="p-1 border-solid border-[.5px] border-white-300/40 rounded-[50%] text-dark-100 dark:text-white-100 dark:bg-blue-101 scale-[.89] hover:scale-[.95] transition-all"
+            className="p-1 border-solid border-[.5px] border-white-300/40 rounded-[50%] text-dark-105 dark:text-white-100 dark:bg-blue-101 scale-[.89] hover:scale-[.95] transition-all"
           />
         ) : (
           <Moon
             size={25}
-            className="p-1 border-solid border-[.5px] border-white-300/40 rounded-[50%] text-dark-100 bg-white-300/60 scale-[.89] hover:scale-[.95] transition-all"
+            className="p-1 border-solid border-[.5px] border-white-300/40 rounded-[50%] text-dark-105 bg-white-300/60 scale-[.89] hover:scale-[.95] transition-all"
           />
         )}
       </button>

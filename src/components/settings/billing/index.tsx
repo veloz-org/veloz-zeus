@@ -46,7 +46,7 @@ function BillingTab() {
   return (
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full">
-        <p className="text-dark-100 dark:text-white-100 font-ppSB text-[15px] ">
+        <p className="text-dark-105 dark:text-white-100 font-ppSB text-[15px] ">
           Plan
         </p>
         <p className="text-white-400 dark:text-white-300 font-ppReg text-[12px] ">
@@ -137,8 +137,8 @@ function PricingPlanCard({
       <FlexRowStartBtw className="w-full">
         <p
           className={cn(
-            "text-dark-100 dark:text-white-100 font-ppSB text-[13px] ",
-            activePlan ? "text-dark-100 dark:text-white-100" : "text-white-100"
+            "text-dark-105 dark:text-white-100 font-ppSB text-[13px] ",
+            activePlan ? "text-dark-105 dark:text-white-100" : "text-white-100"
           )}
         >
           {planName}
@@ -155,7 +155,7 @@ function PricingPlanCard({
             className={cn(
               "font-ppSB",
               activePlan
-                ? "text-dark-100 dark:text-white-300"
+                ? "text-dark-105 dark:text-white-300"
                 : " text-white-100"
             )}
           >

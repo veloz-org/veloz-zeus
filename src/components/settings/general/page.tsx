@@ -82,7 +82,7 @@ function GeneralSettingsTab() {
   return (
     <FlexColStart className="w-full h-full relative">
       <FlexColStart className="w-full">
-        <h1 className="text-dark-100 font-ppSB text-[15px] ">My Details</h1>
+        <h1 className="text-dark-105 font-ppSB text-[15px] ">My Details</h1>
         <p className="text-white-400 font-ppReg text-[12px] ">
           Manage profile details
         </p>
