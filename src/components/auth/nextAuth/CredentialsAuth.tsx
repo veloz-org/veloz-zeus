@@ -22,7 +22,7 @@ function CredentialsAuth() {
   }
 
   return (
-    <FlexColStart className="w-full px-4">
+    <FlexColStart className="w-full px-4  bg-white-100 dark:bg-transparent ">
       {activeTab === "signin" ? <SignInComp /> : <SignupComp />}
       <FlexRowStart className="w-full gap-1 pb-6">
         <span className="text-white-400 text-[12px] font-ppReg px-2 ">
@@ -34,7 +34,7 @@ function CredentialsAuth() {
           onClick={() =>
             setActiveTab(activeTab === "signin" ? "signup" : "signin")
           }
-          className="text-dark-100 font-ppReg underline text-[12px] cursor-pointer"
+          className="text-dark-100 dark:text-white-100 font-ppReg underline text-[12px] cursor-pointer"
         >
           {activeTab === "signin" ? " Sign-up" : " Sign-in"}
         </span>
@@ -94,7 +94,7 @@ function SignInComp() {
           <Input
             name="email"
             placeholder="Email"
-            className="bg-white-300 placeholder:text-white-400 text-dark-200 font-jbSB border-solid border-[.5px] border-white-400 px-5 "
+            className="bg-white-300 dark:bg-transparent dark:border-blue-101 dark:border-[1px] dark:text-white-100 placeholder:text-white-400 text-dark-200 font-jbSB border-solid border-[.5px] border-white-400 px-5 "
             onChange={handleFormChange}
           />
         </FlexColStart>
@@ -106,13 +106,13 @@ function SignInComp() {
             name="password"
             type="password"
             placeholder="Password"
-            className="bg-white-300 placeholder:text-white-400 text-dark-200 font-jbSB border-solid border-[.5px] border-white-400 px-5 "
+            className="bg-white-300 dark:bg-transparent dark:border-blue-101 dark:border-[1px] dark:text-white-100 placeholder:text-white-400 text-dark-200 font-jbSB border-solid border-[.5px] border-white-400 px-5 "
             onChange={handleFormChange}
           />
           {/* @ts-no-error */}
           <Button
             intent={"dark"}
-            className="w-full "
+            className="w-full dark:bg-blue-101 dark:hover:bg-blue-101/80 dark:mt-5 "
             onClick={handleSubmit as any}
             isLoading={loading}
           >
@@ -188,7 +188,7 @@ function SignupComp() {
           <Input
             name="email"
             placeholder="Email"
-            className="bg-white-300 placeholder:text-white-400 text-dark-200 font-jbSB border-solid border-[.5px] border-white-400 px-5 "
+            className="bg-white-300 dark:bg-transparent dark:border-blue-101 dark:border-[1px] dark:text-white-100 placeholder:text-white-400 text-dark-200 font-jbSB border-solid border-[.5px] border-white-400 px-5  "
             onChange={handleFormChange}
           />
         </FlexColStart>
@@ -199,7 +199,7 @@ function SignupComp() {
           <Input
             name="username"
             placeholder="Username"
-            className="bg-white-300 placeholder:text-white-400 text-dark-200 font-jbSB border-solid border-[.5px] border-white-400 px-5 "
+            className="bg-white-300 dark:bg-transparent dark:border-blue-101 dark:border-[1px] dark:text-white-100 placeholder:text-white-400 text-dark-200 font-jbSB border-solid border-[.5px] border-white-400 px-5  "
             onChange={handleFormChange}
           />
         </FlexColStart>
@@ -211,12 +211,12 @@ function SignupComp() {
             name="password"
             type="password"
             placeholder="Password"
-            className="bg-white-300 placeholder:text-white-400 text-dark-200 font-jbSB border-solid border-[.5px] border-white-400 px-5 "
+            className="bg-white-300 dark:bg-transparent dark:border-blue-101 dark:border-[1px] dark:text-white-100 placeholder:text-white-400 text-dark-200 font-jbSB border-solid border-[.5px] border-white-400 px-5  "
             onChange={handleFormChange}
           />
           <Button
             intent={"dark"}
-            className="w-full"
+            className="w-full dark:bg-blue-101 dark:hover:bg-blue-101/80 dark:mt-5"
             isLoading={registerMut.isPending}
             onClick={handleSubmit as any}
           >
