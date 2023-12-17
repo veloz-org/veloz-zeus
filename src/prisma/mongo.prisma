@@ -17,6 +17,7 @@ enum AuthMethod {
     credentials
     magicLink
     oauth
+    clerk
 }
 
 enum PlanType {

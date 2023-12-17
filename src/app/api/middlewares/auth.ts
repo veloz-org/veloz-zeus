@@ -6,18 +6,32 @@ import { RESPONSE_CODE } from "../types";
 import prisma from "../../../prisma/prisma";
 import { NextResponse } from "next/server";
 import env from "../config/env";
+import { getAuth } from "@clerk/nextjs/server";
 
 export function isAuthenticated(fn: Function) {
   return async (req: NextApiRequest) => {
-    const session = await getServerSession(nextAuthOptions);
-    if (!session) {
+    // next-auth
+    // const session = await getServerSession(nextAuthOptions);
+    // if (!session) {
+    //   throw new HttpException(RESPONSE_CODE.UNAUTHORIZED, "Unauthorized", 401);
+    // }
+
+    // clerk
+    const { userId } = getAuth(req);
+    if (!userId) {
       throw new HttpException(RESPONSE_CODE.UNAUTHORIZED, "Unauthorized", 401);
     }
 
-    // check if user exists
+    // next-auth
+    // const user = await prisma.users.findFirst({
+    //   where: { email: session.user?.email as string },
+    // });
+
+    // clerk
     const user = await prisma.users.findFirst({
-      where: { email: session.user?.email as string },
+      where: { uId: userId },
     });
+
     if (!user) {
       throw new HttpException(
         RESPONSE_CODE.UNAUTHORIZED,

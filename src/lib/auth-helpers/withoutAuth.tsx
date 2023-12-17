@@ -27,7 +27,9 @@ export function withoutAuth<P extends { children: React.ReactNode }>(
     // clerk
     useEffect(() => {
       if (isLoaded) {
-        if (userId) {
+        // prevent infinite redirection loop
+        const pathname = window.location.pathname;
+        if (userId && pathname !== "/auth") {
           window.location.href = "/auth";
         }
       }

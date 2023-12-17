@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: "api.dicebear.com",
       },
+      {
+        hostname: "img.clerk.com",
+      },
     ],
   },
 };

@@ -38,7 +38,10 @@ export default function RootLayout({
           `}
         </style>
       </head>
-      <body className="min-h-screen dark:bg-dark-100" suppressHydrationWarning>
+      <body
+        className="min-h-screen dark:bg-dark-100 bg-white-200"
+        suppressHydrationWarning
+      >
         <QueryClientProvider client={queryClient}>
           {/* <NextAuthProvider> */}
           <ClerkAuthProvider>

@@ -34,10 +34,10 @@ export default function withAuth<P extends { children: React.ReactNode }>(
     // clerk
     useEffect(() => {
       if (isLoaded) {
+        console.log({ userId });
         // Avoid infinite redirection loop
         const pathname = window.location.pathname;
-        if (!userId) window.location.href = "/auth";
-        if (userId && pathname !== "/auth") window.location.href = "/auth";
+        if (!userId && pathname !== "/auth") window.location.href = "/auth";
         if (userId) refetch();
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

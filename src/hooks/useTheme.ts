@@ -5,7 +5,7 @@ type Theme = "light" | "dark";
 
 export default function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
-    const storedTheme = localStorage.getItem("theme") ?? null;
+    const storedTheme = window ? window.localStorage.getItem("theme") : null;
     return (storedTheme as Theme) ?? ("light" as Theme);
   });
 
