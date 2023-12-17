@@ -1,3 +1,4 @@
+import { FullPageLoader } from "@/components/Loader";
 import { DataContext } from "@/context/DataContext";
 import useAuthUser from "@/hooks/useAuthUser";
 import { useSession } from "next-auth/react";
@@ -8,7 +9,7 @@ export default function withAuth<P extends { children: React.ReactNode }>(
   Component: React.ComponentType<P>
 ) {
   const ComponentWithAuth = (props: P) => {
-    const { setUserInfo, userInfo, setGlobalLoadingState, setSubscribedPlans } =
+    const { setUserInfo, setGlobalLoadingState, setSubscribedPlans } =
       useContext(DataContext);
     const { data, loading, error, refetch } = useAuthUser(false);
     const { status } = useSession();
@@ -41,8 +42,10 @@ export default function withAuth<P extends { children: React.ReactNode }>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loading, data]);
 
-    if (status === "loading" || loading) return null;
-    if (status === "unauthenticated") return null;
+    if (status === "loading" || loading) return <FullPageLoader />;
+    if (status === "unauthenticated") {
+      window.location.href = "/auth";
+    }
 
     return <Component {...props} />;
   };
