@@ -13,7 +13,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DataContext } from "@/context/DataContext";
-import { ThemeContext } from "@/context/Theme";
+import useTheme from "@/hooks/useTheme";
 import {
   ChevronDown,
   Moon,
@@ -26,7 +26,6 @@ import Image from "next/image";
 import { useContext } from "react";
 
 function TopBar() {
-  const { darkMode } = useContext(ThemeContext);
   const { userInfo, sidebarOpen, setSidebarOpen, globalLoadingState } =
     useContext(DataContext);
 
@@ -98,7 +97,7 @@ function TopBar() {
 export default TopBar;
 
 function ThemeSwitch() {
-  const { toggleDarkMode, darkMode } = useContext(ThemeContext);
+  const { toggleTheme, theme } = useTheme();
 
   return (
     <FlexRowStartCenter>
@@ -107,11 +106,9 @@ function ThemeSwitch() {
       </p>
       <button
         className="w-full text-dark-100 dark:text-white-200 flex items-start justify-start rounded-md text-[12px]"
-        onClick={() => {
-          toggleDarkMode();
-        }}
+        onClick={() => toggleTheme()}
       >
-        {darkMode ? (
+        {theme === "dark" ? (
           <SunMoon
             size={25}
             className="p-1 border-solid border-[.5px] border-white-300/40 rounded-[50%] text-dark-100 dark:text-white-100 dark:bg-blue-101 scale-[.89] hover:scale-[.95] transition-all"
