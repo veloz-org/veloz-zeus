@@ -3,6 +3,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { signOut } from "next-auth/react";
 
 dayjs.extend(relativeTime);
 
@@ -45,3 +46,8 @@ export function generateSubscriptionRenewalMessage(
     return "";
   }
 }
+
+export const Logout = () => {
+  // next-auth
+  signOut();
+};

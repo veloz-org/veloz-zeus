@@ -2,6 +2,7 @@ import { FlexColStart } from "@/components/Flex";
 import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataContext } from "@/context/DataContext";
+import useAuthUser from "@/hooks/useAuthUser";
 import { getUser, updateUserDetails } from "@/http/requests";
 import { ResponseData, UserInfo } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -23,13 +24,9 @@ function GeneralSettingsTab() {
     username: "",
     full_name: "",
   });
-  const router = useRouter();
+  const { loading, data, refetch } = useAuthUser(true);
   const updateUserDetailsMut = useMutation({
     mutationFn: async (data: any) => await updateUserDetails(data),
-  });
-  const fetchUserDetailsQuery = useQuery({
-    queryKey: ["fetchUserDetails"],
-    queryFn: async () => getUser(),
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,40 +51,15 @@ function GeneralSettingsTab() {
   }, [userInfo]);
 
   // user info fetch
-  React.useEffect(() => {
-    if (fetchUserDetailsQuery?.error) {
-      const data = (fetchUserDetailsQuery?.error as any)?.response
-        ?.data as ResponseData;
-      const code = data?.code;
-      if (code === "UNAUTHORISED") {
-        toast.error("Unauthorised");
-        router.push("/auth");
-      }
-    }
-    if (!fetchUserDetailsQuery?.data?.errorStatus) {
-      setGlobalLoadingState(false);
-      // fetch user info if none exists and user is logged in
-      const reqData = fetchUserDetailsQuery.data?.data as UserInfo;
-      if (reqData && Object.entries(reqData).length > 0) {
-        // set subscribed plans
-        const planProdIds = reqData.subscriptions?.map(
-          (plan: any) => plan.product_id
-        );
-        setSubscribedPlans(planProdIds);
-        setUserInfo(reqData);
-      }
-    } else {
-      setUserInfo(null as any);
-      toast.error(
-        fetchUserDetailsQuery.data?.data?.message ?? "Something went wrong"
+  React.useCallback(() => {
+    if (data && !loading) {
+      const planProdIds = data.subscriptions?.map(
+        (plan: any) => plan.product_id
       );
+      setSubscribedPlans(planProdIds);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    fetchUserDetailsQuery.isPending,
-    fetchUserDetailsQuery.data,
-    fetchUserDetailsQuery.error,
-  ]);
+  }, [loading]);
 
   //  user info update
   React.useEffect(() => {
@@ -98,7 +70,7 @@ function GeneralSettingsTab() {
     }
     if (updateUserDetailsMut.data) {
       toast.success("Updated.");
-      fetchUserDetailsQuery.refetch();
+      refetch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -126,7 +98,7 @@ function GeneralSettingsTab() {
             value={userDetails.full_name}
             name={"full_name"}
             onChange={handleInputChange}
-            disabled={fetchUserDetailsQuery.isPending}
+            disabled={loading}
           />
         </FlexColStart>
         <FlexColStart className="w-auto">
@@ -139,7 +111,7 @@ function GeneralSettingsTab() {
             value={userDetails.username}
             name={"username"}
             onChange={handleInputChange}
-            disabled={fetchUserDetailsQuery.isPending}
+            disabled={loading}
           />
         </FlexColStart>
         <FlexColStart className="w-auto">

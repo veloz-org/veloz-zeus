@@ -41,7 +41,7 @@ export default class AuthController {
 
     const users = await prisma.users.findMany();
     const pwdHash = PasswordManager.hashPassword(payload.password);
-    const avatar = `https://api.dicebear.com/7.x/initials/svg?seed=${payload.username}`;
+    const avatar = `https://api.dicebear.com/7.x/initials/png?seed=${payload.username}`;
 
     if (users.length === 0) {
       // ! by default, first user would be created and have the ADMIN role

@@ -52,33 +52,33 @@ function TopBar() {
         <Popover>
           <PopoverTrigger>
             <button className="w-fit">
-              {globalLoadingState ? (
-                <Spinner size={15} color={darkMode ? "#6b77f1" : "#000"} />
-              ) : !globalLoadingState && userInfo ? (
-                <FlexRowStartCenter className="w-full">
-                  <Image
-                    src={userInfo?.avatar
-                      ?.replace(" ", "")
-                      .replace("svg", "png")}
-                    className="rounded-[50%] p-[1px] bg-white-200/50 dark:bg-blue-101"
-                    alt="logo"
-                    width={35}
-                    height={0}
-                  />
-                  <FlexColStart className="gap-1 leading-none">
-                    <span className="font-ppSB text-dark-100 dark:text-white-200 text-[14px]">
-                      {userInfo?.username}
-                    </span>
-                    <span className="font-ppReg text-white-400 text-[10px]">
-                      {userInfo?.email}
-                    </span>
-                  </FlexColStart>
-                  <ChevronDown size={15} />
-                </FlexRowStartCenter>
-              ) : null}
+              <FlexRowStartCenter className="w-full">
+                <Image
+                  src={
+                    globalLoadingState
+                      ? "/default-avatar.svg"
+                      : !userInfo
+                      ? "/default-avatar.svg"
+                      : userInfo?.avatar
+                  }
+                  className="rounded-[50%] p-[1px] bg-white-200/50 dark:bg-blue-101"
+                  alt="user avatar"
+                  width={35}
+                  height={0}
+                />
+                <FlexColStart className="gap-1 leading-none">
+                  <span className="font-ppSB text-dark-100 dark:text-white-200 text-[14px]">
+                    {userInfo?.username}
+                  </span>
+                  <span className="font-ppReg text-white-400 text-[10px]">
+                    {userInfo?.email}
+                  </span>
+                </FlexColStart>
+                <ChevronDown size={15} />
+              </FlexRowStartCenter>
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-full min-w-[200px] bg-white-100 dark:bg-dark-100 dark:shadow-xl px-1 py-1 m-0 border-solid border-[1px] border-white-300/20 ">
+          <PopoverContent className="w-full min-w-[140px] bg-white-100 dark:bg-dark-100 dark:shadow-xl px-1 py-1 m-0 border-solid border-[1px] border-white-300/20 ">
             <FlexColStart className="w-full gap-1">
               <ThemeSwitch />
               <button

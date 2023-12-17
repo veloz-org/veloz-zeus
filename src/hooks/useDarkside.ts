@@ -10,7 +10,7 @@ export default function useDarkSide() {
   useEffect(() => {
     // save theme to local storage
     localStorage.setItem("theme", theme);
-  }, [theme, colorTheme]);
+  }, [theme]);
 
   useEffect(() => {
     if (

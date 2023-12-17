@@ -63,10 +63,7 @@ function BillingTab() {
                 const subscriptions = userInfo.subscriptions.map(
                   (s) => s.product_id
                 );
-                return (
-                  userInfo.role === "admin" ||
-                  subscriptions.includes(String(p.product_id))
-                );
+                return subscriptions.includes(String(p.product_id));
               })
               .map((plan, i) => (
                 <PricingPlanCard

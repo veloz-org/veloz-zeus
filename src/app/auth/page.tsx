@@ -4,9 +4,8 @@ import {
   FlexColStart,
   FlexColStartCenter,
 } from "@/components/Flex";
-import { withAuth, withoutAuth } from "@/lib/helpers";
 import CredentialsAuth from "@/components/auth/nextAuth/CredentialsAuth";
-import { useSession } from "next-auth/react";
+import { withoutAuth } from "@/lib/auth-helpers/withoutAuth";
 import React from "react";
 
 function AuthPage() {
