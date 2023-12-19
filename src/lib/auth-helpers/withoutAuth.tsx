@@ -1,5 +1,4 @@
 import { FullPageLoader } from "@/components/Loader";
-import { DataContext } from "@/context/DataContext";
 import { useAuth } from "@clerk/nextjs";
 import { useSession } from "next-auth/react";
 import React, { useEffect } from "react";

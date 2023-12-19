@@ -3,7 +3,6 @@ import { DataContext } from "@/context/DataContext";
 import useAuthUser from "@/hooks/useAuthUser";
 import { useAuth } from "@clerk/nextjs";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import React, { useCallback, useContext, useEffect } from "react";
 
 export default function withAuth<P extends { children: React.ReactNode }>(

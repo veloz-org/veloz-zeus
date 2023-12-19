@@ -52,7 +52,7 @@ export const handler = CatchError(async (req: NextRequest) => {
     // if it does do nothing
     const email = email_addresses[0]?.email_address;
     const user = await prisma.users.findFirst({
-      where: { email, auth_method: "clerk" },
+      where: { email },
     });
     const fullname =
       first_name === null
@@ -96,7 +96,7 @@ export const handler = CatchError(async (req: NextRequest) => {
 
       // check if user exist
       const user = await prisma.users.findFirst({
-        where: { uId: id, auth_method: "clerk" },
+        where: { uId: id },
       });
 
       if (!user) {
