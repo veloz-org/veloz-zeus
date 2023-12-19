@@ -69,12 +69,23 @@ export default class UserController {
     // validate payload
     await ZodValidation(updateUserDetailsSchema, payload, req.url);
 
+    const userAvatar = await prisma.users.findFirst({
+      where: { uId: user.id },
+      select: { avatar: true },
+    });
+
+    const newDicebearAvatar = `https://api.dicebear.com/7.x/initials/png?seed=${payload.username}}`;
+    const avatar = userAvatar?.avatar?.includes("dicebear")
+      ? newDicebearAvatar
+      : userAvatar?.avatar;
+
     await prisma.users.update({
       where: { uId: user.id },
       data: {
         username: payload.username,
         fullname: payload.full_name,
         email: payload.email,
+        avatar,
       },
     });
 
