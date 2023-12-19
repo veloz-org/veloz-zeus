@@ -8,7 +8,6 @@ import LayoutContextProvider from "@/context/LayoutContext";
 import DataContextProvider from "@/context/DataContext";
 import NextTopLoader from "@/components/TopLoader";
 import useTheme from "@/hooks/useTheme";
-import ClerkAuthProvider from "@/providers/ClerkProviders";
 
 // tanstack reqct query
 const queryClient = new QueryClient();
@@ -43,15 +42,13 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <QueryClientProvider client={queryClient}>
-          {/* <NextAuthProvider> */}
-          <ClerkAuthProvider>
+          <NextAuthProvider>
             {/* LayoutContext (Needed for protected routes that need shared layout) */}
             <LayoutContextProvider>
               <DataContextProvider>{children}</DataContextProvider>
             </LayoutContextProvider>
             <Toaster />
-          </ClerkAuthProvider>
-          {/* </NextAuthProvider> */}
+          </NextAuthProvider>
         </QueryClientProvider>
 
         {/* Show loading state during page navigation */}

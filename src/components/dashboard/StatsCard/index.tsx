@@ -37,7 +37,6 @@ export default function StatsCard({
   setActiveStatsCard,
 }: Props) {
   const isCardActive = name === activeCardName;
-  const defaultCardColor = "#3770fe" ?? activeCardColor;
 
   return (
     <button
@@ -48,9 +47,6 @@ export default function StatsCard({
         className={cn(
           "w-full rounded-md bg-white-100 dark:bg-dark-102 px-4 py-5 shadow-sm "
         )}
-        style={{
-          backgroundColor: isCardActive ? defaultCardColor : "",
-        }}
       >
         <FlexRowStart className="w-full">
           {renderStatIcon(name, activeCardName)}
@@ -77,44 +73,28 @@ export default function StatsCard({
           <FlexRowStartCenter
             className={cn(
               "w-auto px-2 py-1 rounded-md",
-              isCardActive
-                ? "bg-white-300/40"
-                : percentageChange.increase
-                ? "bg-green-200"
-                : "bg-red-100/40"
+              percentageChange.increase ? "bg-green-200" : "bg-red-100/40"
             )}
           >
             {percentageChange.increase ? (
               <TrendingUp
                 size={15}
                 className={cn(
-                  isCardActive
-                    ? "text-white-100"
-                    : percentageChange.increase
-                    ? "text-green-100"
-                    : "text-red-305"
+                  percentageChange.increase ? "text-green-100" : "text-red-305"
                 )}
               />
             ) : (
               <TrendingDown
                 size={15}
                 className={cn(
-                  isCardActive
-                    ? "text-white-100"
-                    : percentageChange.increase
-                    ? "text-green-100"
-                    : "text-red-305"
+                  percentageChange.increase ? "text-green-100" : "text-red-305"
                 )}
               />
             )}
             <span
               className={cn(
                 "text-[10px] font-ppReg",
-                isCardActive
-                  ? "text-white-100"
-                  : percentageChange.increase
-                  ? "text-green-100"
-                  : "text-red-305"
+                percentageChange.increase ? "text-green-100" : "text-red-305"
               )}
             >
               {percentageChange.value}
@@ -135,9 +115,7 @@ function renderStatIcon(name: string, activeCardName: string) {
         size={35}
         className={cn(
           "p-2 rounded-md dark:bg-dark-200 transition ease-in-out",
-          isCardActive
-            ? "bg-white-200/40 text-white-100"
-            : "bg-white-300/40 text-blue-100"
+          "bg-white-200/40 text-white-100"
         )}
       />
     );
@@ -148,9 +126,7 @@ function renderStatIcon(name: string, activeCardName: string) {
         size={35}
         className={cn(
           "p-2 rounded-md dark:bg-dark-200 transition ease-in-out",
-          isCardActive
-            ? "bg-white-200/40 text-white-100"
-            : "bg-white-300/40 text-blue-100"
+          "bg-white-200/40 text-white-100"
         )}
       />
     );
@@ -161,9 +137,7 @@ function renderStatIcon(name: string, activeCardName: string) {
         size={35}
         className={cn(
           "p-2 rounded-md dark:bg-dark-200 transition ease-in-out",
-          isCardActive
-            ? "bg-white-200/40 text-white-100"
-            : "bg-white-300/40 text-blue-100"
+          "bg-white-200/40 text-white-100"
         )}
       />
     );

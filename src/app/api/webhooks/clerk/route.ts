@@ -54,6 +54,7 @@ export const handler = CatchError(async (req: NextRequest) => {
     const user = await prisma.users.findFirst({
       where: { email },
     });
+    const users = await prisma.users.findMany();
     const fullname =
       first_name === null
         ? last_name
@@ -70,6 +71,7 @@ export const handler = CatchError(async (req: NextRequest) => {
           email,
           avatar: image_url,
           auth_method: "clerk",
+          role: users.length === 0 ? "admin" : "user",
         },
       });
 

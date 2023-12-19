@@ -4,7 +4,6 @@ import {
   FlexColStart,
   FlexColStartCenter,
 } from "@/components/Flex";
-import ClerkAuth from "@/components/auth/clerk/ClerkAuth";
 import CredentialsAuth from "@/components/auth/nextAuth/CredentialsAuth";
 import { withoutAuth } from "@/lib/auth-helpers/withoutAuth";
 import React from "react";
@@ -14,8 +13,7 @@ function AuthPage() {
     <FlexColCenter className="w-full h-screen">
       <FlexColStart className="w-full min-w-[350px] max-w-[400px] ">
         {/* Replace your prefer auth component */}
-        {/* <CredentialsAuth /> */}
-        <ClerkAuth />
+        <CredentialsAuth />
       </FlexColStart>
     </FlexColCenter>
   );

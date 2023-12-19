@@ -144,7 +144,7 @@ function SignupComp() {
     if (registerMut.error) {
       resetMutation();
       const error = (registerMut.error as any)?.response?.data as ResponseData;
-      toast.error(error.message);
+      toast.error(error?.message);
     }
     if (registerMut.data) {
       resetMutation();
