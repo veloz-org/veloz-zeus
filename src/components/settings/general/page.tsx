@@ -82,10 +82,9 @@ function GeneralSettingsTab() {
   return (
     <FlexColStart className="w-full h-full relative">
       <FlexColStart className="w-full">
-        <h1 className="text-dark-105 font-ppSB text-[15px] ">My Details</h1>
-        <p className="text-white-400 font-ppReg text-[12px] ">
-          Manage profile details
-        </p>
+        <h1 className="text-dark-105 dark:text-white-300 font-ppSB text-[15px] ">
+          My Details
+        </h1>
       </FlexColStart>
       <FlexColStart className="w-full gap-5">
         <FlexColStart className="w-auto">
@@ -93,7 +92,7 @@ function GeneralSettingsTab() {
             Full Name
           </label>
           <Input
-            className="w-full min-w-[350px] text-[12px] font-ppReg "
+            className="w-full min-w-[350px] text-[12px] font-ppReg dark:bg-dark-102 dark:border-white-300/50 "
             placeholder="Full Name"
             value={userDetails.full_name}
             name={"full_name"}
@@ -106,7 +105,7 @@ function GeneralSettingsTab() {
             Username
           </label>
           <Input
-            className="w-full min-w-[350px] text-[12px] font-ppReg "
+            className="w-full min-w-[350px] text-[12px] font-ppReg dark:bg-dark-102 dark:border-white-300/50 "
             placeholder="Username"
             value={userDetails.username}
             name={"username"}
@@ -117,7 +116,7 @@ function GeneralSettingsTab() {
         <FlexColStart className="w-auto">
           <label className="font-ppReg text-white-400 text-[11px]">Email</label>
           <Input
-            className="w-full min-w-[350px] text-[12px] font-ppReg "
+            className="w-full min-w-[350px] text-[12px] font-ppReg dark:bg-dark-102 dark:border-white-300/50 "
             placeholder="Email"
             value={userDetails.email}
             name={"email"}

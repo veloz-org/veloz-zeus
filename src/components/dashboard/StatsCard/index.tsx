@@ -55,16 +55,14 @@ export default function StatsCard({
           <FlexColStart className="w-full">
             <span
               className={cn(
-                "text-white-100 dark:text-white-100/80 text-[12px] font-ppReg",
-                isCardActive ? "text-white-100" : "text-white-400"
+                "text-white-400 dark:text-white-100/80 text-[12px] font-ppReg"
               )}
             >
               {title}
             </span>
             <h1
               className={cn(
-                "text-white-100 dark:text-white-100 text-3xl font-ppSB",
-                isCardActive ? "text-white-100" : "text-dark-105"
+                "text-dark-100 dark:text-white-100 text-3xl font-ppSB"
               )}
             >
               {numberWithCommas(value)}
@@ -115,7 +113,7 @@ function renderStatIcon(name: string, activeCardName: string) {
         size={35}
         className={cn(
           "p-2 rounded-md dark:bg-dark-200 transition ease-in-out",
-          "bg-white-200/40 text-white-100"
+          "bg-white-200/40 text-white-400 dark:text-white-100"
         )}
       />
     );
@@ -126,7 +124,7 @@ function renderStatIcon(name: string, activeCardName: string) {
         size={35}
         className={cn(
           "p-2 rounded-md dark:bg-dark-200 transition ease-in-out",
-          "bg-white-200/40 text-white-100"
+          "bg-white-200/40 text-white-400 dark:text-white-100"
         )}
       />
     );
@@ -137,7 +135,7 @@ function renderStatIcon(name: string, activeCardName: string) {
         size={35}
         className={cn(
           "p-2 rounded-md dark:bg-dark-200 transition ease-in-out",
-          "bg-white-200/40 text-white-100"
+          "bg-white-200/40 text-white-400 dark:text-white-100"
         )}
       />
     );

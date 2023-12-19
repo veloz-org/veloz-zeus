@@ -4,6 +4,7 @@ import Modal from "./Modal";
 import {
   FlexColCenter,
   FlexColStart,
+  FlexRowCenter,
   FlexRowCenterBtw,
   FlexRowStart,
   FlexRowStartBtw,
@@ -62,7 +63,7 @@ function PricingPlanModal({ closeModal }: Props) {
 
   // console.log({ userInfo });
   return (
-    <FlexColStart className="w-full h-screen absolute top-0 right-0 z-[100] bg-white-100 p-0 overflow-y-scroll">
+    <FlexColStart className="w-full h-screen absolute top-0 right-0 z-[100] bg-white-100 dark:bg-dark-100 p-0 overflow-y-scroll">
       <FlexRowStart className="px-4 py-4">
         <button
           className="underline w-auto flex gap-2 items-center justify-start"
@@ -78,14 +79,14 @@ function PricingPlanModal({ closeModal }: Props) {
         </button>
       </FlexRowStart>
       <FlexColCenter className="w-full text-center pb-5 py-2 mt-5">
-        <h1 className="text-dark-105 font-ppSB text-2xl">
+        <h1 className="text-dark-105 dark:text-white-200 font-ppSB text-2xl">
           Purchase a subscription
         </h1>
-        <p className="text-white-400 text-[12px] font-ppReg">
+        <p className="text-white-400 dark:text-white-400 text-[12px] font-ppReg">
           Choose the plan that works for you.
         </p>
       </FlexColCenter>
-      <FlexRowStart className="w-full flex-wrap p-3 ">
+      <FlexRowCenter className="w-full flex-wrap p-3 ">
         {pricingPlans.map((plan, i) => (
           <PricingCard
             key={i}
@@ -100,7 +101,7 @@ function PricingPlanModal({ closeModal }: Props) {
             loading={subscribeLoading}
           />
         ))}
-      </FlexRowStart>
+      </FlexRowCenter>
     </FlexColStart>
   );
 }
@@ -143,8 +144,8 @@ function PricingCard({
   return (
     <FlexColStart
       className={cn(
-        "w-full max-w-[400px] md:max-w-[300px] h-auto bg-white-100 shadow-md rounded-md ",
-        "border-solid border-[1px] border-white-300 "
+        "w-full max-w-[400px] md:max-w-[300px] h-auto bg-white-100 dark:bg-dark-102 shadow-md rounded-md ",
+        "border-solid border-[1px] border-white-300 dark:border-white-300/30 "
       )}
     >
       <FlexRowStartBtw className="w-full px-4 py-5 ">
@@ -192,7 +193,7 @@ function PricingCard({
             ) : (
               <X size={15} className="text-red-305" />
             )}
-            <span className="text-dark-105 font-ppReg text-[13px] ">
+            <span className="text-dark-105 dark:text-white-200 font-ppReg text-[13px] ">
               {f.title}
             </span>
           </FlexRowStartCenter>
