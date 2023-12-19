@@ -13,7 +13,6 @@
     "schema": "./src/prisma/mongo.prisma"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.28.1",
     "@prisma/client": "^5.7.0",
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-slot": "^1.0.2",

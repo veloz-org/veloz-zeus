@@ -2,7 +2,6 @@ import { NextRequest } from "next/server";
 import CatchError from "../../utils/_error";
 import { Webhook } from "svix";
 import env from "../../config/env";
-import { WebhookEvent } from "@clerk/nextjs/dist/types/server";
 import HttpException from "../../utils/exception";
 import { RESPONSE_CODE } from "../../types";
 import prisma from "@/prisma/prisma";
@@ -20,10 +19,10 @@ export const handler = CatchError(async (req: NextRequest) => {
 
   const wh = new Webhook(env.CLERK_WEBHOOK_SECRET as string);
 
-  let evt: WebhookEvent;
+  let evt;
   try {
     // Verify the webhook payload and headers
-    evt = wh.verify(wh_body, svix_required_headers as any) as WebhookEvent;
+    evt = wh.verify(wh_body, svix_required_headers as any) as any;
   } catch (_) {
     // If the verification fails, return a 400 error
     console.log(`❌ Invalid webhook signature`);

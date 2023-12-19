@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  background: rgba(86, 86, 255, 0.362);
+}
+
 /* shadcn ui */
 @layer base {
   :root {
