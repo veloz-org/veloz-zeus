@@ -54,15 +54,15 @@ function OAuth() {
   }
 
   return (
-    <FlexColStart className="w-full px-4  dark:bg-transparent ">
-      <FlexRowCenter className="w-full grid grid-cols-3">
+    <FlexColStart className="w-full dark:bg-transparent ">
+      {/* <FlexRowCenter className="w-full grid grid-cols-3">
         <span className="p-[.5px] w-full bg-white-400/30"></span>
         <span className="text-white-400 w-full text-center text-[12px] font-ppReg">
           Continue with
         </span>
         <span className="p-[.5px] w-full bg-white-400/30"></span>
       </FlexRowCenter>
-      <br />
+      <br /> */}
       <FlexColStart className="w-full">
         {supportedOAuthProviders.map((p, i) => (
           <Button

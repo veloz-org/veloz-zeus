@@ -14,8 +14,8 @@ function AuthPage() {
     <FlexColCenter className="w-full h-screen">
       <FlexColStart className="w-full min-w-[350px] max-w-[400px] ">
         {/* Replace your prefer auth component */}
-        {/* <CredentialsAuth /> */}
         <OAuth />
+        <CredentialsAuth />
       </FlexColStart>
     </FlexColCenter>
   );

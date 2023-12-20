@@ -22,7 +22,7 @@ function CredentialsAuth() {
   }
 
   return (
-    <FlexColStart className="w-full px-4  bg-white-100 dark:bg-transparent ">
+    <FlexColStart className="w-full dark:bg-transparent ">
       {activeTab === "signin" ? <SignInComp /> : <SignupComp />}
       <FlexRowStart className="w-full gap-1 pb-6">
         <span className="text-white-400 text-[12px] font-ppReg px-2 ">
@@ -79,7 +79,7 @@ function SignInComp() {
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
-      <FlexColStart className="w-full relative px-3 py-4">
+      <FlexColStart className="w-full relative py-4">
         <FlexRowCenter className="w-full grid grid-cols-3">
           <span className="p-[.5px] w-full bg-white-400/30"></span>
           <span className="text-white-400 w-full text-center text-[12px] font-ppReg">
@@ -173,7 +173,7 @@ function SignupComp() {
 
   return (
     <form className="w-full" onSubmit={handleSubmit}>
-      <FlexColStart className="w-full relative px-3 py-4">
+      <FlexColStart className="w-full relative py-4">
         <FlexRowCenter className="w-full grid grid-cols-3">
           <span className="p-[.5px] w-full bg-white-400/30"></span>
           <span className="text-white-400 w-full text-[12px] font-ppReg">
