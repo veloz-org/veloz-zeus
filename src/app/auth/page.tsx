@@ -12,7 +12,7 @@ import React from "react";
 function AuthPage() {
   return (
     <FlexColCenter className="w-full h-screen">
-      <FlexColStart className="w-full min-w-[350px] max-w-[400px] ">
+      <FlexColStart className="w-full min-w-[350px] max-w-[400px] scale-[.90] md:scale-[1] ">
         {/* Replace your prefer auth component */}
         <OAuth />
         <CredentialsAuth />
