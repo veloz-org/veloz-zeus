@@ -16,7 +16,7 @@ import React from "react";
 function TopBar() {
   const [showSlideBar, setShowSlideBar] = React.useState(false);
 
-  //  track when screen size changes
+  //track when screen size changes
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
