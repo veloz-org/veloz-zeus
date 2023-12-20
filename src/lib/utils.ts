@@ -50,7 +50,5 @@ export function generateSubscriptionRenewalMessage(
 export const Logout = () => {
   // next-auth
   NextAuthSignOut();
-
-  localStorage.clear();
   window.location.href = "/";
 };
