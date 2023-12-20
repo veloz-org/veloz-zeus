@@ -1,3 +1,5 @@
+import TopBar from "@/components/landing/navigations/TopBar";
+
 export default function RootLayout({
   children,
   pageProps,
@@ -7,7 +9,7 @@ export default function RootLayout({
 }) {
   return (
     <div className="w-full min-h-screen" suppressHydrationWarning>
-      <p className="text-white-100 font-ppReg">HEYY</p>
+      <TopBar />
       {children}
     </div>
   );
