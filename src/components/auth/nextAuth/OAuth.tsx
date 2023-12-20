@@ -3,13 +3,58 @@ import {
   FlexRowCenter,
   FlexRowStartCenter,
 } from "@/components/Flex";
+import Button from "@/components/ui/button";
+import useTheme from "@/hooks/useTheme";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 
-const supportedOAuthProviders = ["google", "github"];
+const supportedOAuthProviders = [
+  {
+    name: "google",
+    available: true,
+  },
+  {
+    name: "github",
+    available: false,
+  },
+];
+
+// get the type from supportedOAuthProviders
+type AuthType = (typeof supportedOAuthProviders)[number]["name"];
 
 function OAuth() {
+  const { theme } = useTheme();
+  const [loading, setLoading] = React.useState<
+    { name: string; loading: boolean }[]
+  >([]);
+  const errorParams = useSearchParams().get("error");
+
+  React.useEffect(() => {
+    if (errorParams) {
+      if (errorParams === "OAuthAccountNotLinked") {
+        toast.error("Email already exists, not linked with Google.");
+      }
+    }
+  }, [errorParams]);
+
+  async function handleAuth(type: AuthType) {
+    if (type === "google") {
+      // set loading
+      setLoading((prev) => [...prev, { name: type, loading: true }]);
+      // sign in
+      await signIn("google");
+      // remove loading
+      setLoading((prev) => prev.filter((d) => d.name !== type));
+    }
+    if (type === "github") {
+      await signIn("github");
+    }
+  }
+
   return (
-    <FlexColStart className="w-full px-4  bg-white-100 dark:bg-transparent ">
+    <FlexColStart className="w-full px-4  dark:bg-transparent ">
       <FlexRowCenter className="w-full grid grid-cols-3">
         <span className="p-[.5px] w-full bg-white-400/30"></span>
         <span className="text-white-400 w-full text-center text-[12px] font-ppReg">
@@ -20,17 +65,22 @@ function OAuth() {
       <br />
       <FlexColStart className="w-full">
         {supportedOAuthProviders.map((p, i) => (
-          <button
+          <Button
             key={i}
-            className="w-full px-8 py-3 rounded-md bg-white-100 hover:bg-white-100/70 border-solid border-[1px] border-white-300/30 dark:hover:bg-dark-102/70 dark:bg-dark-102 "
+            className="w-full px-8 py-3 rounded-md bg-white-100 dark:bg-dark-102/70 hover:bg-white-100/70 border-solid border-[1px] border-white-300/30 dark:hover:bg-dark-102/70 dark:bg-dark-102 disabled:opacity-[.5] disabled:cursor-not-allowed "
+            disabled={!p.available}
+            onClick={handleAuth.bind(null, p.name)}
+            isLoading={loading.find((d) => d.name === p.name)?.loading}
+            spinnerColor={theme === "dark" ? "#fff" : "#000"}
           >
             <FlexRowCenter className="gap-5">
-              {renderSocialIcon(p)}
-              <span className="text-sm text-white-300 font-ppReg">
-                Continue with {p.slice(0, 1).toUpperCase() + p.slice(1)}
+              {renderSocialIcon(p.name)}
+              <span className="text-sm text-dark-300 dark:text-white-300 font-ppReg">
+                Continue with{" "}
+                {p.name.slice(0, 1).toUpperCase() + p.name.slice(1)}
               </span>
             </FlexRowCenter>
-          </button>
+          </Button>
         ))}
       </FlexColStart>
     </FlexColStart>
@@ -39,7 +89,7 @@ function OAuth() {
 
 export default OAuth;
 
-function renderSocialIcon(type: (typeof supportedOAuthProviders)[number]) {
+function renderSocialIcon(type: AuthType) {
   let icon = null;
   const iconWidth = 20;
   const iconHeight = 20;
