@@ -7,7 +7,7 @@ import {
   FlexRowStartBtw,
   FlexRowStartCenter,
 } from "@/components/Flex";
-import { LANDING_TOP_BAR_NAV } from "@/data/navigations/landing";
+import { LANDING_TOP_BAR_NAV } from "@/data/landing/navigation";
 import useTheme from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import { ChevronRight, Menu, Moon, SunMoon, X } from "lucide-react";
