@@ -1,5 +1,5 @@
 import { FlexRowCenter, FlexRowStartCenter } from "@/components/Flex";
-import TRUSTED_MAKERS from "@/data/testimonials/trustedBy";
+import TRUSTED_MAKERS from "@/data/landing/trustedBy";
 import Image from "next/image";
 import React from "react";
 
