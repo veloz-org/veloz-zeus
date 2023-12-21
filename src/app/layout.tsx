@@ -8,6 +8,7 @@ import LayoutContextProvider from "@/context/LayoutContext";
 import DataContextProvider from "@/context/DataContext";
 import NextTopLoader from "@/components/TopLoader";
 import useTheme from "@/hooks/useTheme";
+import TopBar from "@/components/landing/navigations/TopBar";
 
 // tanstack reqct query
 const queryClient = new QueryClient();
@@ -38,9 +39,10 @@ export default function RootLayout({
         </style>
       </head>
       <body
-        className="min-h-screen dark:bg-dark-100 bg-white-200"
+        className="min-h-screen dark:bg-dark-100 bg-white-100"
         suppressHydrationWarning
       >
+        <TopBar />
         <QueryClientProvider client={queryClient}>
           <NextAuthProvider>
             {/* LayoutContext (Needed for protected routes that need shared layout) */}
