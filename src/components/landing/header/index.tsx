@@ -4,7 +4,7 @@ import TrustedBy from "../testimonials/TrustedBy";
 
 function Header() {
   return (
-    <FlexColCenter className="w-full h-full min-h-[400px] ">
+    <FlexColCenter className="w-full h-full min-h-[600px] text-center border-b-solid border-b-[1px] border-b-white-300 dark:border-b-white-600 ">
       <h1 className="text-5xl font-ppEB text-white-100">
         Ship your startup in{" "}
         <span className=" line-through text-3xl font-ppSB text-white-300 ">
