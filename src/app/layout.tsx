@@ -1,5 +1,5 @@
 "use client";
-import { ppReg, ppB, ppEB, ppSB, ppL } from "@/config/font";
+import { ppReg, ppB, ppEB, ppSB, ppL, blEB } from "@/config/font";
 import "./styles/globals.css";
 import NextAuthProvider from "@/providers/NextAuthProvider";
 import { Toaster } from "react-hot-toast";
@@ -33,6 +33,7 @@ export default function RootLayout({
               --font-ppEB: ${ppEB.style.fontFamily};
               --font-ppSB: ${ppSB.style.fontFamily};
               --font-ppL: ${ppL.style.fontFamily};
+              --font-blEB: ${blEB.style.fontFamily};
             }
           `}
         </style>
