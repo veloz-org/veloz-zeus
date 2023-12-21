@@ -6,21 +6,21 @@ import {
   FlexRowStart,
   FlexRowStartCenter,
 } from "@/components/Flex";
-import { FEATURES_DATA } from "@/data/features";
-import { Diamond, DiamondIcon, Gem } from "lucide-react";
+import { FEATURES_DATA } from "@/data/landing/features";
+import { Gem } from "lucide-react";
 import React from "react";
 
 function Features() {
   return (
-    <FlexColCenter className="w-full mx-auto md:max-w-[90%] py-9 px-8 flex-wrap">
-      <FlexColStartCenter className="w-auto md:w-auto min-w-[30%] ">
+    <FlexColCenter className="w-full mx-auto md:max-w-[95%] py-9 flex-wrap pb-9 mb-[4em]">
+      <FlexColStartCenter className="w-auto md:w-auto min-w-[30%] px-8 ">
         <h1 className="text-4xl font-ppEB text-white-100">Features</h1>
         <p className="text-white-300 text-sm font-ppReg">
           Showwcase the features your product has to offer!.
         </p>
         <br />
       </FlexColStartCenter>
-      <FlexRowCenter className="w-full mx-auto flex-wrap gap-5">
+      <FlexRowCenter className="w-full mx-auto flex-wrap gap-5 px-8">
         {FEATURES_DATA.map((f, i) => (
           <FeatureCard key={i} title={f.title} description={f.description} />
         ))}
