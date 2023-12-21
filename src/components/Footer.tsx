@@ -19,7 +19,7 @@ const legalData = [
 
 function Footer() {
   return (
-    <FlexColStart className="w-full h-auto py-9 pb-9 bg-dark-102 border-t-solid border-t-[1px] border-t-gray-100/20 ">
+    <FlexColStart className="w-full h-auto py-9 pb-9 bg-white-100/30 dark:bg-dark-102 border-t-solid border-t-[1px] border-t-gray-100/20 ">
       <div className="w-full h-full gap-10 grid grid-cols-1 md:grid-cols-3 px-9 md:px-[5em]">
         <FlexColStart className="w-full h-full">
           <FlexRowStartCenter className="gap-1">
@@ -30,15 +30,20 @@ function Footer() {
               alt="veloz logo"
               className=""
             />
-            <p className="text-white-100 text-1xl font-ppSB">Veloz</p>
+            <p className="text-dark-100 dark:text-white-100 text-1xl font-ppSB">
+              Veloz
+            </p>
           </FlexRowStartCenter>
-          <span className="text-white-300/50 font-ppReg text-[13px] ">
+          <span className="text-white-400 dark:text-white-300/50 font-ppReg text-[13px] ">
             © 2021 Veloz. All rights reserved.
           </span>
           {SOCIALS.filter((d) => d.url.length > 0).map((s, i) => (
             <a href={s.url} key={i}>
               {s.name === "twitter" ? (
-                <Twitter size={20} className="text-blue-300" />
+                <Twitter
+                  size={20}
+                  className="text-dark-100 dark:text-blue-300"
+                />
               ) : null}
             </a>
           ))}
@@ -48,7 +53,7 @@ function Footer() {
             <h1 className="text-white-400 text-[15px] font-ppSB">Links</h1>
             {LANDING_TOP_BAR_NAV.map((d, i) => (
               <Link href={d.href} key={i} className="leading-none">
-                <span className="text-white-200 text-[12px] hover:underline font-ppSB ">
+                <span className="text-dark-100 dark:text-white-200 text-[12px] hover:underline font-ppSB ">
                   {d.name}
                 </span>
               </Link>
@@ -60,7 +65,7 @@ function Footer() {
             <h1 className="text-white-400 text-[15px] font-ppSB">Legal</h1>
             {legalData.map((d, i) => (
               <Link href={d.url} key={i} className="leading-none">
-                <span className="text-white-200 text-[12px] hover:underline font-ppSB ">
+                <span className="text-dark-100 dark:text-white-200 text-[12px] hover:underline font-ppSB ">
                   {d.title}
                 </span>
               </Link>

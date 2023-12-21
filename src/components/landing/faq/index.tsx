@@ -11,13 +11,14 @@ import React from "react";
 
 function FAQ() {
   return (
-    <FlexColCenter className="w-full h-full border-t-[1px] border-t-white-300 dark:border-t-white-600 py-9 pb-9 mb-8">
-      <h1 className="text-3xl font-ppSB text-dark-100 dark:text-white-100">
+    <FlexColCenter className="relative w-full h-full border-t-[1px] border-t-white-300 dark:border-t-white-600 py-9 pb-9 mb-8">
+      <div id={"faq"} className="absolute -top-12"></div>
+      <h1 className="text-2xl md:text-3xl font-ppSB text-dark-100 dark:text-white-100">
         Frequently Asked Questions
       </h1>
       <br />
       <FlexColCenter className="w-full max-w-[75%] mx-auto">
-        <FlexColStart className="w-full border-[1px] border-white-300/40 rounded-md">
+        <FlexColStart className="w-full border-[1px] border-white-400/30 dark:border-white-300/40 rounded-md">
           {FAQ_DATA.map((f, i) => (
             <FAQDropdown
               key={f.key}
@@ -45,7 +46,7 @@ function FAQDropdown({ question, answer, _key }: FAQDropdownProps) {
 
   return (
     <FlexColStart className="w-full">
-      <FlexColStart className="w-full border-b-[1px] border-b-white-300/20 dark:border-b-white-600">
+      <FlexColStart className="w-full border-b-[1px] border-b-white-400/20 dark:border-b-white-600">
         <button
           className="w-full px-8 py-4"
           onClick={() => {
@@ -57,7 +58,7 @@ function FAQDropdown({ question, answer, _key }: FAQDropdownProps) {
           }}
         >
           <FlexRowStartBtw>
-            <span className="text-white-100 font-ppReg text-md">
+            <span className="text-dark-100 text-sm md:text-md dark:text-white-100 font-ppSB dark:font-ppReg text-md">
               {question}
             </span>
             {activeFaq.includes(_key) ? (
@@ -80,7 +81,9 @@ function FAQDropdown({ question, answer, _key }: FAQDropdownProps) {
             activeFaq.includes(_key) ? "h-auto py-4" : "h-0"
           )}
         >
-          <span className="text-white-300 font-ppL text-sm">{answer}</span>
+          <span className="text-white-400 dark:text-white-300 text-[12px] font-ppL md:text-sm">
+            {answer}
+          </span>
         </FlexColStart>
       </FlexColStart>
     </FlexColStart>

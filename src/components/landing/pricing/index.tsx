@@ -13,16 +13,23 @@ import { pricingPlans } from "@/data/pricing/plan";
 import { cn, currencyFormatter } from "@/lib/utils";
 import { ValidPricingDuration } from "@/types";
 import { CheckCheck, Zap, X } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export default function Pricing() {
-  const subscribe = () => {};
+  const { status } = useSession();
+  const subscribe = () => {
+    window.location.href =
+      status === "authenticated" ? "/app/dashboard" : "auth";
+  };
 
   return (
     <FlexColCenter className="relative w-full h-full py-[4em] border-t-[1px] border-t-white-300 dark:border-t-white-600">
       <div id={"pricing"} className="absolute -top-12"></div>
       <FlexColStartCenter className="w-auto md:w-auto min-w-[30%] px-8 ">
-        <h1 className="text-4xl font-ppEB text-white-100">Pricing</h1>
-        <p className="text-white-300 text-sm font-ppReg">
+        <h1 className="text-4xl font-ppEB text-dark-100 dark:text-white-100">
+          Pricing
+        </h1>
+        <p className="text-white-400 dark:text-white-300 text-sm font-ppReg">
           Choose your plan and get started for free!
         </p>
         <br />
@@ -67,7 +74,6 @@ function PricingCard({
   subscribeToPlan,
   recommended,
 }: PricingCardProps) {
-  const product = pricingPlans.find((d) => d.id === id);
   const features = pricingPlanFeatures.find((d) => d.id === id)?.features;
 
   return (
@@ -82,7 +88,7 @@ function PricingCard({
     >
       {recommended && (
         <FlexColCenter className="w-full absolute top-[-1em] translate-y-1">
-          <span className="text-[10px] font-ppReg px-2 py-[2px] rounded-full bg-blue-101">
+          <span className="text-[10px] text-white-100 font-ppReg px-2 py-[2px] rounded-full bg-blue-101">
             Recommended
           </span>
         </FlexColCenter>

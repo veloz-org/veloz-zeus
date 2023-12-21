@@ -18,10 +18,4 @@ export const LANDING_TOP_BAR_NAV = [
     href: "/#faq",
     external: false,
   },
-  {
-    name: "Contact",
-    key: "contact",
-    href: "/#contact",
-    external: false,
-  },
 ];

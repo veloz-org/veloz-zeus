@@ -80,6 +80,10 @@
   }
 }
 
+body {
+  scroll-behavior: smooth;
+}
+
 #loading-spinner {
   animation: spinner 0.5s linear infinite;
   border-radius: 30px;

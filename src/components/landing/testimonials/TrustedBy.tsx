@@ -24,8 +24,11 @@ function TrustedBy() {
         ))}
       </FlexRowCenter>
       <FlexRowCenter>
-        <p className="text-white-300 text-sm font-ppReg">
-          Trusted by <span className="font-ppSB text-white-100">100+</span>{" "}
+        <p className=" text-white-400 dark:text-white-300 text-sm font-ppReg">
+          Trusted by{" "}
+          <span className="font-ppSB text-dark-100 dark:text-white-100">
+            100+
+          </span>{" "}
           Makers
         </p>
       </FlexRowCenter>
