@@ -28,6 +28,7 @@ export const pricingPlans = [
     },
     product_id: 149209,
     variant_id: 183213,
+    recommended: true,
   },
   {
     id: "premium_123918",
