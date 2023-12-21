@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { FullPageLoader } from "@/components/Loader";
 import { FAQ, Features, Header, Pricing } from "@/components/landing";
 import TopBar from "@/components/landing/navigations/TopBar";
+import WaitlistPage from "@/components/waitlist/page";
 import usePageLoaded from "@/hooks/usePageLoaded";
 import React from "react";
 
@@ -16,14 +17,17 @@ export default function Home() {
       {!pageloaded && <FullPageLoader />}
 
       {/* navigation section */}
-      <TopBar />
+      {/* <TopBar /> */}
 
       {/* components sections */}
-      <Header />
-      <Features />
-      <Pricing />
-      <FAQ />
-      <Footer />
+      {/* <Header /> */}
+      {/* <Features /> */}
+      {/* <Pricing /> */}
+      {/* <FAQ /> */}
+      {/* <Footer /> */}
+
+      {/* waitlist page */}
+      <WaitlistPage />
     </FlexColStart>
   );
 }
