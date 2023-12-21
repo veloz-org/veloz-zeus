@@ -170,6 +170,7 @@ module.exports = {
         ppEB: ["var(--font-ppEB)"],
         ppSB: ["var(--font-ppSB)"],
         ppL: ["var(--font-ppL)"],
+        blEB: ["var(--font-blEB)"],
       },
     },
   },
