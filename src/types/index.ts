@@ -36,6 +36,7 @@ export interface PricingPlan {
   };
   variant_id: number;
   product_id: number;
+  recommended?: boolean;
 }
 
 // pricing plan feature Types Definition
