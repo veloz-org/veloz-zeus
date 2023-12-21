@@ -2,36 +2,47 @@ import {
   FlexColCenter,
   FlexColStart,
   FlexColStartCenter,
+  FlexRowCenter,
+  FlexRowStart,
+  FlexRowStartCenter,
 } from "@/components/Flex";
+import { FEATURES_DATA } from "@/data/features";
 import { Diamond, DiamondIcon, Gem } from "lucide-react";
 import React from "react";
 
 function Features() {
   return (
-    <FlexColStartCenter className="w-full py-9">
-      <h1 className="text-4xl font-ppEB text-white-100">Features</h1>
-      <p className="text-white-300 text-sm font-ppReg">
-        Showwcase the features your product has to offer!.
-      </p>
-      <br />
-      <FeatureCard />
-    </FlexColStartCenter>
+    <FlexColCenter className="w-full mx-auto md:max-w-[90%] py-9 px-8 flex-wrap">
+      <FlexColStartCenter className="w-auto md:w-auto min-w-[30%] ">
+        <h1 className="text-4xl font-ppEB text-white-100">Features</h1>
+        <p className="text-white-300 text-sm font-ppReg">
+          Showwcase the features your product has to offer!.
+        </p>
+        <br />
+      </FlexColStartCenter>
+      <FlexRowCenter className="w-full mx-auto flex-wrap gap-5">
+        {FEATURES_DATA.map((f, i) => (
+          <FeatureCard key={i} title={f.title} description={f.description} />
+        ))}
+      </FlexRowCenter>
+    </FlexColCenter>
   );
 }
 
 export default Features;
 
-function FeatureCard() {
+type FeatureCardProps = {
+  title: string;
+  description: string;
+};
+
+function FeatureCard({ title, description }: FeatureCardProps) {
   return (
-    <FlexColStart className="w-full max-w-[300px] h-auto p-5 rounded-lg border-[.5px] dark:border-white-300/20 ">
+    <FlexColStart className="w-full md:max-w-[250px] h-auto p-5 rounded-lg border-[.5px] dark:border-white-300/20 ">
       <Gem size={40} className=" p-2 bg-blue-200 text-blue-101 rounded-full " />
       <FlexColStart className="w-full">
-        <h1 className="text-2xl font-ppSB">Title</h1>
-        <p className="text-white-300 text-xs font-ppReg">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos earum
-          eligendi quasi odio magnam cupiditate, officiis iusto aliquam dicta
-          impedit!
-        </p>
+        <h1 className="text-1xl font-ppSB">{title}</h1>
+        <p className="text-white-300 text-xs font-ppReg">{description}</p>
       </FlexColStart>
     </FlexColStart>
   );
