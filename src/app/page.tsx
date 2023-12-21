@@ -17,17 +17,17 @@ export default function Home() {
       {!pageloaded && <FullPageLoader />}
 
       {/* navigation section */}
-      {/* <TopBar /> */}
+      <TopBar />
 
       {/* components sections */}
-      {/* <Header /> */}
-      {/* <Features /> */}
-      {/* <Pricing /> */}
-      {/* <FAQ /> */}
-      {/* <Footer /> */}
+      <Header />
+      <Features />
+      <Pricing />
+      <FAQ />
+      <Footer />
 
-      {/* waitlist page */}
-      <WaitlistPage />
+      {/* waitlist page (if in use, comment out the above sections including the footer and topbar) */}
+      {/* <WaitlistPage /> */}
     </FlexColStart>
   );
 }
