@@ -1,9 +1,13 @@
+"use client";
+import { FlexColStart } from "@/components/Flex";
+import Header from "@/components/landing/header";
 import Image from "next/image";
+import { useEffect } from "react";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen">
-      <p className="text-dark-105 font-ppSB">Welcome</p>
-    </main>
+    <FlexColStart className="w-full min-h-screen mt-[4.5em]">
+      <Header />
+    </FlexColStart>
   );
 }
