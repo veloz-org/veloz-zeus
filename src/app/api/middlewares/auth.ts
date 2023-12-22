@@ -28,3 +28,22 @@ export function isAuthenticated(fn: Function) {
     return await fn(req);
   };
 }
+
+export function isAdmin(fn: Function) {
+  return async (req: NextApiRequest) => {
+    const userId = (req as any)?.user?.id;
+
+    if (!userId) {
+      throw new HttpException(RESPONSE_CODE.UNAUTHORIZED, "Unauthorized", 401);
+    }
+
+    const admin = await prisma.users.findFirst({
+      where: { uId: userId, role: "admin" },
+    });
+
+    if (!admin) {
+      throw new HttpException(RESPONSE_CODE.UNAUTHORIZED, "Unauthorized", 401);
+    }
+    return await fn(req);
+  };
+}
