@@ -23,7 +23,7 @@ export default function Pricing() {
   };
 
   return (
-    <FlexColCenter className="relative w-full h-full py-[4em] border-t-[1px] border-t-white-300 dark:border-t-white-600">
+    <FlexColCenter className="relative w-full h-auto py-[4em] border-t-[1px] border-t-white-300 dark:border-t-white-600">
       <div id={"pricing"} className="absolute -top-12"></div>
       <FlexColStartCenter className="w-auto md:w-auto min-w-[30%] px-8 ">
         <h1 className="text-4xl font-ppEB text-dark-100 dark:text-white-100">
