@@ -14,11 +14,20 @@ export default class WaitlistController {
   // get waitlist
   public async getWaitlist(req: NextRequest) {
     const waitlist = await prisma.waitlist.findMany();
+
+    const _waitlist = waitlist.map((user) => {
+      return {
+        email: user.email,
+        date: user.createdAt,
+        id: user.id,
+      };
+    });
+
     return sendResponse.success(
       RESPONSE_CODE.SUCCESS,
       "Success",
       200,
-      waitlist
+      _waitlist
     );
   }
 

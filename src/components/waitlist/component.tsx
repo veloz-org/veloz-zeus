@@ -7,8 +7,10 @@ import { addToWaitlist } from "@/http/requests";
 import React from "react";
 import toast from "react-hot-toast";
 import { ResponseData } from "@/types";
+import useTheme from "@/hooks/useTheme";
 
 export default function WaitlistFormComponent() {
+  const { theme } = useTheme();
   const [email, setEmail] = React.useState<string>("");
   const addToWaitlistMutation = useMutation({
     mutationFn: async (data: any) => await addToWaitlist(data),
@@ -51,6 +53,7 @@ export default function WaitlistFormComponent() {
           className="w-full max-w-[150px] bg-blue-101 hover:bg-blue-101/80 rounded-full translate3-x-4"
           isLoading={addToWaitlistMutation.isPending}
           onClick={() => addToWaitlistMutation.mutate({ email })}
+          spinnerColor={theme === "dark" ? "#fff" : "#000"}
         >
           <FlexRowStartCenter className="gap-2">
             <span className="text-white-100 text-[11px] font-ppSB">

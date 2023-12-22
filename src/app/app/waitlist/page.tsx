@@ -87,6 +87,19 @@ function WaitlistMainPage() {
     setLoading((prev) => [...prev, { id: email, loading: true }]);
   };
 
+  const exportWaitlist = () => {
+    const csvData = convertToCsvData(
+      waitlist.map((w) => {
+        return {
+          email: w.email,
+          date: w.date,
+          formatedDate: dayjs(w.date).format("MMMM DD, YYYY h:mm A"),
+        };
+      })
+    );
+    downloadCSV(csvData, "waitlist.csv");
+  };
+
   return (
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full px-8 py-4">
@@ -107,7 +120,11 @@ function WaitlistMainPage() {
       ) : (
         <FlexColStart className="w-full px-8 py-4">
           <FlexRowEnd className="w-full">
-            <Button className="bg-blue-101 py-0 h-[30px] scale-[.95]">
+            <Button
+              className="bg-blue-101 py-0 h-[30px] scale-[.95]"
+              disabled={waitlist.length === 0}
+              onClick={exportWaitlist}
+            >
               <span className="text-white-100 font-ppReg text-xs">Export</span>
             </Button>
           </FlexRowEnd>
@@ -169,3 +186,28 @@ function WaitlistMainPage() {
 
 // Only show this page to user having the admin role
 export default OnlyAdminHOF(WaitlistMainPage);
+
+function downloadCSV(data: string[][], filename: string) {
+  const csvContent = data.map((row) => row.join(",")).join("\n");
+  const blob = new Blob([csvContent], { type: "text/plain" });
+  const url = window.URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+
+  document.body.appendChild(a);
+  a.click();
+
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+}
+
+function convertToCsvData(
+  data: { email: string; date: string; formatedDate: string }[]
+) {
+  const row = ["Email", "Date", "Formated Date"];
+  const csvData = data.map((d) => [d.email, d.date, d.formatedDate]);
+  console.log({ csvData });
+  return [row, ...csvData];
+}
