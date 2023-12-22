@@ -103,8 +103,10 @@ function WaitlistMainPage() {
   return (
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full px-8 py-4">
-        <h1 className="text-white-100 font-ppSB">Waitlist</h1>
-        <p className="text-white-300 text-xs font-ppReg">
+        <h1 className="text-dark-100 dark:text-white-100 font-ppSB">
+          Waitlist
+        </h1>
+        <p className="text-white-400 dark:text-white-300 text-xs font-ppReg">
           View and manage waitlist
         </p>
       </FlexColStart>
@@ -131,12 +133,12 @@ function WaitlistMainPage() {
           <br />
           <Table>
             <TableCaption>
-              <p className="text-white-300 text-xs font-ppReg">
+              <p className="text-white-400 dark:text-white-300 text-xs font-ppReg">
                 Showing {waitlist.length} waitlist users
               </p>
             </TableCaption>
             <TableHeader>
-              <TableRow className="dark:hover:bg-dark-102 font-ppSB border-b-white-300/20 ">
+              <TableRow className="dark:hover:bg-dark-102 bg-dark-100 font-ppSB border-b-white-300/20 ">
                 <TableHead className="w-[250px] text-white-300">
                   Emails
                 </TableHead>
@@ -150,13 +152,15 @@ function WaitlistMainPage() {
               {waitlist.map((w, i) => (
                 <TableRow
                   key={i}
-                  className="dark:hover:bg-transparent odd:bg-dark-100 even:bg-white-400/40"
+                  className="dark:hover:bg-transparent dark:odd:bg-dark-100 dark:even:bg-white-400/40 odd:bg-white-300/20 even:bg-dark-300/30"
                 >
                   <TableCell className="font-ppReg">
-                    <span className="text-white-100 text-xs">{w.email}</span>
+                    <span className="text-dark-100 dark:text-white-100 text-xs">
+                      {w.email}
+                    </span>
                   </TableCell>
                   <TableCell className="font-ppReg">
-                    <span className="text-white-100 text-xs">
+                    <span className="text-dark-100 dark:text-white-100 text-xs">
                       {dayjs(w.date).fromNow()}
                     </span>
                   </TableCell>
