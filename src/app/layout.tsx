@@ -23,7 +23,7 @@ export default function RootLayout({
   useTheme();
 
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <style jsx global>
           {`
@@ -39,7 +39,7 @@ export default function RootLayout({
         </style>
       </head>
       <body
-        className="min-h-screen scroll-smooth overflow-auto dark:bg-dark-100 bg-white-100"
+        className="h-screen overflow-hidden dark:bg-dark-100 bg-white-100"
         suppressHydrationWarning
       >
         <QueryClientProvider client={queryClient}>
