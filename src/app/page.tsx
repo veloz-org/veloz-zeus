@@ -13,7 +13,7 @@ export default function Home() {
   const pageloaded = usePageLoaded(1000);
 
   return (
-    <FlexColStart className="w-full min-h-screen mt-[4.5em] scroll-smooth">
+    <FlexColStart className="w-full h-screen hideScrollBar overflow-auto mt-[4.5em] scroll-smooth">
       {!pageloaded && <FullPageLoader />}
 
       {/* navigation section */}
