@@ -99,3 +99,20 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.hideScrollBar::-webkit-scrollbar {
+  /* customize it */
+  width: 3px;
+  background: transparent;
+}
+
+.hideScrollBar::-webkit-scrollbar-thumb {
+  /* customize it */
+  background: #777;
+  border-radius: 30px;
+}
+
+.hideScrollBar::-webkit-scrollbar-track {
+  /* customize it */
+  background: transparent;
+}
