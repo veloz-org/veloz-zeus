@@ -116,3 +116,9 @@ body {
   /* customize it */
   background: transparent;
 }
+
+.hideScrollBar2::-webkit-scrollbar {
+  /* customize it */
+  width: 0px;
+  background: transparent;
+}

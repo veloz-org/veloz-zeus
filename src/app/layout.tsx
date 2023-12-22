@@ -39,7 +39,7 @@ export default function RootLayout({
         </style>
       </head>
       <body
-        className="h-screen overflow-hidden dark:bg-dark-100 bg-white-100"
+        className="h-screen hideScrollBar2 scroll-smooth dark:bg-dark-100 bg-white-100"
         suppressHydrationWarning
       >
         <QueryClientProvider client={queryClient}>
