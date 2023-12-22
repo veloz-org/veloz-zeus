@@ -7,6 +7,10 @@ import { RESPONSE_CODE } from "../../types";
 import prisma from "@/prisma/prisma";
 import sendResponse from "../../utils/sendResponse";
 
+/**
+ * @description Verify webhook signature for clerk (CURRENTLY NOT IN USE, BUT IF YOU WISH TO ADD CLERK AUTHENTICATION, YOU CAN USE THIS)
+ */
+
 export const handler = CatchError(async (req: NextRequest) => {
   const wh_body = await req.text();
   const headers = req.headers;
@@ -69,7 +73,6 @@ export const handler = CatchError(async (req: NextRequest) => {
           username: fullname.toLowerCase().replace(/\s/g, ""),
           email,
           avatar: image_url,
-          auth_method: "clerk",
           role: users.length === 0 ? "admin" : "user",
         },
       });
