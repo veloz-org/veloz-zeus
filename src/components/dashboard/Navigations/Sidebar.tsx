@@ -6,6 +6,7 @@ import {
   FlexRowStartCenter,
 } from "@/components/Flex";
 import Modal from "@/components/Modal";
+import { OnlyAdmin } from "@/components/ProtectedComp";
 import { Spinner } from "@/components/Spinner";
 import Button from "@/components/ui/button";
 import { DataContext } from "@/context/DataContext";
@@ -17,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { ResponseData, UserSubscriptions } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import {
+  Contact,
   LayoutDashboard,
   PanelRightClose,
   PanelRightOpen,
@@ -39,6 +41,10 @@ const navigations = [
     link: "/app/dashboard",
   },
   {
+    name: "Waitlist",
+    link: "/app/waitlist",
+  },
+  {
     name: "Settings",
     link: "/app/settings",
   },
@@ -50,7 +56,10 @@ function Sidebar({}: SidebarProps) {
   const { activePage } = useContext(LayoutContext);
   const { theme } = useTheme();
 
-  const navListStyle = (pageName: string, navName: string) => {
+  const navListStyle = (
+    pageName: string,
+    navName: string
+  ): { btn: string; icon: string } => {
     const notActive = "text-gray-100 bg-none",
       Active = "text-white-100 bg-blue-100",
       iconActive = "#fff",
@@ -99,24 +108,48 @@ function Sidebar({}: SidebarProps) {
         </button>
       </FlexRowStartCenter>
       <FlexColStart className="w-full h-full px-5">
-        {navigations.map((nav, i) => (
-          <Link
-            key={i}
-            href={nav.link}
-            className={cn(
-              "w-full h-auto group px-4 py-3 rounded-sm flex items-center justify-start gap-2 font-ppReg transition ease-in-out text-[14px]",
-              navListStyle(activePage, nav.name.toLowerCase()).btn
-            )}
-          >
-            {renderNavIcons(
-              nav.name,
-              navListStyle(activePage, nav.name.toLowerCase()).icon
-            )}
-            <span className="group-hover:text-white-100 transition ease-in-out">
-              {nav.name}
-            </span>
-          </Link>
-        ))}
+        {navigations.map((nav, i) => {
+          if (nav.name.toLowerCase() === "waitlist") {
+            return (
+              <OnlyAdmin key={i}>
+                <Link
+                  key={i}
+                  href={nav.link}
+                  className={cn(
+                    "w-full h-auto group px-4 py-3 rounded-sm flex items-center justify-start gap-2 font-ppReg transition ease-in-out text-[14px]",
+                    navListStyle(activePage, nav.name.toLowerCase()).btn
+                  )}
+                >
+                  {renderNavIcons(
+                    nav.name,
+                    navListStyle(activePage, nav.name.toLowerCase()).icon
+                  )}
+                  <span className="group-hover:text-white-100 transition ease-in-out">
+                    {nav.name}
+                  </span>
+                </Link>
+              </OnlyAdmin>
+            );
+          }
+          return (
+            <Link
+              key={i}
+              href={nav.link}
+              className={cn(
+                "w-full h-auto group px-4 py-3 rounded-sm flex items-center justify-start gap-2 font-ppReg transition ease-in-out text-[14px]",
+                navListStyle(activePage, nav.name.toLowerCase()).btn
+              )}
+            >
+              {renderNavIcons(
+                nav.name,
+                navListStyle(activePage, nav.name.toLowerCase()).icon
+              )}
+              <span className="group-hover:text-white-100 transition ease-in-out">
+                {nav.name}
+              </span>
+            </Link>
+          );
+        })}
       </FlexColStart>
 
       {/* upgrade plan widget */}
@@ -224,6 +257,17 @@ function renderNavIcons(name: string, style: string) {
   if (_name === "billing") {
     icon = (
       <WalletCards
+        size={20}
+        className={cn(
+          "group-hover:text-white-100 transition ease-in-out",
+          style
+        )}
+      />
+    );
+  }
+  if (_name === "waitlist") {
+    icon = (
+      <Contact
         size={20}
         className={cn(
           "group-hover:text-white-100 transition ease-in-out",
