@@ -17,6 +17,7 @@ export function OnlyAdminHOF<P extends { children: React.ReactNode }>(
   const ComponentWithAuth = (props: P) => {
     const { userInfo } = useContext(DataContext);
     const router = useRouter();
+    if (!userInfo) return null;
     if (userInfo?.role !== "admin") {
       router.push("/app/dashboard");
       return null;
