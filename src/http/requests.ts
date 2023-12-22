@@ -47,3 +47,11 @@ export const getWaitlist = async () => {
   const resp = await $axios.get("/waitlist");
   return resp.data;
 };
+
+// delete from waitlist
+export const deleteFromWaitlist = async (email: string) => {
+  const resp = await $axios.delete(
+    `/waitlist?email=${encodeURIComponent(email)}`
+  );
+  return resp.data;
+};
