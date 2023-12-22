@@ -120,3 +120,12 @@ model Subscriptions {
     @@index([uId])
     @@map(name: "subscriptions")
 }
+
+// waitlist
+model Waitlist {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    email     String   @unique
+    createdAt DateTime @default(now())
+
+    @@map(name: "waitlist")
+}
