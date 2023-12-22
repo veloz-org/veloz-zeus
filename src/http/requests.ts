@@ -35,3 +35,15 @@ export const updateUserDetails = async (data: any) => {
   const resp = await $axios.patch("/user", data);
   return resp.data;
 };
+
+// add to waitlist
+export const addToWaitlist = async (data: any) => {
+  const resp = await $axios.post("/waitlist", data);
+  return resp.data;
+};
+
+// get waitlist
+export const getWaitlist = async () => {
+  const resp = await $axios.get("/waitlist");
+  return resp.data;
+};
