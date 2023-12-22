@@ -57,3 +57,12 @@ export const updateUserDetailsSchema = zod.object({
     required_error: "Avatar is required",
   }),
 });
+
+// waitlist
+export const addToWaitlistSchema = zod.object({
+  email: zod
+    .string({
+      required_error: "Email is required",
+    })
+    .email(),
+});
