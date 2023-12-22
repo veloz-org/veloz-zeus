@@ -6,7 +6,7 @@ import WaitlistFormComponent from "./component";
 
 function WaitlistPage() {
   return (
-    <FlexColStartCenter className="w-full h-screen py-[4em]">
+    <FlexColStartCenter className="w-full h-full py-[4em] hideScrollBar">
       <FlexColCenter className="w-full max-w-[90%]">
         <FlexColCenter className="w-full text-center mb-4">
           <Image
@@ -20,12 +20,12 @@ function WaitlistPage() {
             YOUR SAAS LAUNCH PAD
           </p>
           <p className="dark:text-white-100 font-ppSB">
-            <span className=" bg-gradient-to-b from-white-100/30 to-white-100/70 inline-block text-transparent bg-clip-text text-3xl md:text-3xl">
+            <span className="text-dark-100/50 bg-gradient-to-b dark:from-white-100/30 dark:to-white-100/70 inline-block dark:text-transparent bg-clip-text text-3xl md:text-3xl">
               Get early access to
             </span>
             <br />
             <span
-              className=" text-white-100 text-4xl md:text-5xl "
+              className="text-dark-100 dark:text-white-100 text-4xl md:text-5xl "
               style={blEB.style}
             >
               Veloz
