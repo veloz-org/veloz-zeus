@@ -1,6 +1,7 @@
 import { FlexColCenter, FlexColStartCenter } from "@/components/Flex";
 import React from "react";
 import TrustedBy from "../testimonials/TrustedBy";
+import WaitlistFormComponent from "@/components/waitlist/component";
 
 function Header() {
   return (
@@ -19,6 +20,8 @@ function Header() {
       </p>
       <br />
       <TrustedBy />
+      <br />
+      <WaitlistFormComponent />
     </FlexColCenter>
   );
 }
