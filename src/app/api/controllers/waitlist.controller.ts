@@ -13,22 +13,13 @@ type ReqUserObj = {
 export default class WaitlistController {
   // get waitlist
   public async getWaitlist(req: NextRequest) {
-    const user = (req as any)["user"] as ReqUserObj;
-
-    const _user = await prisma.users.findFirst({
-      where: {
-        uId: user.id,
-      },
-    });
-
-    if (!_user || _user.role !== "admin") {
-      throw new HttpException(RESPONSE_CODE.UNAUTHORIZED, "Unauthorized", 401);
-    }
-
     const waitlist = await prisma.waitlist.findMany();
-    return sendResponse.success(RESPONSE_CODE.SUCCESS, "Success", 200, {
-      waitlist,
-    });
+    return sendResponse.success(
+      RESPONSE_CODE.SUCCESS,
+      "Success",
+      200,
+      waitlist
+    );
   }
 
   // add to waitlist
@@ -60,6 +51,42 @@ export default class WaitlistController {
     });
 
     // handle background job of sending email to user(admin)
+
+    return sendResponse.success(RESPONSE_CODE.SUCCESS, "Success", 200);
+  }
+
+  // delete from waitlist
+  public async deleteFromWaitlist(req: NextRequest) {
+    const { searchParams } = new URL(req.url);
+    const email = searchParams.get("email") as string;
+
+    if (!email) {
+      throw new HttpException(
+        RESPONSE_CODE.USER_NOT_FOUND,
+        "User not found",
+        400
+      );
+    }
+
+    const user = await prisma.waitlist.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      throw new HttpException(
+        RESPONSE_CODE.USER_NOT_FOUND,
+        "User not found",
+        400
+      );
+    }
+
+    await prisma.waitlist.delete({
+      where: {
+        email,
+      },
+    });
 
     return sendResponse.success(RESPONSE_CODE.SUCCESS, "Success", 200);
   }
