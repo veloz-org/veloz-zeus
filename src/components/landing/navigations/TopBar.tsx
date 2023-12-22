@@ -55,7 +55,7 @@ function TopBar() {
       <FlexRowStartCenter
         className={cn(
           "w-full h-auto py-4 px-5 dark:bg-dark-100/30 bg-white-100/30 border-b-solid border-b-[.1px] dark:border-b-white-100/20 border-b-white-400 justify-between ",
-          isScrolledPast ? "backdrop-blur" : ""
+          isScrolledPast ? "backdrop-blur-md" : "backdrop-blur-md"
         )}
       >
         <Link href="/">

@@ -50,18 +50,17 @@ export default function WaitlistFormComponent() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <Button
-          className="w-full max-w-[150px] bg-blue-101 hover:bg-blue-101/80 rounded-full translate3-x-4"
+          className="w-full max-w-[150px] bg-blue-101 hover:bg-blue-101/80 rounded-full translate3-x-4 text-white-100 disabled:text-white-300 "
           isLoading={addToWaitlistMutation.isPending}
           onClick={() => addToWaitlistMutation.mutate({ email })}
           spinnerColor={theme === "dark" ? "#fff" : "#000"}
+          disabled={email.length === 0 ?? addToWaitlistMutation.isPending}
         >
           <FlexRowStartCenter className="gap-2">
-            <span className="text-white-100 text-[11px] font-ppSB">
-              Join Waitlist
-            </span>
+            <span className=" text-[11px] font-ppSB">Join Waitlist</span>
             <ChevronRight
               size={15}
-              className="text-white-100 group-hover:translate-x-2 translate-x-0 transition-all"
+              className=" group-hover:translate-x-2 translate-x-0 transition-all"
             />
           </FlexRowStartCenter>
         </Button>
