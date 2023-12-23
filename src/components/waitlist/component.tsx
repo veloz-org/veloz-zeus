@@ -50,7 +50,7 @@ export default function WaitlistFormComponent() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <Button
-          className="w-full max-w-[150px] bg-blue-101 hover:bg-blue-101/80 rounded-full translate3-x-4 text-white-100 disabled:text-white-300 "
+          className="w-full max-w-[150px] bg-blue-101 hover:bg-blue-101/80 rounded-full translate3-x-4 text-white-100 disabled:text-white-400/30 dark:disabled:text-white-300 "
           isLoading={addToWaitlistMutation.isPending}
           onClick={() => addToWaitlistMutation.mutate({ email })}
           spinnerColor={theme === "dark" ? "#fff" : "#000"}

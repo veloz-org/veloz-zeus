@@ -67,7 +67,7 @@ function OAuth() {
         {supportedOAuthProviders.map((p, i) => (
           <Button
             key={i}
-            className="w-full px-8 py-3 rounded-md bg-white-100 dark:bg-dark-102/70 hover:bg-white-100/70 border-solid border-[1px] border-white-300/30 dark:hover:bg-dark-102/70 dark:bg-dark-102 disabled:opacity-[.5] disabled:cursor-not-allowed "
+            className="w-full px-8 py-3 rounded-md bg-white-100 dark:bg-dark-102/70 hover:bg-white-100/70 border-solid border-[1px] border-white-400/40 dark:hover:bg-dark-102/70 dark:bg-dark-102 disabled:opacity-[.5] disabled:cursor-not-allowed "
             disabled={!p.available}
             onClick={handleAuth.bind(null, p.name)}
             isLoading={loading.find((d) => d.name === p.name)?.loading}

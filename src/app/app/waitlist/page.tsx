@@ -131,7 +131,7 @@ function WaitlistMainPage() {
             </Button>
           </FlexRowEnd>
           <br />
-          <Table>
+          <Table className="hideScrollBar">
             <TableCaption>
               <p className="text-white-400 dark:text-white-300 text-xs font-ppReg">
                 Showing {waitlist.length} waitlist users
@@ -148,11 +148,11 @@ function WaitlistMainPage() {
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="hideScrollBar">
               {waitlist.map((w, i) => (
                 <TableRow
                   key={i}
-                  className="dark:hover:bg-transparent dark:odd:bg-dark-100 dark:even:bg-white-400/40 odd:bg-white-300/20 even:bg-dark-300/30"
+                  className="dark:hover:bg-transparent hideScrollBar dark:odd:bg-dark-100 dark:even:bg-white-400/40 odd:bg-white-300/20 even:bg-dark-300/30"
                 >
                   <TableCell className="font-ppReg">
                     <span className="text-dark-100 dark:text-white-100 text-xs">
