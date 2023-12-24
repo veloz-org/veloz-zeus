@@ -8,6 +8,7 @@ import LayoutContextProvider from "@/context/LayoutContext";
 import DataContextProvider from "@/context/DataContext";
 import NextTopLoader from "@/components/TopLoader";
 import useTheme from "@/hooks/useTheme";
+import Seo from "@/components/Seo";
 
 // tanstack reqct query
 const queryClient = new QueryClient();
@@ -37,6 +38,9 @@ export default function RootLayout({
             }
           `}
         </style>
+
+        {/* Seo metatags */}
+        <Seo />
       </head>
       <body
         className="h-screen hideScrollBar2 scroll-smooth dark:bg-dark-100 bg-white-100"
