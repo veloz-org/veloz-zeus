@@ -5,6 +5,7 @@ import prisma from "../../../../prisma/prisma";
 import PasswordManager from "../../utils/passwordManage";
 import HttpException from "../../utils/exception";
 import { RESPONSE_CODE } from "../../types";
+import GitHubProvider from "next-auth/providers/github";
 
 type CredentialsPayload = {
   email: string;
@@ -58,6 +59,20 @@ export const nextAuthOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
+    GitHubProvider({
+      name: "github",
+      clientId: process.env.GH_CLIENT_ID as string,
+      clientSecret: process.env.GH_CLIENT_SECRET as string,
+      profile(profile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name || profile.login,
+          email: profile.email,
+          image: profile.avatar_url,
+          username: profile.login,
+        } as any;
+      },
+    }),
   ],
   callbacks: {
     async signIn({ user, account }) {
@@ -107,13 +122,57 @@ export const nextAuthOptions: NextAuthOptions = {
           );
         }
       }
+      if (account?.provider === "github") {
+        const { image, username, name, email, id } = user as any;
+
+        // check if user exist
+        const users = await prisma.users.findMany();
+        const accountWithGithubAuth =
+          users.length > 0 ? users.find((u) => u.uId === id) : null;
+
+        if (!accountWithGithubAuth) {
+          // create user
+          await prisma.users.create({
+            data: {
+              uId: id as string,
+              email: (email as string) ?? "",
+              username: username?.toLowerCase() as string,
+              fullname: name as string,
+              avatar: image as string,
+              auth_method: "oauth",
+              provider: "github",
+              role: users.length === 0 ? "admin" : "user",
+            },
+          });
+          return true;
+        }
+
+        if (accountWithGithubAuth) {
+          return true;
+        }
+      }
       return true;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uId = user?.id;
+      }
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token?.uId as string;
+      }
+      return session;
     },
     async redirect({ url, baseUrl }) {
       return `${baseUrl}/app/dashboard`;
     },
   },
-
+  secret: process.env.JWT_SECRET,
+  session: {
+    strategy: "jwt",
+  },
   pages: {
     signIn: "/auth",
     error: "/auth",
