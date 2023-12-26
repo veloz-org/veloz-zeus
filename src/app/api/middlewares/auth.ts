@@ -12,9 +12,18 @@ export function isAuthenticated(fn: Function) {
       throw new HttpException(RESPONSE_CODE.UNAUTHORIZED, "Unauthorized", 401);
     }
 
-    const user = await prisma.users.findFirst({
-      where: { email: session.user?.email as string },
-    });
+    let user = null;
+
+    // oauth provider like github sometimes dont include email
+    if (session.user.email) {
+      user = await prisma.users.findFirst({
+        where: { email: session.user?.email as string },
+      });
+    } else {
+      user = await prisma.users.findFirst({
+        where: { uId: session.user?.id as string },
+      });
+    }
 
     if (!user) {
       throw new HttpException(
