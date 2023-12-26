@@ -61,7 +61,7 @@ model Users {
     uId           String     @unique @default(cuid())
     username      String
     fullname      String?
-    email         String     @unique
+    email         String?    @unique
     avatar        String?
     auth_method   AuthMethod @default(credentials)
     provider      String?
