@@ -5,6 +5,8 @@ import prisma from "../../../prisma/prisma";
 import sendResponse from "../utils/sendResponse";
 import ZodValidation from "../utils/zodValidation";
 import HttpException from "../utils/exception";
+import resendSendMail from "../config/email/resend";
+import waitlistWelcome from "@/email-template/waitlist-welcome";
 
 type ReqUserObj = {
   id: string;
@@ -59,7 +61,9 @@ export default class WaitlistController {
       },
     });
 
-    // handle background job of sending email to user(admin)
+    // send waitlist user email
+    const emailTemp = waitlistWelcome(email, "Veloz");
+    await resendSendMail(email, "🥳 Waitlist", emailTemp);
 
     return sendResponse.success(RESPONSE_CODE.SUCCESS, "Success", 200);
   }
