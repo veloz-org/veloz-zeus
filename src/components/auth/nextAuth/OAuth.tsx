@@ -17,7 +17,7 @@ const supportedOAuthProviders = [
   },
   {
     name: "github",
-    available: false,
+    available: true,
   },
 ];
 
@@ -40,17 +40,12 @@ function OAuth() {
   }, [errorParams]);
 
   async function handleAuth(type: AuthType) {
-    if (type === "google") {
-      // set loading
-      setLoading((prev) => [...prev, { name: type, loading: true }]);
-      // sign in
-      await signIn("google");
-      // remove loading
-      setLoading((prev) => prev.filter((d) => d.name !== type));
-    }
-    if (type === "github") {
-      await signIn("github");
-    }
+    // set loading
+    setLoading((prev) => [...prev, { name: type, loading: true }]);
+    if (type === "google") await signIn("google");
+    if (type === "github") await signIn("github");
+    // remove loading
+    setLoading((prev) => prev.filter((d) => d.name !== type));
   }
 
   return (
