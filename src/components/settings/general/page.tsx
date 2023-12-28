@@ -120,7 +120,8 @@ function GeneralSettingsTab() {
             placeholder="Email"
             value={userDetails.email}
             name={"email"}
-            disabled
+            onChange={handleInputChange}
+            // disabled={(userInfo?.email as string)?.length > 0}
           />
         </FlexColStart>
         <FlexColStart>

@@ -3,7 +3,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { signOut as NextAuthSignOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 dayjs.extend(relativeTime);
 
@@ -49,6 +49,5 @@ export function generateSubscriptionRenewalMessage(
 
 export const Logout = () => {
   // next-auth
-  NextAuthSignOut();
-  window.location.href = "/";
+  signOut();
 };
