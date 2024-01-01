@@ -24,10 +24,11 @@ export default class UserController {
       },
     });
 
-    // get subscriptions
+    // get active subscriptions
     const subscriptions = await prisma.subscriptions.findMany({
       where: {
         uId: user.id,
+        status: "active",
       },
     });
 
