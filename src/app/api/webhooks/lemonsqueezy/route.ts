@@ -58,6 +58,7 @@ export const POST = CatchError(async (req: NextRequest) => {
       const user = await prisma.users.findFirst({ where: { uId: user_id } });
 
       if (!user) {
+        console.log(`${event_name.toUpperCase()} EVENT`);
         const msg = `User ${user_email} with id ${user_id} not found`;
         console.log(`❌ ${msg}`);
         throw new HttpException(RESPONSE_CODE.USER_NOT_FOUND, msg, 404);
