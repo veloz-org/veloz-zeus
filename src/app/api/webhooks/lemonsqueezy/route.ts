@@ -7,6 +7,7 @@ import { NextRequest } from "next/server";
 import crypto from "node:crypto";
 import { LS_WebhookPayload } from "../../types/lemonsqueezy_types";
 import env from "../../config/env";
+import { pricingPlans } from "@/data/pricing/plan";
 
 export const GET = (req: NextRequest) => {
   return sendResponse.success(RESPONSE_CODE.SUCCESS, "Success", 200, {
@@ -18,42 +19,44 @@ export const POST = CatchError(async (req: NextRequest) => {
   const rawBody = await req.text();
   const secret = String(env.LEMONSQUEEZY_WEBHOOK_SECRET);
 
-  // verofy webhook signature
+  // Verify webhook signature
   verifySignature(rawBody, req.headers.get("x-signature") as string, secret);
 
   const body = JSON.parse(rawBody) as LS_WebhookPayload;
 
-  // log every webhook event
+  // Log every webhook event
   console.log(body);
 
   const { data, meta } = body;
   const { event_name, custom_data } = meta;
 
-  // subscription created event
+  // Subscription events
   if (data.type === "subscriptions") {
-    // subscription created event
-    if (event_name === "subscription_created") {
-      console.log("SUBSCRIPTION CREATED EVENT");
-      const { user_id } = custom_data;
-      const {
-        status,
-        user_email,
-        user_name,
-        test_mode,
-        ends_at,
-        renews_at,
-        customer_id,
-        order_id,
-        product_id,
-        product_name,
-        variant_id,
-        variant_name,
-        store_id,
-        card_brand,
-        card_last_four,
-      } = data?.attributes;
+    const {
+      status,
+      user_email,
+      user_name,
+      test_mode,
+      ends_at,
+      renews_at,
+      customer_id,
+      order_id,
+      product_name,
+      variant_id,
+      variant_name,
+      store_id,
+      card_brand,
+      card_last_four,
+    } = data?.attributes;
+    const { user_id } = custom_data;
 
-      // check if user exists
+    if (
+      event_name === "subscription_created" ||
+      event_name === "subscription_updated"
+    ) {
+      console.log(`${event_name.toUpperCase()} EVENT`);
+
+      // Check if user exists
       const user = await prisma.users.findFirst({ where: { uId: user_id } });
 
       if (!user) {
@@ -62,7 +65,7 @@ export const POST = CatchError(async (req: NextRequest) => {
         throw new HttpException(RESPONSE_CODE.USER_NOT_FOUND, msg, 404);
       }
 
-      // prevent duplicate subscription
+      // Prevent duplicate subscription
       const userSubscription = await prisma.subscriptions.findFirst({
         where: {
           uId: user_id,
@@ -70,100 +73,17 @@ export const POST = CatchError(async (req: NextRequest) => {
         },
       });
 
+      // Update or create subscription
       if (userSubscription) {
-        const msg = `User ${user_email} with id ${user_id} is already subscribed`;
-        console.log(`❌ ${msg}`);
-        throw new HttpException(
-          RESPONSE_CODE.USER_ALREADY_SUBSCRIBED,
-          msg,
-          400
+        const _newPlan = pricingPlans.find(
+          (p) => p.product_id === Number(data?.attributes.product_id)
         );
-      }
+        const _prevPlan = pricingPlans.find(
+          (p) => p.product_id === Number(userSubscription.product_id)
+        );
 
-      // check if subscription exists
-      const subscriptionExists = await prisma.subscriptions.findFirst({
-        where: {
-          subscription_id: data.id,
-        },
-      });
-
-      if (subscriptionExists) {
-        const msg = `Duplicate subscription with id ${data.id}`;
-        console.log(`❌ ${msg}`);
-        throw new HttpException(RESPONSE_CODE.ERROR, msg, 400);
-      }
-
-      // create subscription
-      const subscription = await prisma.subscriptions.create({
-        data: {
-          // uId: user_id,
-          status,
-          user_email,
-          user_name,
-          test_mode,
-          ends_at,
-          renews_at,
-          customer_id: String(customer_id),
-          order_id: String(order_id),
-          product_id: String(product_id),
-          product_name,
-          variant_id: String(variant_id),
-          variant_name,
-          store_id: String(store_id),
-          card_brand,
-          card_last_four,
-          subscription_id: data.id,
-          user: {
-            connect: {
-              uId: user_id,
-            },
-          },
-        },
-      });
-
-      // check if subscription was created
-      if (!subscription) {
-        const msg = `Error creating subscription for user ${user_email} with id ${user_id}`;
-        console.log(`❌ ${msg}`);
-        throw new HttpException(RESPONSE_CODE.ERROR, msg, 400);
-      }
-
-      console.log(
-        `✅ Subscription created for user ${user_email} with id ${user_id}`
-      );
-    }
-    // subscription updated event
-    if (event_name === "subscription_updated") {
-      console.log("SUBSCRIPTION UPDATED EVENT");
-      const {
-        status,
-        user_email,
-        user_name,
-        test_mode,
-        ends_at,
-        renews_at,
-        customer_id,
-        order_id,
-        product_id,
-        product_name,
-        variant_id,
-        variant_name,
-        store_id,
-        card_brand,
-        card_last_four,
-      } = data?.attributes;
-      const sub_id = data?.id;
-
-      // check if subscription exists
-      const subscription = await prisma.subscriptions.findFirst({
-        where: {
-          subscription_id: sub_id,
-        },
-      });
-
-      if (!subscription) {
-        // create it
-        const newSubscription = await prisma.subscriptions.create({
+        await prisma.subscriptions.update({
+          where: { id: userSubscription.id, uId: user_id },
           data: {
             status,
             user_email,
@@ -173,64 +93,79 @@ export const POST = CatchError(async (req: NextRequest) => {
             renews_at,
             customer_id: String(customer_id),
             order_id: String(order_id),
-            product_id: String(product_id),
+            product_id: String(data?.attributes.product_id),
             product_name,
             variant_id: String(variant_id),
             variant_name,
             store_id: String(store_id),
             card_brand,
             card_last_four,
-            subscription_id: sub_id,
+            subscription_id: data.id,
             user: {
-              connect: { uId: custom_data.user_id },
+              connect: {
+                uId: user_id,
+              },
             },
           },
         });
 
-        // check if subscription was created
-        if (!newSubscription) {
-          const msg = `Error creating new subscription with id ${sub_id}`;
+        console.log(
+          `✅ Subscription updated for user ${user_email} with id ${user_id}`
+        );
+        console.log(`Prev plan: ${_prevPlan?.name ?? "N/A"}`);
+        console.log(`New plan: ${_newPlan?.name}`);
+      } else {
+        // Check if subscription exists
+        const subscriptionExists = await prisma.subscriptions.findFirst({
+          where: {
+            subscription_id: data.id,
+          },
+        });
+
+        if (subscriptionExists) {
+          const msg = `Duplicate subscription with id ${data.id}`;
           console.log(`❌ ${msg}`);
           throw new HttpException(RESPONSE_CODE.ERROR, msg, 400);
         }
 
-        console.log(`✅ New Subscription created with id ${sub_id}`);
-        return;
+        // Create subscription
+        const subscription = await prisma.subscriptions.create({
+          data: {
+            status,
+            user_email,
+            user_name,
+            test_mode,
+            ends_at,
+            renews_at,
+            customer_id: String(customer_id),
+            order_id: String(order_id),
+            product_id: String(data?.attributes.product_id),
+            product_name,
+            variant_id: String(variant_id),
+            variant_name,
+            store_id: String(store_id),
+            card_brand,
+            card_last_four,
+            subscription_id: data.id,
+            user: {
+              connect: {
+                uId: user_id,
+              },
+            },
+          },
+        });
+
+        // Check if subscription was created
+        if (!subscription) {
+          const msg = `Error creating subscription for user ${user_email} with id ${user_id}`;
+          console.log(`❌ ${msg}`);
+          throw new HttpException(RESPONSE_CODE.ERROR, msg, 400);
+        }
+
+        console.log(
+          `✅ Subscription created for user ${user_email} with id ${user_id}`
+        );
       }
-
-      // update subscription
-      const updatedSubscription = await prisma.subscriptions.update({
-        where: {
-          id: subscription.id,
-          subscription_id: sub_id,
-        },
-        data: {
-          status,
-          user_email,
-          user_name,
-          test_mode,
-          ends_at,
-          renews_at,
-          customer_id: String(customer_id),
-          order_id: String(order_id),
-          product_id: String(product_id),
-          product_name,
-          variant_id: String(variant_id),
-          variant_name,
-          store_id: String(store_id),
-          card_brand,
-          card_last_four,
-        },
-      });
-
-      // check if subscription was updated
-      if (!updatedSubscription) {
-        const msg = `Error updating subscription with id ${sub_id}`;
-        console.log(`❌ ${msg}`);
-        throw new HttpException(RESPONSE_CODE.ERROR, msg, 400);
-      }
-
-      console.log(`✅ Subscription updated with id ${sub_id}`);
     }
   }
 });
