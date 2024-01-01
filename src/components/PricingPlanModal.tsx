@@ -135,16 +135,13 @@ function PricingCard({
   loading,
 }: PricingCardProps) {
   const hasSubscribedToPlan = subscribed_plans?.includes(String(product_id));
-
   const product = pricingPlans.find((d) => d.id === id);
-  const features = pricingPlanFeatures.find((d) => d.id === id)?.features;
-
   const _loading = loading.find((d) => String(d.id) === String(product_id));
 
   return (
     <FlexColStart
       className={cn(
-        "w-full max-w-[400px] md:max-w-[300px] h-auto bg-white-100 dark:bg-dark-102 shadow-md rounded-md ",
+        "w-full max-w-[400px] md:max-w-[250px] h-auto bg-white-100 dark:bg-dark-102 shadow-md rounded-md ",
         "border-solid border-[1px] border-white-300 dark:border-white-300/30 "
       )}
     >
@@ -153,18 +150,20 @@ function PricingCard({
           <h1 className="text-1xl font-ppSB text-blue-101">{name}</h1>
         </FlexColStart>
         <FlexRowStart>
-          <h1 className="text-2xl font-ppSB">
+          <h1 className="relative text-2xl font-ppSB">
             {currencyFormatter(amount, currency)}
+            <span className="absolute text-xs top-[-1em] scale-[.80] right-[-3px] font-ppL text-dark-100/20 dark:text-white-400">
+              / {product?.id === id ? product.duration.replace("ly", "") : null}
+            </span>
           </h1>
         </FlexRowStart>
       </FlexRowStartBtw>
       <FlexColCenter className="w-full px-5 py-3">
         <Button
           className={cn(
-            "w-full py-0 h-[40px] hover:bg-blue-100/70 bg-blue-100 text-white-100 disabled:bg-white-400/40 border-solid border-transparent",
-            hasSubscribedToPlan
-              ? "border-[2px] border-blue-101 bg-blue-201 cursor-not-allowed text-dark-105 hover:bg-blue-201/50 "
-              : ""
+            "w-full rounded-full py-0 h-[40px] hover:bg-blue-100/70 bg-blue-100 text-white-100 disabled:bg-white-400/40 border-solid border-transparent",
+            hasSubscribedToPlan &&
+              "cursor-not-allowed opacity-[.5] hover:cursor-not-allowed"
           )}
           onClick={() =>
             !hasSubscribedToPlan &&
@@ -180,25 +179,11 @@ function PricingCard({
           <FlexRowStartCenter>
             {hasSubscribedToPlan ? <CheckCheck size={20} /> : <Zap size={20} />}
             <span className="font-ppReg text-[14px] ">
-              {hasSubscribedToPlan ? "Subscribed" : "Subscribe"}
+              {hasSubscribedToPlan ? "Subscribed" : "Switch to this plan"}
             </span>
           </FlexRowStartCenter>
         </Button>
       </FlexColCenter>
-      <FlexColStart className="w-full px-4 py-3">
-        {features?.map((f, i) => (
-          <FlexRowStartCenter className="w-full" key={i}>
-            {f.isAvailable ? (
-              <CheckCheck size={15} className="text-green-100" />
-            ) : (
-              <X size={15} className="text-red-305" />
-            )}
-            <span className="text-dark-105 dark:text-white-200 font-ppReg text-[13px] ">
-              {f.title}
-            </span>
-          </FlexRowStartCenter>
-        ))}
-      </FlexColStart>
     </FlexColStart>
   );
 }
