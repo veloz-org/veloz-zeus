@@ -54,8 +54,6 @@ export const POST = CatchError(async (req: NextRequest) => {
       event_name === "subscription_created" ||
       event_name === "subscription_updated"
     ) {
-      console.log(`${event_name.toUpperCase()} EVENT`);
-
       // Check if user exists
       const user = await prisma.users.findFirst({ where: { uId: user_id } });
 
@@ -75,6 +73,8 @@ export const POST = CatchError(async (req: NextRequest) => {
 
       // Update or create subscription
       if (userSubscription) {
+        console.log(`SUBSCRIPTION_UPDATED`);
+
         const _newPlan = pricingPlans.find(
           (p) => p.product_id === Number(data?.attributes.product_id)
         );
@@ -115,6 +115,7 @@ export const POST = CatchError(async (req: NextRequest) => {
         console.log(`Prev plan: ${_prevPlan?.name ?? "N/A"}`);
         console.log(`New plan: ${_newPlan?.name}`);
       } else {
+        console.log(`SUBSCRIPTION_CREATED`);
         // Check if subscription exists
         const subscriptionExists = await prisma.subscriptions.findFirst({
           where: {
