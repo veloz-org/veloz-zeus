@@ -86,6 +86,7 @@ export default class SubscriptionController {
     const subscriptions = await prisma.subscriptions.findMany({
       where: {
         uId: userId,
+        status: "active",
       },
     });
 
