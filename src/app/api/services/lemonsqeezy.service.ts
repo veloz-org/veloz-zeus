@@ -91,8 +91,6 @@ export default class LemonsqueezyServices {
       });
       const resp = res.data;
 
-      console.log(resp?.data[2].attributes);
-
       const variantData = resp?.data.map((v: any) => {
         const price = v.attributes.price;
         const prodId = v.attributes.product_id;
