@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext, useContext, useState } from "react";
-import { UserInfo, UserSubscriptions } from "@/types";
+import { UserInfo, CurrentUserPlan } from "@/types";
 
 interface ContextValuesType {
   userInfo: UserInfo | null;
@@ -8,12 +8,10 @@ interface ContextValuesType {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   globalLoadingState: boolean;
   setGlobalLoadingState: React.Dispatch<React.SetStateAction<boolean>>;
-  subscribed_plans: string[];
-  setSubscribedPlans: React.Dispatch<React.SetStateAction<string[]>>;
-  current_plan: string;
-  setCurrentPlan: React.Dispatch<React.SetStateAction<string>>;
-  subscriptions: UserSubscriptions[];
-  setSubscriptions: React.Dispatch<React.SetStateAction<UserSubscriptions[]>>;
+  current_plan: CurrentUserPlan | null;
+  setCurrentPlan: React.Dispatch<React.SetStateAction<CurrentUserPlan | null>>;
+  subscriptions: CurrentUserPlan[];
+  setSubscriptions: React.Dispatch<React.SetStateAction<CurrentUserPlan[]>>;
 }
 
 export const DataContext = createContext<ContextValuesType>(
@@ -23,12 +21,11 @@ export const DataContext = createContext<ContextValuesType>(
 function DataContextProvider({ children }: { children: ReactNode }) {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [subscriptions, setSubscriptions] = useState<UserSubscriptions[]>([]);
-  const [subscribed_plans, setSubscribedPlans] = useState<string[]>([]);
-  const [current_plan, setCurrentPlan] = useState<string>("" as string);
+  const [subscriptions, setSubscriptions] = useState<CurrentUserPlan[]>([]);
+  const [current_plan, setCurrentPlan] = useState<CurrentUserPlan | null>(null);
 
   // this should be used for global loading state (e.g. when fetching data) that
-  // should be used across the app/pages
+  // should be used across the app/pages or pages that depends on this state.
   const [globalLoadingState, setGlobalLoadingState] = useState(false);
 
   const contextValues: ContextValuesType = {
@@ -38,8 +35,6 @@ function DataContextProvider({ children }: { children: ReactNode }) {
     setSidebarOpen,
     setGlobalLoadingState,
     globalLoadingState,
-    subscribed_plans,
-    setSubscribedPlans,
     setCurrentPlan,
     current_plan,
     subscriptions,
