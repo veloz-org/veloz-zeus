@@ -23,7 +23,7 @@ export const pricingPlans = [
         duration: "yearly",
         pricing: {
           currency: "USD",
-          amount: 4,
+          amount: 48,
         },
       },
     ],
@@ -39,7 +39,7 @@ export const pricingPlans = [
         duration: "yearly",
         pricing: {
           currency: "USD",
-          amount: 8,
+          amount: 108,
         },
       },
       {
@@ -72,7 +72,7 @@ export const pricingPlans = [
         duration: "yearly",
         pricing: {
           currency: "USD",
-          amount: 108,
+          amount: 240,
         },
       },
     ],
