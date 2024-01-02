@@ -25,27 +25,30 @@ export default class UserController {
     });
 
     // get active subscriptions
-    const subscriptions = await prisma.subscriptions.findMany({
+    // const subscriptions = await prisma.subscriptions.findMany({
+    //   where: {
+    //     uId: user.id,
+    //     status: "active",
+    //   },
+    // });
+
+    const subscription = await prisma.subscriptions.findFirst({
       where: {
         uId: user.id,
         status: "active",
       },
     });
 
-    // format subscriptions and return needed data
-    const _subscriptions = subscriptions.map((s) => {
-      return {
-        id: s.subscription_id,
-        status: s.status,
-        product_id: s.product_id,
-        product_name: s.product_name,
-        variant_id: s.variant_id,
-        variant_name: s.variant_name,
-        ends_at: s.ends_at,
-        renews_at: s.renews_at,
-        created_at: s.createdAt,
-      };
-    });
+    const _subData = {
+      status: subscription?.status,
+      product_id: subscription?.product_id,
+      product_name: subscription?.product_name,
+      variant_id: subscription?.variant_id,
+      variant_name: subscription?.variant_name,
+      ends_at: subscription?.ends_at,
+      renews_at: subscription?.renews_at,
+      created_at: subscription?.createdAt,
+    };
 
     return sendResponse.success(RESPONSE_CODE.SUCCESS, "Success", 200, {
       id: userData?.uId,
@@ -54,7 +57,7 @@ export default class UserController {
       full_name: userData?.fullname ?? "",
       avatar: userData?.avatar,
       role: userData?.role,
-      subscriptions: _subscriptions,
+      subscription: _subData,
     });
   }
 
