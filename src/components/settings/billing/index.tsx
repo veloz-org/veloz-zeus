@@ -13,18 +13,29 @@ import {
   cn,
   currencyFormatter,
   generateSubscriptionRenewalMessage,
+  getCurrUserPlan,
 } from "@/lib/utils";
-import { ResponseData, CurrentUserPlan } from "@/types";
+import { ResponseData, CurrentUserPlan, TogglePlanDurations } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { CheckCheck, Wallet, X } from "lucide-react";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import BillingPricingPlans from "./pricingPlans";
 
 function BillingTab() {
   const { current_plan, userInfo } = useContext(DataContext);
   const getCustomerPortalMut = useMutation({
     mutationFn: async (data: any) => await getCustomerPortal(data),
   });
+
+  // toggling plan between month and year
+  const [activePlanDuration, setActivePlanDuration] =
+    useState<TogglePlanDurations>("MONTH");
+
+  const togglePlans = () => {
+    if (activePlanDuration === "MONTH") setActivePlanDuration("YEAR");
+    else setActivePlanDuration("MONTH");
+  };
 
   React.useEffect(() => {
     if (getCustomerPortalMut.error) {
@@ -54,7 +65,7 @@ function BillingTab() {
             ? "No active subscription plan."
             : "Manage your subscription plans."}
         </p>
-        {/* pricing plans */}
+        {/* billing card */}
         <FlexRowStart className="w-full mt-2 flex-wrap">
           {userInfo &&
             userInfo?.subscription &&
@@ -77,6 +88,8 @@ function BillingTab() {
               ))}
         </FlexRowStart>
         <br />
+        {/* pricing plans */}
+        <BillingPricingPlans activePlanDuration={activePlanDuration} />
       </FlexColStart>
     </FlexColStart>
   );
@@ -104,16 +117,11 @@ function BillingCard({
     _subscription?.renews_at as any
   );
 
-  const planDetail = pricingPlans.find(
-    (p) => String(p.product_id) === String(product_id)
-  );
-  const currVariant = planDetail?.variants.find(
-    (v) => String(v.id) === String(_subscription?.variant_id)
-  );
-  const plan_name = planDetail?.name;
-  const plan_price = currVariant?.pricing.amount as number;
-  const plan_currency = currVariant?.pricing.currency as string;
-  const duration = currVariant?.duration as string;
+  const planDetail = getCurrUserPlan(String(product_id), _subscription);
+
+  if (!planDetail) return null;
+
+  const { duration, plan_currency, plan_name, plan_price } = planDetail;
 
   return (
     <FlexColStart
