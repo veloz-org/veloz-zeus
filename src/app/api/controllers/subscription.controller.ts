@@ -82,35 +82,30 @@ export default class SubscriptionController {
   public async getSubscriptions(req: NextRequest) {
     const userId = (req as any)["user"]?.id as string;
 
-    // get subscriptions
-    const subscriptions = await prisma.subscriptions.findMany({
+    const subscription = await prisma.subscriptions.findFirst({
       where: {
         uId: userId,
         status: "active",
       },
     });
 
-    // format subscriptions and return needed data
-    const _subscriptions = subscriptions.map((s) => {
-      return {
-        id: s.subscription_id,
-        status: s.status,
-        product_id: s.product_id,
-        product_name: s.product_name,
-        variant_id: s.variant_id,
-        variant_name: s.variant_name,
-        ends_at: s.ends_at,
-        renews_at: s.renews_at,
-        created_at: s.createdAt,
-      };
-    });
+    const _subData = {
+      status: subscription?.status,
+      product_id: subscription?.product_id,
+      product_name: subscription?.product_name,
+      variant_id: subscription?.variant_id,
+      variant_name: subscription?.variant_name,
+      ends_at: subscription?.ends_at,
+      renews_at: subscription?.renews_at,
+      created_at: subscription?.createdAt,
+    };
 
     // send the subscriptions to the client
     return sendResponse.success(
       RESPONSE_CODE.SUCCESS,
       "Success",
       200,
-      _subscriptions
+      _subData
     );
   }
 
