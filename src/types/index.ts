@@ -1,6 +1,7 @@
 // Client Types Definition
 
 export type ValidPricingDuration = "daily" | "weekly" | "monthly" | "yearly";
+export type TogglePlanDurations = "MONTH" | "YEAR";
 
 export type ResponseData = {
   errorStatus: boolean;
