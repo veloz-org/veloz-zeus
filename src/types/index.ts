@@ -29,12 +29,14 @@ export interface PricingPlan {
   id: any;
   name: string;
   key: string;
-  duration: ValidPricingDuration;
-  pricing: {
-    currency: string;
-    amount: number;
-  };
-  variant_id: number;
+  variants: {
+    id: number;
+    duration: ValidPricingDuration;
+    pricing: {
+      currency: string;
+      amount: number;
+    };
+  }[];
   product_id: number;
   recommended?: boolean;
 }
