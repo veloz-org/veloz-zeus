@@ -21,7 +21,7 @@ import React, { useContext } from "react";
 import toast from "react-hot-toast";
 
 function BillingTab() {
-  const { subscribed_plans, userInfo } = useContext(DataContext);
+  const { current_plan, userInfo } = useContext(DataContext);
   const getCustomerPortalMut = useMutation({
     mutationFn: async (data: any) => await getCustomerPortal(data),
   });
@@ -50,35 +50,25 @@ function BillingTab() {
           Plan
         </p>
         <p className="text-white-400 dark:text-white-300 font-ppReg text-[12px] ">
-          {userInfo?.subscriptions.length === 0
+          {userInfo?.subscription
             ? "No active subscription plan."
             : "Manage your subscription plans."}
         </p>
         {/* pricing plans */}
         <FlexRowStart className="w-full mt-2 flex-wrap">
           {userInfo &&
-            userInfo?.subscriptions.length > 0 &&
+            userInfo?.subscription &&
             pricingPlans
               .filter((p) => {
-                const subscriptions = userInfo.subscriptions.map(
-                  (s) => s.product_id
-                );
-                return subscriptions.includes(String(p.product_id));
+                const subscription =
+                  userInfo.subscription?.product_id === String(p.product_id);
+                return subscription;
               })
               .map((plan, i) => (
-                <PricingPlanCard
+                <BillingCard
                   key={i}
-                  activePlan={
-                    subscribed_plans.includes(String(plan.product_id))
-                      ? plan.key
-                      : null
-                  }
                   product_id={plan.product_id}
-                  planName={plan.name}
-                  planPrice={plan.pricing.amount}
-                  currency={plan.pricing.currency}
-                  duration={plan.duration as any}
-                  subscriptions={userInfo?.subscriptions as any}
+                  subscription={userInfo?.subscription}
                   getCustomerPortal={(prodId) => {
                     getCustomerPortalMut.mutate({ product_id: prodId });
                   }}
@@ -94,74 +84,60 @@ function BillingTab() {
 
 export default BillingTab;
 
-type PricingPlanCardProps = {
+type BillingCardProps = {
   product_id: number;
-  activePlan: string | "free" | null;
-  planName: string;
-  planPrice: number;
-  currency: string;
-  duration: "monthly" | "yearly" | "weekly" | "daily";
-  subscriptions: CurrentUserPlan[];
+  subscription: CurrentUserPlan;
   getCustomerPortal: (prodId: string) => void;
   loading: boolean;
 };
 
-function PricingPlanCard({
-  activePlan,
-  planName,
-  planPrice,
-  currency,
-  duration,
-  subscriptions,
+function BillingCard({
+  subscription,
   product_id,
   getCustomerPortal,
   loading,
-}: PricingPlanCardProps) {
-  const _subscription = subscriptions?.find(
-    (s) => s.product_id === String(product_id)
-  );
+}: BillingCardProps) {
+  const _subscription =
+    subscription?.product_id === String(product_id) ? subscription : null;
   const msg = generateSubscriptionRenewalMessage(
     _subscription?.status as any,
     _subscription?.renews_at as any
   );
 
+  const planDetail = pricingPlans.find(
+    (p) => String(p.product_id) === String(product_id)
+  );
+  const currVariant = planDetail?.variants.find(
+    (v) => String(v.id) === String(_subscription?.variant_id)
+  );
+  const plan_name = planDetail?.name;
+  const plan_price = currVariant?.pricing.amount as number;
+  const plan_currency = currVariant?.pricing.currency as string;
+  const duration = currVariant?.duration as string;
+
   return (
     <FlexColStart
       className={cn(
         "w-full max-w-[250px] py-3 px-4 rounded-md border-solid border-transparent",
-        activePlan
-          ? "bg-blue-201 dark:bg-dark-102 border-[2px] border-blue-101 "
-          : "bg-blue-101"
+        "bg-blue-201 dark:bg-dark-102 border-[2px] border-blue-101 "
       )}
     >
       <FlexRowStartBtw className="w-full">
         <p
           className={cn(
             "text-dark-105 dark:text-white-100 font-ppSB text-[13px] ",
-            activePlan ? "text-dark-105 dark:text-white-100" : "text-white-100"
+            "text-dark-105 dark:text-white-100"
           )}
         >
-          {planName}
+          {plan_name}
         </p>
-        <p
-          className={cn(
-            "font-ppL text-[13px] ",
-            !activePlan
-              ? "text-white-100/70 dark:text-white-300"
-              : "text-white-400"
-          )}
-        >
+        <p className={cn("font-ppL text-[13px] ", "text-white-400")}>
           <span
-            className={cn(
-              "font-ppSB",
-              activePlan
-                ? "text-dark-105 dark:text-white-300"
-                : " text-white-100"
-            )}
+            className={cn("font-ppSB", "text-dark-105 dark:text-white-300")}
           >
-            {currencyFormatter(planPrice, currency)}
+            {currencyFormatter(plan_price, plan_currency)}
           </span>{" "}
-          / {duration.replace("ly", "")}
+          / {duration?.replace("ly", "")}
         </p>
       </FlexRowStartBtw>
       <FlexColStart className="w-full mt-2">
@@ -173,12 +149,7 @@ function PricingPlanCard({
               <CheckCheck size={15} className="text-blue-100" />
             )
           ) : null}
-          <p
-            className={cn(
-              "font-ppReg text-[10px]",
-              activePlan ? "text-blue-100" : "text-white-100"
-            )}
-          >
+          <p className={cn("font-ppReg text-[10px]", "text-blue-100")}>
             {msg ?? "Not Subscribed"}
           </p>
         </FlexRowStartCenter>
@@ -187,9 +158,7 @@ function PricingPlanCard({
             intent={"primary"}
             className={cn(
               "h-[35px] bg-blue-201 group hover:bg-blue-101 hover:text-white-100 py-0 px-5 border-solid border-[1px]  border-blue-101 ",
-              activePlan
-                ? " disabled:text-white-400 hover:bg-blue-101 hover:text-white-100 text-blue-100 dark:bg-blue-101 dark:text-white-100 dark:hover:bg-blue-101/80 dark:disabled:text-white-100/40"
-                : "disabled:bg-blue-201/40 disabled:text-white-100 hover:bg-blue-201/40 text-blue-101"
+              " disabled:text-white-400 hover:bg-blue-101 hover:text-white-100 text-blue-100 dark:bg-blue-101 dark:text-white-100 dark:hover:bg-blue-101/80 dark:disabled:text-white-100/40"
             )}
             onClick={() => getCustomerPortal(String(product_id))}
             disabled={loading}
