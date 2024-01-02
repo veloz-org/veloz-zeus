@@ -21,7 +21,7 @@ export type UserInfo = {
   avatar: string;
   id: string;
   role: string;
-  subscriptions: UserSubscriptions[];
+  subscription: CurrentUserPlan;
 };
 
 // pricing plan Types Definition
@@ -50,7 +50,7 @@ export interface PricingPlanFeature {
   }[];
 }
 
-export type UserSubscriptions = {
+export type CurrentUserPlan = {
   id: string;
   status: LS_SubscriptionStatus;
   product_id: string;
