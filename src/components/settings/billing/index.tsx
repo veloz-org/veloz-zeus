@@ -14,7 +14,7 @@ import {
   currencyFormatter,
   generateSubscriptionRenewalMessage,
 } from "@/lib/utils";
-import { ResponseData, UserSubscriptions } from "@/types";
+import { ResponseData, CurrentUserPlan } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { CheckCheck, Wallet, X } from "lucide-react";
 import React, { useContext } from "react";
@@ -101,7 +101,7 @@ type PricingPlanCardProps = {
   planPrice: number;
   currency: string;
   duration: "monthly" | "yearly" | "weekly" | "daily";
-  subscriptions: UserSubscriptions[];
+  subscriptions: CurrentUserPlan[];
   getCustomerPortal: (prodId: string) => void;
   loading: boolean;
 };
