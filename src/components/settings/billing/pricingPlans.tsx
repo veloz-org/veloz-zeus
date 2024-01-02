@@ -74,22 +74,22 @@ function BillingPricingPlans({}: Props) {
   return (
     <FlexColStart className="w-full h-auto">
       <FlexRowEnd className="w-full">
-        <FlexRowStartCenter className="w-auto px-[1px] py-[1.5px] rounded-full bg-dark-100 border-[1px] border-white-400/50 dark:border-white-300/10 ">
+        <FlexRowStartCenter className="w-auto px-[1px] py-[1.5px] gap-0 rounded-full dark:bg-dark-100 border-[1px] border-white-300/80 dark:border-white-300/10 ">
           {["month", "year"].map((d, i) => (
             <button
               key={i}
               className={cn(
-                "w-auto px-3 h-[30px] scale-[.95] transition-all rounded-full border-[1px] border-transparent ",
+                "w-auto px-5 h-[30px] scale-[.95] transition-all rounded-full",
                 activePlanDuration.toLowerCase() === d
-                  ? "bg-blue-101"
-                  : "bg-transparent"
+                  ? "bg-blue-100 text-white-100 font-ppSB"
+                  : "bg-transparent text-dark-100 "
               )}
               onClick={() =>
                 togglePlans(d.toUpperCase() as TogglePlanDurations)
               }
             >
               <FlexRowCenter>
-                <span className="text-xs text-white-100 font-ppReg">
+                <span className="text-xs font-ppReg">
                   {d.slice(0, 1).toUpperCase() + d.slice(1)}
                 </span>
               </FlexRowCenter>
@@ -166,7 +166,7 @@ function PricingCard({
         <FlexRowStart>
           <h1 className="relative text-2xl font-ppSB">
             {currencyFormatter(plan_price, plan_currency)}
-            <span className="absolute text-xs top-[-1em] scale-[.80] right-[-3px] font-ppL text-dark-100/20 dark:text-white-400">
+            <span className="absolute text-xs top-[-1em] scale-[.80] right-[-3px] font-ppL text-dark-100 dark:text-white-400">
               / {duration?.replace("ly", "")}
             </span>
           </h1>
