@@ -1,9 +1,10 @@
-import { LS_SubscriptionStatus } from "@/types";
+import { CurrentUserPlan, LS_SubscriptionStatus } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { signOut } from "next-auth/react";
+import { pricingPlans } from "@/data/pricing/plan";
 
 dayjs.extend(relativeTime);
 
@@ -50,4 +51,29 @@ export function generateSubscriptionRenewalMessage(
 export const Logout = () => {
   // next-auth
   signOut();
+};
+
+export const getCurrUserPlan = (
+  product_id: string,
+  current_subscription: CurrentUserPlan | null
+) => {
+  if (!current_subscription) return null;
+
+  const planDetail = pricingPlans.find(
+    (p) => String(p.product_id) === String(product_id)
+  );
+  const currVariant = planDetail?.variants.find(
+    (v) => String(v.id) === String(current_subscription?.variant_id)
+  );
+  const plan_name = planDetail?.name;
+  const plan_price = currVariant?.pricing.amount as number;
+  const plan_currency = currVariant?.pricing.currency as string;
+  const duration = currVariant?.duration as string;
+
+  return {
+    plan_name,
+    plan_price,
+    plan_currency,
+    duration,
+  };
 };
