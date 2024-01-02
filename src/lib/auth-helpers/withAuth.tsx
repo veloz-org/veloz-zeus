@@ -29,8 +29,7 @@ export default function withAuth<P extends { children: React.ReactNode }>(
         setGlobalLoadingState(loading);
         if (data) {
           setUserInfo(data);
-          const activeSubscription = data.subscription;
-          setCurrentPlan(activeSubscription ?? null);
+          setCurrentPlan(data.subscription ?? null);
         }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
