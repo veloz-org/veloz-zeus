@@ -49,7 +49,10 @@ function BillingPricingPlans({}: Props) {
     setActivePlanDuration(duration);
 
   const subscribe = (product_id: number) => {
-    subscribePlanMut.mutate({ product_id });
+    subscribePlanMut.mutate({
+      product_id,
+      duration: activePlanDuration.toLowerCase() + "ly",
+    });
     setSubscribeLoading((prev) => [...prev, { id: product_id, loading: true }]);
   };
 
@@ -82,7 +85,7 @@ function BillingPricingPlans({}: Props) {
                 "w-auto px-5 h-[30px] scale-[.95] transition-all rounded-full",
                 activePlanDuration.toLowerCase() === d
                   ? "bg-blue-100 text-white-100 font-ppSB"
-                  : "bg-transparent text-dark-100 "
+                  : "bg-transparent text-dark-100 dark:text-white-400 "
               )}
               onClick={() =>
                 togglePlans(d.toUpperCase() as TogglePlanDurations)
