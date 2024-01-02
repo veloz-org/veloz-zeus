@@ -44,7 +44,7 @@ export default class AuthController {
     const avatar = `https://api.dicebear.com/7.x/initials/png?seed=${payload.username}`;
 
     if (users.length === 0) {
-      // ! by default, first user would be created and have the ADMIN role
+      // ! by default, first user would be assigned the "ADMIN" role
       await prisma.users.create({
         data: {
           email: payload.email,
