@@ -24,14 +24,6 @@ export default class UserController {
       },
     });
 
-    // get active subscriptions
-    // const subscriptions = await prisma.subscriptions.findMany({
-    //   where: {
-    //     uId: user.id,
-    //     status: "active",
-    //   },
-    // });
-
     const subscription = await prisma.subscriptions.findFirst({
       where: {
         uId: user.id,
