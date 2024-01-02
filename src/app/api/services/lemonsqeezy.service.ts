@@ -8,7 +8,7 @@ const IN_TEST_MODE = process.env.NODE_ENV === "development";
 // create lemonsqueezy checkout
 export default class LemonsqueezyServices {
   // create checkout
-  public async createCheckout(prod_id: number, custom_data?: object) {
+  public async createCheckout(plan_variant_id: string, custom_data?: object) {
     const custom_redirect_url = `${env.BASE_URL}/app/settings`;
 
     const payload = {
@@ -49,7 +49,7 @@ export default class LemonsqueezyServices {
 
       // filter out variant
       const _variant = variants?.data?.find(
-        (v: any) => String(v.product_id) === String(prod_id)
+        (v: any) => String(v.variant_id) === String(plan_variant_id)
       );
 
       payload.data.relationships.variant = {
