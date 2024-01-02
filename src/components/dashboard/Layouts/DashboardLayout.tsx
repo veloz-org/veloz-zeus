@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import SideBar from "@/components/dashboard/Navigations/Sidebar";
 import { LayoutContext } from "@/context/LayoutContext";
 import TopBar from "../Navigations/TopBar";
-import PricingPlanModal from "../../PricingPlanModal";
+import BillingPricingPlans from "../../settings/billing/pricingPlans";
 import withAuth from "@/lib/auth-helpers/withAuth";
 
 interface DashboardLayoutProps {
@@ -29,7 +29,9 @@ function DashboardLayout({ children, className }: DashboardLayoutProps) {
           <TopBar />
           {children}
           {pricingModalOpen && (
-            <PricingPlanModal closeModal={() => setPricingModalOpen(false)} />
+            <BillingPricingPlans
+              closeModal={() => setPricingModalOpen(false)}
+            />
           )}
         </div>
       </div>
