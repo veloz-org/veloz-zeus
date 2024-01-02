@@ -8,7 +8,7 @@ export default function withAuth<P extends { children: React.ReactNode }>(
   Component: React.ComponentType<P>
 ) {
   const ComponentWithAuth = (props: P) => {
-    const { setUserInfo, setGlobalLoadingState, setSubscribedPlans } =
+    const { setUserInfo, setGlobalLoadingState, setCurrentPlan } =
       useContext(DataContext);
     const { data, loading, error, refetch } = useAuthUser(false);
     const { status } = useSession();
@@ -29,10 +29,8 @@ export default function withAuth<P extends { children: React.ReactNode }>(
         setGlobalLoadingState(loading);
         if (data) {
           setUserInfo(data);
-          const planProdIds = data.subscriptions?.map(
-            (plan: any) => plan.product_id
-          );
-          setSubscribedPlans(planProdIds);
+          const activeSubscription = data.subscription;
+          setCurrentPlan(activeSubscription ?? null);
         }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
