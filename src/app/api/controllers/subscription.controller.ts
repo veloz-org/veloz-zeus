@@ -10,6 +10,7 @@ import ZodValidation from "../utils/zodValidation";
 import { pricingPlans } from "@/data/pricing/plan";
 import LemonsqueezyServices from "../services/lemonsqeezy.service";
 import HttpException from "../utils/exception";
+import { ValidPricingDuration } from "@/types";
 
 type ReqUserObj = {
   id: string;
@@ -21,14 +22,17 @@ export default class SubscriptionController {
   // get users info
   public async subscribe(req: NextRequest) {
     const user = (req as any)["user"] as ReqUserObj;
-    const payload = (await req.json()) as { product_id: number };
+    const payload = (await req.json()) as {
+      product_id: number;
+      duration: ValidPricingDuration;
+    };
 
     // product_id is actually related to the pricing "plan" in ../data/plan.ts
 
     // validate request body
     await ZodValidation(createCheckoutSchema, payload, req.url);
 
-    const { product_id } = payload;
+    const { product_id, duration } = payload;
 
     // check if plan exists
     const product = pricingPlans.find(
@@ -61,7 +65,10 @@ export default class SubscriptionController {
     }
 
     // create the checkout url
-    const checkoutUrl = await LQS.createCheckout(product.product_id, {
+    const planVariant = product.variants.find(
+      (v) => v.duration.toLowerCase() === duration.toLowerCase()
+    );
+    const checkoutUrl = await LQS.createCheckout(String(planVariant?.id), {
       user_id: user.id,
     });
 
