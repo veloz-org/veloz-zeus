@@ -28,15 +28,6 @@ function BillingTab() {
     mutationFn: async (data: any) => await getCustomerPortal(data),
   });
 
-  // toggling plan between month and year
-  const [activePlanDuration, setActivePlanDuration] =
-    useState<TogglePlanDurations>("MONTH");
-
-  const togglePlans = () => {
-    if (activePlanDuration === "MONTH") setActivePlanDuration("YEAR");
-    else setActivePlanDuration("MONTH");
-  };
-
   React.useEffect(() => {
     if (getCustomerPortalMut.error) {
       const errMsg = (getCustomerPortalMut.error as any)?.response?.data
@@ -89,7 +80,7 @@ function BillingTab() {
         </FlexRowStart>
         <br />
         {/* pricing plans */}
-        <BillingPricingPlans activePlanDuration={activePlanDuration} />
+        <BillingPricingPlans />
       </FlexColStart>
     </FlexColStart>
   );
