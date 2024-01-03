@@ -148,15 +148,17 @@ function PricingCard({
 
   // check if user has subscribed to plan based on the plan duration
   const hasSubscribedToPlan = () => {
-    if (current_plan?.product_id === String(product_id)) {
-      const vId = current_plan?.variant_id;
-      const variant = product?.variants.find((v) => String(v.id) === vId);
-      if (!variant) return false;
-      const { duration } = variant;
-      const _duration = duration.toLowerCase().replace("ly", "");
-      return _duration === activePlanDuration.toLowerCase();
-    }
-    return false;
+    if (current_plan?.product_id !== String(product_id)) return false;
+
+    const variant = product?.variants.find(
+      (v) => String(v.id) === current_plan?.variant_id
+    );
+    if (!variant) return false;
+
+    return (
+      variant.duration.toLowerCase().replace("ly", "") ===
+      activePlanDuration.toLowerCase()
+    );
   };
 
   const variant = product?.variants.find(
