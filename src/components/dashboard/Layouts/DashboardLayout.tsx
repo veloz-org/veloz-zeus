@@ -4,7 +4,6 @@ import { twMerge } from "tailwind-merge";
 import SideBar from "@/components/dashboard/Navigations/Sidebar";
 import { LayoutContext } from "@/context/LayoutContext";
 import TopBar from "../Navigations/TopBar";
-import BillingPricingPlans from "../../settings/billing/pricingPlans";
 import withAuth from "@/lib/auth-helpers/withAuth";
 
 interface DashboardLayoutProps {
@@ -28,11 +27,6 @@ function DashboardLayout({ children, className }: DashboardLayoutProps) {
         <div className="w-full z-upper relative  overflow-hidden">
           <TopBar />
           {children}
-          {pricingModalOpen && (
-            <BillingPricingPlans
-              closeModal={() => setPricingModalOpen(false)}
-            />
-          )}
         </div>
       </div>
     </div>
