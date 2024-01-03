@@ -147,81 +147,11 @@ function Sidebar({}: SidebarProps) {
           );
         })}
       </FlexColStart>
-
-      {/* upgrade plan widget */}
-      {/* <UpgradePlanWidget /> */}
     </FlexColStart>
   );
 }
 
 export default Sidebar;
-
-// function UpgradePlanWidget() {
-//   const { setPricingModalOpen, pricingModalOpen } = useContext(LayoutContext);
-//   const { current_plan, setCurrentPlan, userInfo } = useContext(DataContext);
-//   const getSubscriptionMut = useMutation({
-//     mutationFn: async () => getSubscriptions(),
-//   });
-
-//   // Get user subscriptions on mount
-//   React.useEffect(() => {
-//     if (getSubscriptionMut.error) {
-//       const errMsg = (getSubscriptionMut.error as any)?.response?.data?.message;
-//       toast.error(errMsg);
-//     }
-//     if (getSubscriptionMut.data) {
-//       const { data } = getSubscriptionMut.data as ResponseData;
-//       const subscription = data as CurrentUserPlan;
-//       setCurrentPlan(subscription ?? null);
-//       setPricingModalOpen(true);
-//     }
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, [
-//     getSubscriptionMut.data,
-//     getSubscriptionMut.error,
-//     getSubscriptionMut.isPending,
-//   ]);
-
-//   const activeSubscriptions = userInfo?.subscriptions?.filter(
-//     (s) => s.status === "active"
-//   );
-//   // get the highest level of subscription plan
-//   const HIGHEST_SUBSCRIPTION_KEY = "premium";
-//   const activeSubscriptionsLevel = activeSubscriptions
-//     ?.map((s) => {
-//       const plan = pricingPlans.find(
-//         (p) => String(p.product_id) === String(s.product_id)
-//       );
-//       return plan;
-//     })
-//     .filter((p) => p?.key === HIGHEST_SUBSCRIPTION_KEY);
-
-//   return (
-//     <FlexColCenter className="w-full px-5 py-4 absolute bottom-2">
-//       <FlexColStart className="w-full bg-dark-200 p-3 rounded-md border-solid border-[.5px] border-gray-100/30 ">
-//         <p className="text-white-100/50 text-center font-jbPR text-[10px] ">
-//           Get access to incredible features.
-//         </p>
-//         <FlexColCenter className="w-full mt-2">
-//           <Button
-//             className={cn(
-//               "w-full bg-blue-100 hover:bg-blue-100/80 rounded-md py-2 h-[40px] font-ppSB text-[14px] gap-2"
-//             )}
-//             onClick={() => getSubscriptionMut.mutate()}
-//             isLoading={getSubscriptionMut.isPending}
-//             disabled={
-//               getSubscriptionMut.isPending ||
-//               (activeSubscriptionsLevel as any[])?.length > 0
-//             }
-//           >
-//             <Zap size={15} />{" "}
-//             <span className="text-[13px] font-ppSB">Upgrade</span>
-//           </Button>
-//         </FlexColCenter>
-//       </FlexColStart>
-//     </FlexColCenter>
-//   );
-// }
 
 function renderNavIcons(name: string, style: string) {
   const _name = name.toLowerCase();
