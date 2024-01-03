@@ -43,7 +43,7 @@ export const pricingPlans = [
         },
       },
       {
-        id: 183213,
+        id: 198720,
         duration: "monthly",
         pricing: {
           currency: "USD",
