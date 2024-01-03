@@ -56,6 +56,8 @@ export default class SubscriptionController {
       },
     });
 
+    // compare the current user subscription in database
+    // and that of the subcription the user wanna switch to.
     if (userSubscription) {
       const normalizeDuration = (duration: string) =>
         duration.toLowerCase().replace("ly", "");
