@@ -2,7 +2,6 @@
 import React, { useContext } from "react";
 import { twMerge } from "tailwind-merge";
 import SideBar from "@/components/dashboard/Navigations/Sidebar";
-import { LayoutContext } from "@/context/LayoutContext";
 import TopBar from "../Navigations/TopBar";
 import withAuth from "@/lib/auth-helpers/withAuth";
 
@@ -13,8 +12,6 @@ interface DashboardLayoutProps {
 
 // use this component as a wrapper for all dashboard authenticated pages
 function DashboardLayout({ children, className }: DashboardLayoutProps) {
-  const { pricingModalOpen, setPricingModalOpen } = useContext(LayoutContext);
-
   return (
     <div
       className={twMerge(
