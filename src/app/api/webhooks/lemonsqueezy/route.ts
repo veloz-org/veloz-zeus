@@ -68,7 +68,6 @@ export const POST = CatchError(async (req: NextRequest) => {
       const userSubscription = await prisma.subscriptions.findFirst({
         where: {
           uId: user_id,
-          subscription_id: data.id,
         },
       });
 
