@@ -35,7 +35,7 @@ function SettingsPage() {
   setActivePage("settings");
 
   return (
-    <FlexColStart className="w-full h-full">
+    <FlexColStart className="w-full h-full overflow-auto">
       <FlexColStart className="w-full px-4 py-5">
         <h1 className="text-dark-105 dark:text-white-200 text-2xl font-ppSB">
           Settings
@@ -44,7 +44,7 @@ function SettingsPage() {
           Manage your account settings.
         </p>
       </FlexColStart>
-      <FlexColStart className="w-full px-4 mt-1">
+      <FlexColStart className="w-full h-auto px-4 mt-1">
         {/* Tabs */}
         <FlexRowStartCenter className="w-full pb-2 mb-6  gap-5 ">
           {Tabs.map((t) => (
