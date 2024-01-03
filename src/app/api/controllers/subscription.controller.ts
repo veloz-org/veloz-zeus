@@ -57,11 +57,30 @@ export default class SubscriptionController {
     });
 
     if (userSubscription) {
-      return sendResponse.error(
-        RESPONSE_CODE.USER_ALREADY_SUBSCRIBED,
-        "User already subscribed to this plan",
-        400
+      const normalizeDuration = (duration: string) =>
+        duration.toLowerCase().replace("ly", "");
+
+      const clientProduct = pricingPlans.find(
+        (p) => p.product_id === Number(product_id)
       );
+      const clientVariant = clientProduct?.variants.find(
+        (v) => normalizeDuration(v.duration) === normalizeDuration(duration)
+      );
+
+      const dbProduct = pricingPlans.find(
+        (p) => p.product_id === Number(userSubscription.product_id)
+      );
+      const dbVariant = dbProduct?.variants.find(
+        (v) => String(v.id) === userSubscription.variant_id
+      );
+
+      if (clientVariant?.duration === dbVariant?.duration) {
+        return sendResponse.error(
+          RESPONSE_CODE.USER_ALREADY_SUBSCRIBED,
+          "User already subscribed to this plan",
+          400
+        );
+      }
     }
 
     // create the checkout url
