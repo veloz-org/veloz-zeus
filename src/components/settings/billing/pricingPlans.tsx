@@ -76,7 +76,10 @@ function BillingPricingPlans({}: Props) {
 
   return (
     <FlexColStart className="w-full h-auto">
-      <FlexRowEnd className="w-full">
+      <FlexRowStartCenter className="w-full">
+        <h1 className="font-ppSB text-white-400 dark:text-white-200 text-1xl">
+          Upgrade Account
+        </h1>
         <FlexRowStartCenter className="w-auto px-[1px] py-[1.5px] gap-0 rounded-full dark:bg-dark-100 border-[1px] border-white-300/80 dark:border-white-300/10 ">
           {["month", "year"].map((d, i) => (
             <button
@@ -99,8 +102,9 @@ function BillingPricingPlans({}: Props) {
             </button>
           ))}
         </FlexRowStartCenter>
-      </FlexRowEnd>
-      <FlexRowStartBtw className="w-full flex-wrap p-3 ">
+      </FlexRowStartCenter>
+      <br />
+      <FlexRowStart className="w-full h-auto flex-wrap pb-[6em] md:pb-[2em] ">
         {pricingPlans.map((plan, i) => (
           <PricingCard
             key={i}
@@ -112,7 +116,7 @@ function BillingPricingPlans({}: Props) {
             activePlanDuration={activePlanDuration}
           />
         ))}
-      </FlexRowStartBtw>
+      </FlexRowStart>
     </FlexColStart>
   );
 }
@@ -158,7 +162,7 @@ function PricingCard({
   return (
     <FlexColStart
       className={cn(
-        "w-full max-w-[400px] md:max-w-[250px] h-auto ",
+        "w-[350px] max-w-[400px] md:max-w-[250px] h-auto ",
         "border-solid border-[1px] border-white-400/30 rounded-md dark:border-white-300/30 dark:border-[.5px] "
       )}
     >
