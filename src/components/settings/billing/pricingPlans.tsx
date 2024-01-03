@@ -143,9 +143,21 @@ function PricingCard({
   current_plan,
   activePlanDuration,
 }: PricingCardProps) {
-  const hasSubscribedToPlan = current_plan?.product_id === String(product_id);
   const product = pricingPlans.find((d) => d.id === id);
   const _loading = loading.find((d) => String(d.id) === String(product_id));
+
+  // check if user has subscribed to plan based on the plan duration
+  const hasSubscribedToPlan = () => {
+    if (current_plan?.product_id === String(product_id)) {
+      const vId = current_plan?.variant_id;
+      const variant = product?.variants.find((v) => String(v.id) === vId);
+      if (!variant) return false;
+      const { duration } = variant;
+      const _duration = duration.toLowerCase().replace("ly", "");
+      return _duration === activePlanDuration.toLowerCase();
+    }
+    return false;
+  };
 
   const variant = product?.variants.find(
     (v) =>
@@ -183,11 +195,11 @@ function PricingCard({
         <Button
           className={cn(
             "w-full rounded-full py-0 h-[40px] hover:bg-blue-100/70 bg-blue-100 text-white-100 disabled:bg-white-400/40 border-solid border-transparent",
-            hasSubscribedToPlan &&
+            hasSubscribedToPlan() &&
               "cursor-not-allowed opacity-[.5] hover:cursor-not-allowed"
           )}
           onClick={() =>
-            !hasSubscribedToPlan &&
+            !hasSubscribedToPlan() &&
             subscribeToPlan(product?.product_id as number)
           }
           disabled={
@@ -198,9 +210,13 @@ function PricingCard({
           }
         >
           <FlexRowStartCenter>
-            {hasSubscribedToPlan ? <CheckCheck size={20} /> : <Zap size={20} />}
+            {hasSubscribedToPlan() ? (
+              <CheckCheck size={20} />
+            ) : (
+              <Zap size={20} />
+            )}
             <span className="font-ppReg text-xs ">
-              {hasSubscribedToPlan ? "Subscribed" : "Switch to this plan"}
+              {hasSubscribedToPlan() ? "Subscribed" : "Switch to this plan"}
             </span>
           </FlexRowStartCenter>
         </Button>
