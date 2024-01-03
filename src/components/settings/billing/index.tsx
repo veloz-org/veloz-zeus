@@ -117,7 +117,7 @@ function BillingCard({
   return (
     <FlexColStart
       className={cn(
-        "w-full max-w-[250px] py-3 px-4 rounded-md border-solid border-transparent",
+        "w-full md:max-w-[250px] py-3 px-4 rounded-md border-solid border-transparent",
         "bg-blue-201 dark:bg-dark-102 border-[2px] border-blue-101 "
       )}
     >
