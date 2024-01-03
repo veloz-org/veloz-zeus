@@ -11,12 +11,20 @@ import Button from "@/components/ui/button";
 import pricingPlanFeatures from "@/data/pricing/features";
 import { pricingPlans } from "@/data/pricing/plan";
 import { cn, currencyFormatter } from "@/lib/utils";
-import { ValidPricingDuration } from "@/types";
+import { TogglePlanDurations, ValidPricingDuration } from "@/types";
 import { CheckCheck, Zap, X } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 export default function Pricing() {
   const { status } = useSession();
+  // toggling plan between month and year
+  const [activePlanDuration, setActivePlanDuration] =
+    useState<TogglePlanDurations>("MONTH");
+
+  const togglePlans = (duration: TogglePlanDurations) =>
+    setActivePlanDuration(duration);
+
   const subscribe = () => {
     window.location.href =
       status === "authenticated" ? "/app/dashboard" : "auth";
@@ -34,18 +42,41 @@ export default function Pricing() {
         </p>
         <br />
       </FlexColStartCenter>
+      <FlexRowCenter>
+        <FlexRowStartCenter className="w-auto px-[1px] py-[1.5px] gap-0 rounded-full dark:bg-dark-100 border-[1px] border-white-300/80 dark:border-white-300/10 ">
+          {["month", "year"].map((d, i) => (
+            <button
+              key={i}
+              className={cn(
+                "w-auto px-5 h-[30px] scale-[.95] transition-all rounded-full",
+                activePlanDuration.toLowerCase() === d
+                  ? "bg-blue-100 text-white-100 font-ppSB"
+                  : "bg-transparent text-dark-100 dark:text-white-400 "
+              )}
+              onClick={() =>
+                togglePlans(d.toUpperCase() as TogglePlanDurations)
+              }
+            >
+              <FlexRowCenter>
+                <span className="text-xs font-ppReg">
+                  {d.slice(0, 1).toUpperCase() + d.slice(1)}
+                </span>
+              </FlexRowCenter>
+            </button>
+          ))}
+        </FlexRowStartCenter>
+      </FlexRowCenter>
+      <br />
       <FlexRowCenter className="w-full flex-wrap p-3 gap-7 ">
         {pricingPlans.map((plan, i) => (
           <PricingCard
             key={i}
-            name={plan.name}
-            currency={plan.pricing.currency}
-            amount={plan?.pricing.amount}
-            duration={plan.duration}
             id={plan.id}
             product_id={plan.product_id}
+            name={plan.name}
             subscribeToPlan={subscribe}
             recommended={plan.recommended}
+            activePlanDuration={activePlanDuration}
           />
         ))}
       </FlexRowCenter>
@@ -57,24 +88,31 @@ type PricingCardProps = {
   id: string;
   product_id: number;
   name: string;
-  duration: ValidPricingDuration;
-  currency: string;
-  amount: number;
   subscribeToPlan: () => void;
   recommended?: boolean;
+  activePlanDuration: TogglePlanDurations;
 };
 
 function PricingCard({
   id,
   product_id,
   name,
-  duration,
-  currency,
-  amount,
+  activePlanDuration,
   subscribeToPlan,
   recommended,
 }: PricingCardProps) {
   const features = pricingPlanFeatures.find((d) => d.id === id)?.features;
+  const product = pricingPlans.find((d) => d.id === id);
+  const variant = product?.variants.find(
+    (v) =>
+      v.duration.toLowerCase().replace("ly", "") ===
+      activePlanDuration.toLowerCase()
+  );
+
+  if (!variant || !product) return null;
+
+  const duration = variant.duration;
+  const { amount, currency } = variant.pricing;
 
   return (
     <FlexColStart
