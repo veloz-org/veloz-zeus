@@ -169,6 +169,8 @@ export const POST = CatchError(async (req: NextRequest) => {
       }
     }
   }
+
+  return sendResponse.success(RESPONSE_CODE.SUCCESS, "Success", 200);
 });
 
 // export { handler as Get, handler as POST, handler as PUT, handler as DELETE };
