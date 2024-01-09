@@ -10,7 +10,7 @@
     "dbPush": "npx prisma db push && npx prisma generate"
   },
   "prisma": {
-    "schema": "./src/prisma/mongo.prisma"
+    "schema": "./src/prisma/mysql.prisma"
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
