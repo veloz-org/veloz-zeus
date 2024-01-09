@@ -120,7 +120,7 @@ function WaitlistMainPage() {
           <p className="text-white-300 font-ppReg text-sm">No waitlist</p>
         </FlexRowCenter>
       ) : (
-        <FlexColStart className="w-full px-8 py-4">
+        <FlexColStart className="w-full h-auto overflow-scroll md:hideScrollBar md:overflow-hidden px-8 py-4">
           <FlexRowEnd className="w-full">
             <Button
               className="bg-blue-101 py-0 h-[30px] scale-[.95]"
@@ -131,7 +131,7 @@ function WaitlistMainPage() {
             </Button>
           </FlexRowEnd>
           <br />
-          <Table className="hideScrollBar">
+          <Table className="hideScrollBar ">
             <TableCaption>
               <p className="text-white-400 dark:text-white-300 text-xs font-ppReg">
                 Showing {waitlist.length} waitlist users
@@ -159,8 +159,8 @@ function WaitlistMainPage() {
                       {w.email}
                     </span>
                   </TableCell>
-                  <TableCell className="font-ppReg">
-                    <span className="text-dark-100 dark:text-white-100 text-xs">
+                  <TableCell className="w-auto font-ppReg">
+                    <span className="text-dark-100 dark:text-white-100 text-xs whitespace-nowrap">
                       {dayjs(w.date).fromNow()}
                     </span>
                   </TableCell>
