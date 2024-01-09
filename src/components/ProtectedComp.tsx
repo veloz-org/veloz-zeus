@@ -4,7 +4,7 @@ import { DataContext } from "@/context/DataContext";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 
-// protect component from unauthorized users
+// protect component from unauthorized users that aren't admins
 export function OnlyAdmin({ children }: { children: React.ReactNode }) {
   const { userInfo } = useContext(DataContext);
   if (userInfo?.role !== "admin") return null;
