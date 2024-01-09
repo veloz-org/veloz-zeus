@@ -5,6 +5,7 @@ import React from "react";
 
 // customer trust components
 function TrustedBy() {
+  const TRUSTED_CUSTOMERS_COUNT = 100;
   return (
     <FlexRowStartCenter>
       <FlexRowCenter className="w-fit -space-x-5 rtl:space-x-reverse">
@@ -27,7 +28,7 @@ function TrustedBy() {
         <p className=" text-white-400 dark:text-white-300 text-sm font-ppReg">
           Trusted by{" "}
           <span className="font-ppSB text-dark-100 dark:text-white-100">
-            100+
+            {TRUSTED_CUSTOMERS_COUNT}+
           </span>{" "}
           Makers
         </p>
