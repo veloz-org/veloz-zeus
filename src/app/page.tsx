@@ -2,7 +2,7 @@
 import { FlexColStart } from "@/components/Flex";
 import Footer from "@/components/Footer";
 import { FullPageLoader } from "@/components/Loader";
-import { FAQ, Features, Header, Pricing } from "@/components/landing";
+import { FAQ, Features, Hero, Pricing } from "@/components/landing";
 import TopBar from "@/components/landing/navigations/TopBar";
 import WaitlistPage from "@/components/waitlist/page";
 import usePageLoaded from "@/hooks/usePageLoaded";
@@ -20,7 +20,7 @@ export default function Home() {
       <TopBar />
 
       {/* components sections */}
-      <Header />
+      <Hero />
       <Features />
       <Pricing />
       <FAQ />

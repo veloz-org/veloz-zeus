@@ -3,7 +3,7 @@ import React from "react";
 import TrustedBy from "../testimonials/TrustedBy";
 import WaitlistFormComponent from "@/components/waitlist/component";
 
-function Header() {
+function Hero() {
   return (
     <FlexColCenter className="w-full h-full min-h-[600px] text-center border-b-solid border-b-[1px] border-b-white-300 dark:border-b-white-600 ">
       <div id={""} className="absolute -top-12"></div>
@@ -26,4 +26,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Hero;
