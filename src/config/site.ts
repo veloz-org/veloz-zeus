@@ -1,5 +1,8 @@
-// your site config data
-const SITE_CONFIG = {
+const siteConfig = {
+  domain: "https://tryveloz.com",
+  social: {
+    discord: "https://discord.com/invite/d9Ywveuh25",
+  },
   name: "Veloz",
   headline: "Veloz",
   description: "Your saas launchpad",
@@ -7,4 +10,4 @@ const SITE_CONFIG = {
   image: "/images/og/og-image.png",
 };
 
-export default SITE_CONFIG;
+export default siteConfig;
