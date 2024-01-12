@@ -9,6 +9,7 @@ import DataContextProvider from "@/context/DataContext";
 import NextTopLoader from "@/components/TopLoader";
 import useTheme from "@/hooks/useTheme";
 import Seo from "@/components/Seo";
+import Script from "next/script";
 
 // tanstack reqct query
 const queryClient = new QueryClient();
@@ -41,6 +42,16 @@ export default function RootLayout({
 
         {/* Seo metatags */}
         <Seo />
+
+        {/* Analytics */}
+        <script
+          defer
+          type="text/javascript"
+          src="https://api.pirsch.io/pirsch-extended.js"
+          id="pirschextendedjs"
+          data-code="m1JWwnX2AnjyV6XJhZQPc6SkEvhepiub"
+          data-dev="benrobo4.vercel.app" // in dev mode
+        ></script>
       </head>
       <body
         className="h-screen hideScrollBar2 scroll-smooth dark:bg-dark-100 bg-white-100"
