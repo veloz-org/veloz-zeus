@@ -1,8 +1,8 @@
 // your site config data
 const SITE_CONFIG = {
   name: "Veloz",
-  headline: "Veloz",
-  description: "Your saas launchpad",
+  headline: "Veloz - Your saas launchpad",
+  description: "ship your saas in weeks, not months.",
   keywords: "boilerplate, starter kit, saucecode",
   domain: "",
   image: "/images/og/og-image.png",
