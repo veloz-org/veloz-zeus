@@ -1,4 +1,4 @@
-import SITE_CONFIG from "@/config/site";
+import SITE_CONFIG from "../config/site";
 import React from "react";
 
 type SeoProps = {
@@ -20,7 +20,7 @@ function Seo({ title, description, image, url, keywords }: SeoProps) {
       />
       <meta name="keywords" content={SITE_CONFIG.keywords ?? keywords} />
       <meta name="image" content={SITE_CONFIG.image ?? image} />
-      <meta name="url" content={url} />
+      <meta name="url" content={SITE_CONFIG.domain ?? url} />
       <meta name="robots" content="index, follow" />
       <meta name="googlebot" content="index, follow" />
 
@@ -31,18 +31,18 @@ function Seo({ title, description, image, url, keywords }: SeoProps) {
         content={SITE_CONFIG.description ?? description}
       />
       <meta property="og:image" content={SITE_CONFIG.image ?? image} />
-      <meta property="og:url" content={url} />
+      <meta property="og:url" content={SITE_CONFIG.domain ?? url} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="Veloz" />
 
       {/* Twitter Meta Tags */}
-      <meta property="twitter:title" content={title} />
+      <meta property="twitter:title" content={SITE_CONFIG.headline ?? title} />
       <meta
         property="twitter:description"
         content={SITE_CONFIG.description ?? description}
       />
       <meta name="twitter:image" content={SITE_CONFIG.image ?? image} />
-      <meta property="twitter:url" content={url} />
+      <meta property="twitter:url" content={SITE_CONFIG.domain ?? url} />
       <meta property="twitter:type" content="website" />
       <meta name="twitter:site" content="@tryveloz" />
       <meta name="twitter:card" content="summary_large_image" />

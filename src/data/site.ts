@@ -4,6 +4,7 @@ const SITE_CONFIG = {
   headline: "Veloz",
   description: "Your saas launchpad",
   keywords: "boilerplate, starter kit, saucecode",
+  domain: "",
   image: "/images/og/og-image.png",
 };
 
