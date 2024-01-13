@@ -4,10 +4,8 @@ import useAuthUser from "@/hooks/useAuthUser";
 import { useSession } from "next-auth/react";
 import React, { useCallback, useContext, useEffect } from "react";
 
-export default function withAuth<P extends { children: React.ReactNode }>(
-  Component: React.ComponentType<P>
-) {
-  const ComponentWithAuth = (props: P) => {
+export default function withAuth<P>(Component: React.ComponentType<P>) {
+  const ComponentWithAuth = (props: P & any) => {
     const { setUserInfo, setGlobalLoadingState, setCurrentPlan } =
       useDataContext();
     const { data, loading, error, refetch } = useAuthUser(false);

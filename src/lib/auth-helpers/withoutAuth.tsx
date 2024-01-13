@@ -2,10 +2,8 @@ import { FullPageLoader } from "@/components/Loader";
 import { useSession } from "next-auth/react";
 import React, { useEffect } from "react";
 
-export function withoutAuth<P extends { children: React.ReactNode }>(
-  Component: React.ComponentType<P>
-) {
-  const ComponentWithAuth = (props: P) => {
+export function withoutAuth<P>(Component: React.ComponentType<P>) {
+  const ComponentWithAuth = (props: P & any) => {
     const { status } = useSession();
 
     useEffect(() => {
