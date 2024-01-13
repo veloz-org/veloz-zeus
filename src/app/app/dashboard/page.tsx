@@ -7,7 +7,7 @@ import {
   FlexRowStartCenter,
 } from "@/components/Flex";
 import StatsCard from "@/components/dashboard/StatsCard";
-import { LayoutContext } from "@/context/LayoutContext";
+import { useLayoutContext } from "@/context/LayoutContext";
 
 const dashboardStats = [
   {
@@ -40,7 +40,7 @@ const dashboardStats = [
 ];
 
 function Dashboard() {
-  const { setActivePage } = React.useContext(LayoutContext);
+  const { setActivePage } = useLayoutContext();
   const [activeStatsCard, setActiveStatsCard] = React.useState("totalUsers");
 
   // set active page in layout context to reflect sidebar /active state

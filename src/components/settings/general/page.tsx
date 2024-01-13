@@ -1,13 +1,13 @@
 import { FlexColStart } from "@/components/Flex";
 import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DataContext } from "@/context/DataContext";
+import { useDataContext } from "@/context/DataContext";
 import useAuthUser from "@/hooks/useAuthUser";
 import { getUser, updateUserDetails } from "@/http/requests";
-import { ResponseData, UserInfo } from "@/types";
+import { CurrentUserPlan, ResponseData, UserInfo } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 type UserDetails = {
@@ -17,8 +17,7 @@ type UserDetails = {
 };
 
 function GeneralSettingsTab() {
-  const { userInfo, setUserInfo, setSubscribedPlans, setGlobalLoadingState } =
-    useContext(DataContext);
+  const { userInfo, setCurrentPlan, setGlobalLoadingState } = useDataContext();
   const [userDetails, setUserDetails] = useState<UserDetails>({
     email: "",
     username: "",
@@ -53,10 +52,7 @@ function GeneralSettingsTab() {
   // user info fetch
   React.useCallback(() => {
     if (data && !loading) {
-      const planProdIds = data.subscriptions?.map(
-        (plan: any) => plan.product_id
-      );
-      setSubscribedPlans(planProdIds);
+      setCurrentPlan(data?.subscription ?? null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);

@@ -12,7 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { DataContext } from "@/context/DataContext";
+import { useDataContext } from "@/context/DataContext";
 import useTheme from "@/hooks/useTheme";
 import {
   ChevronDown,
@@ -23,11 +23,10 @@ import {
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { useContext } from "react";
 
 function TopBar() {
   const { userInfo, sidebarOpen, setSidebarOpen, globalLoadingState } =
-    useContext(DataContext);
+    useDataContext();
 
   return (
     <FlexRowCenterBtw className="w-full h-auto px-4 py-2 bg-white-100 dark:bg-dark-100 shadow-sm border-b-solid border-b-[1px] border-b-transparent dark:border-b-white-600 ">

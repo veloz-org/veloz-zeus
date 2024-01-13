@@ -49,3 +49,7 @@ function DataContextProvider({ children }: { children: ReactNode }) {
 }
 
 export default DataContextProvider;
+
+export function useDataContext() {
+  return useContext(DataContext);
+}

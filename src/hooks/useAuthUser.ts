@@ -1,16 +1,14 @@
-import { DataContext } from "@/context/DataContext";
+import { useDataContext } from "@/context/DataContext";
 import { getUser } from "@/http/requests";
 import { Logout } from "@/lib/utils";
 import { ResponseData, UserInfo } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import React, { useContext, useState } from "react";
+import React from "react";
 import toast from "react-hot-toast";
 
 // hook meant to fetch auth user info
 export default function useAuthUser(shouldFetchOnMount: boolean = false) {
-  const { userInfo, setUserInfo } = useContext(DataContext);
+  const { userInfo, setUserInfo } = useDataContext();
   const userInfoMutation = useMutation({
     mutationFn: () => getUser(),
   });

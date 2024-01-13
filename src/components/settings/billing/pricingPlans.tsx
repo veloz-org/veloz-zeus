@@ -15,14 +15,8 @@ import { ArrowLeftToLine, CheckCheck, X, Zap } from "lucide-react";
 import Button from "../../ui/button";
 import { cn, currencyFormatter } from "@/lib/utils";
 import { pricingPlans } from "@/data/pricing/plan";
-import {
-  CurrentUserPlan,
-  ResponseData,
-  TogglePlanDurations,
-  ValidPricingDuration,
-} from "@/types";
-import pricingPlanFeatures from "@/data/pricing/features";
-import { DataContext } from "@/context/DataContext";
+import { CurrentUserPlan, ResponseData, TogglePlanDurations } from "@/types";
+import { useDataContext } from "@/context/DataContext";
 import { useMutation } from "@tanstack/react-query";
 import { subscribeToPlan } from "@/http/requests";
 import toast from "react-hot-toast";
@@ -30,7 +24,7 @@ import toast from "react-hot-toast";
 type Props = {};
 
 function BillingPricingPlans({}: Props) {
-  const { userInfo, current_plan } = useContext(DataContext);
+  const { userInfo, current_plan } = useDataContext();
   const [subscribeLoading, setSubscribeLoading] = React.useState<
     {
       id: any;

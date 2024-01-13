@@ -6,7 +6,7 @@ import {
   FlexRowStartCenter,
 } from "@/components/Flex";
 import Button from "@/components/ui/button";
-import { DataContext } from "@/context/DataContext";
+import { DataContext, useDataContext } from "@/context/DataContext";
 import { pricingPlans } from "@/data/pricing/plan";
 import { getCustomerPortal } from "@/http/requests";
 import {
@@ -23,7 +23,7 @@ import toast from "react-hot-toast";
 import BillingPricingPlans from "./pricingPlans";
 
 function BillingTab() {
-  const { current_plan, userInfo } = useContext(DataContext);
+  const { userInfo } = useDataContext();
   const getCustomerPortalMut = useMutation({
     mutationFn: async (data: any) => await getCustomerPortal(data),
   });

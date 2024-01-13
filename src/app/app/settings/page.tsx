@@ -6,7 +6,7 @@ import {
 } from "@/components/Flex";
 import BillingTab from "@/components/settings/billing";
 import GeneralSettingsTab from "@/components/settings/general/page";
-import { LayoutContext } from "@/context/LayoutContext";
+import { useLayoutContext } from "@/context/LayoutContext";
 import { cn } from "@/lib/utils";
 import { Settings, Wallet } from "lucide-react";
 import React, { useState } from "react";
@@ -25,7 +25,7 @@ const Tabs = [
 type SettingsTabs = (typeof Tabs)[number];
 
 function SettingsPage() {
-  const { setActivePage } = React.useContext(LayoutContext);
+  const { setActivePage } = useLayoutContext();
   const [activeTab, setActiveTab] = useState<SettingsTabs>({
     title: "General",
     key: "general",

@@ -17,7 +17,8 @@ export function withoutAuth<P extends { children: React.ReactNode }>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
-    if (status === "loading") return <FullPageLoader />;
+    if (status === "loading" || status === "unauthenticated")
+      return <FullPageLoader />;
 
     return <Component {...props} />;
   };

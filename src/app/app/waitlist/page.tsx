@@ -1,9 +1,8 @@
 "use client";
 import { FlexColStart, FlexRowCenter, FlexRowEnd } from "@/components/Flex";
 import { OnlyAdminHOF } from "@/components/ProtectedComp";
-import DashboardLayout from "@/components/dashboard/Layouts/DashboardLayout";
-import { LayoutContext } from "@/context/LayoutContext";
-import React, { useContext } from "react";
+import { useLayoutContext } from "@/context/LayoutContext";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -25,7 +24,7 @@ import useTheme from "@/hooks/useTheme";
 dayjs.extend(relativeTime);
 
 function WaitlistMainPage() {
-  const { setActivePage } = useContext(LayoutContext);
+  const { setActivePage } = useLayoutContext();
   const { theme } = useTheme();
   const [waitlist, setWaitlist] = React.useState<
     { email: string; date: string; id: string }[]

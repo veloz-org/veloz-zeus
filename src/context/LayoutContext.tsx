@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 interface LayoutContextValuesProps {
   setActivePage: (page: string) => void;
@@ -25,3 +25,7 @@ function LayoutContextProvider({ children }: { children: React.ReactNode }) {
 }
 
 export default LayoutContextProvider;
+
+export function useLayoutContext() {
+  return useContext(LayoutContext);
+}

@@ -1,16 +1,11 @@
 "use client";
-import {
-  FlexColCenter,
-  FlexColStart,
-  FlexRowCenterBtw,
-  FlexRowStartCenter,
-} from "@/components/Flex";
+import { FlexColStart, FlexRowStartCenter } from "@/components/Flex";
 import Modal from "@/components/Modal";
 import { OnlyAdmin } from "@/components/ProtectedComp";
 import { Spinner } from "@/components/Spinner";
 import Button from "@/components/ui/button";
-import { DataContext } from "@/context/DataContext";
-import { LayoutContext } from "@/context/LayoutContext";
+import { useDataContext } from "@/context/DataContext";
+import { useLayoutContext } from "@/context/LayoutContext";
 import useTheme from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import {
@@ -48,8 +43,8 @@ const navigations = [
 
 function Sidebar({}: SidebarProps) {
   const { userInfo, setSidebarOpen, sidebarOpen, globalLoadingState } =
-    useContext(DataContext);
-  const { activePage } = useContext(LayoutContext);
+    useDataContext();
+  const { activePage } = useLayoutContext();
   const { theme } = useTheme();
 
   const navListStyle = (

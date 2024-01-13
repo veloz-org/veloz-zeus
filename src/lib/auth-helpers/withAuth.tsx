@@ -1,5 +1,5 @@
 import { FullPageLoader } from "@/components/Loader";
-import { DataContext } from "@/context/DataContext";
+import { useDataContext } from "@/context/DataContext";
 import useAuthUser from "@/hooks/useAuthUser";
 import { useSession } from "next-auth/react";
 import React, { useCallback, useContext, useEffect } from "react";
@@ -9,7 +9,7 @@ export default function withAuth<P extends { children: React.ReactNode }>(
 ) {
   const ComponentWithAuth = (props: P) => {
     const { setUserInfo, setGlobalLoadingState, setCurrentPlan } =
-      useContext(DataContext);
+      useDataContext();
     const { data, loading, error, refetch } = useAuthUser(false);
     const { status } = useSession();
 

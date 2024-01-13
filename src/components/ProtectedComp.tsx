@@ -1,19 +1,18 @@
 "use client";
 
-import { DataContext } from "@/context/DataContext";
+import { useDataContext } from "@/context/DataContext";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
 
 // protect component from unauthorized users that aren't admins
 export function OnlyAdmin({ children }: { children: React.ReactNode }) {
-  const { userInfo } = useContext(DataContext);
+  const { userInfo } = useDataContext();
   if (userInfo?.role !== "admin") return null;
   return children;
 }
 
 export function OnlyAdminHOF<P>(Component: React.ComponentType<P>) {
   const ComponentWithAuth = (props: P & any) => {
-    const { userInfo } = useContext(DataContext);
+    const { userInfo } = useDataContext();
     const router = useRouter();
     if (!userInfo) return null;
     if (userInfo?.role !== "admin") {
