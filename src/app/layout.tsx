@@ -9,7 +9,6 @@ import DataContextProvider from "@/context/DataContext";
 import NextTopLoader from "@/components/TopLoader";
 import useTheme from "@/hooks/useTheme";
 import Seo from "@/components/Seo";
-import Script from "next/script";
 
 // tanstack reqct query
 const queryClient = new QueryClient();
