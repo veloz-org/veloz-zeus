@@ -50,7 +50,6 @@ export default function RootLayout({
           src="https://api.pirsch.io/pirsch-extended.js"
           id="pirschextendedjs"
           data-code="m1JWwnX2AnjyV6XJhZQPc6SkEvhepiub"
-          data-dev="benrobo4.vercel.app" // in dev mode
         ></script>
       </head>
       <body

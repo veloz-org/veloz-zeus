@@ -10,8 +10,8 @@ export const Spinner: React.FC<SpinnerProps> = ({
   const spinnerStyle = {
     width: `${size}px`,
     height: `${size}px`,
-    borderTopColor: `${color}`,
-    borderRightColor: `${color}`,
+    borderTopColor: `${color ?? "#fff"}`,
+    borderRightColor: `${color ?? "#fff"}`,
     borderBottomColor: `transparent`,
     borderLeftColor: `transparent`,
     // borderColor: `${color}`,

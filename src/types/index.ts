@@ -32,6 +32,7 @@ export interface PricingPlan {
   key: string;
   variants: {
     id: number;
+    test_variant_id: any;
     duration: ValidPricingDuration;
     pricing: {
       currency: string;

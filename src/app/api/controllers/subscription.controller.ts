@@ -89,9 +89,13 @@ export default class SubscriptionController {
     const planVariant = product.variants.find(
       (v) => v.duration.toLowerCase() === duration.toLowerCase()
     );
-    const checkoutUrl = await LQS.createCheckout(String(planVariant?.id), {
-      user_id: user.id,
-    });
+    const checkoutUrl = await LQS.createCheckout(
+      String(product.product_id),
+      String(planVariant?.duration),
+      {
+        user_id: user.id,
+      }
+    );
 
     if (checkoutUrl.error) {
       return sendResponse.error(
@@ -103,7 +107,7 @@ export default class SubscriptionController {
 
     // send the checkout url to the client
     return sendResponse.success(RESPONSE_CODE.SUCCESS, "Success", 200, {
-      url: checkoutUrl.data.url,
+      url: checkoutUrl?.data?.url as string,
     });
   }
 

@@ -3,12 +3,16 @@ import env from "../config/env";
 import { LemonsqueezyConfig } from "../config";
 import { pricingPlans } from "@/data/pricing/plan";
 
-const IN_TEST_MODE = process.env.NODE_ENV === "development";
+const IN_TEST_MODE = process.env.SERVER_ENV === "development";
 
 // create lemonsqueezy checkout
 export default class LemonsqueezyServices {
   // create checkout
-  public async createCheckout(plan_variant_id: string, custom_data?: object) {
+  public async createCheckout(
+    prod_id: string,
+    duration: string,
+    custom_data?: object
+  ) {
     const custom_redirect_url = `${env.BASE_URL}/app/settings`;
 
     const payload = {
@@ -36,26 +40,32 @@ export default class LemonsqueezyServices {
           },
           variant: {},
         },
-        test_mode: IN_TEST_MODE,
       },
     };
-    let response = { error: null, data: null };
+    let response: {
+      error: null | string;
+      data: { url: null | string } | null;
+    } = { error: null, data: { url: null } };
     try {
       // get variants
-      const variants = await this.getProductVariants();
-      if (variants.error) {
-        return variants;
-      }
+      const variants = [];
 
-      // filter out variant
-      const _variant = variants?.data?.find(
-        (v: any) => String(v.variant_id) === String(plan_variant_id)
-      );
+      for (const plan of pricingPlans) {
+        if (String(plan.product_id) === prod_id) {
+          for (const variant of plan?.variants) {
+            const durationEq = variant.duration === duration;
+            if (IN_TEST_MODE) durationEq && variants.push(variant);
+            else durationEq && variants.push(variant);
+          }
+        }
+      }
 
       payload.data.relationships.variant = {
         data: {
-          type: _variant.type,
-          id: _variant.variant_id,
+          type: "variants",
+          id: IN_TEST_MODE
+            ? String(variants[0].test_variant_id)
+            : String(variants[0].id),
         },
       };
 
