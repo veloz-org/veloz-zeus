@@ -1,7 +1,7 @@
 "use client";
 import { ppReg, ppB, ppEB, ppSB, ppL, blEB } from "@/config/font";
 import "./styles/globals.css";
-import NextAuthProvider from "@/providers/NextAuthProvider";
+import NextAuthProvider from "../providers/NextAuthProvider";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LayoutContextProvider from "@/context/LayoutContext";
