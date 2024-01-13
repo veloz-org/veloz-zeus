@@ -43,4 +43,5 @@ class SendResponse {
   }
 }
 
-export default new SendResponse();
+const sendResponse = new SendResponse();
+export default sendResponse;

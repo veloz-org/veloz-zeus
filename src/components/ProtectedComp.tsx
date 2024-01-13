@@ -11,10 +11,8 @@ export function OnlyAdmin({ children }: { children: React.ReactNode }) {
   return children;
 }
 
-export function OnlyAdminHOF<P extends { children: React.ReactNode }>(
-  Component: React.ComponentType<P>
-) {
-  const ComponentWithAuth = (props: P) => {
+export function OnlyAdminHOF<P>(Component: React.ComponentType<P>) {
+  const ComponentWithAuth = (props: P & any) => {
     const { userInfo } = useContext(DataContext);
     const router = useRouter();
     if (!userInfo) return null;

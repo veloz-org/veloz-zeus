@@ -1,5 +1,4 @@
 import TopBar from "@/components/landing/navigations/TopBar";
-import useTheme from "@/hooks/useTheme";
 
 export default function RootLayout({
   children,
