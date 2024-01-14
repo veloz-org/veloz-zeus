@@ -20,7 +20,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
-import toast from "react-hot-toast";
 
 interface SidebarProps {
   // activePage: string;
@@ -58,6 +57,12 @@ function Sidebar({}: SidebarProps) {
 
     if (pageName === navName) return { btn: Active, icon: iconActive };
     else return { btn: notActive, icon: iconNotActive };
+  };
+
+  const closeSidebarOnNavClick = () => {
+    if (window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
   };
 
   return (
@@ -110,6 +115,7 @@ function Sidebar({}: SidebarProps) {
                     "w-full h-auto group px-4 py-3 rounded-sm flex items-center justify-start gap-2 font-ppReg transition ease-in-out text-[14px]",
                     navListStyle(activePage, nav.name.toLowerCase()).btn
                   )}
+                  onClick={closeSidebarOnNavClick}
                 >
                   {renderNavIcons(
                     nav.name,
@@ -130,6 +136,7 @@ function Sidebar({}: SidebarProps) {
                 "w-full h-auto group px-4 py-3 rounded-sm flex items-center justify-start gap-2 font-ppReg transition ease-in-out text-[14px]",
                 navListStyle(activePage, nav.name.toLowerCase()).btn
               )}
+              onClick={closeSidebarOnNavClick}
             >
               {renderNavIcons(
                 nav.name,
