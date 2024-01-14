@@ -29,15 +29,6 @@ function OAuth() {
   const [loading, setLoading] = React.useState<
     { name: string; loading: boolean }[]
   >([]);
-  const errorParams = useSearchParams().get("error");
-
-  React.useEffect(() => {
-    if (errorParams) {
-      if (errorParams === "OAuthAccountNotLinked") {
-        toast.error("Email already exists, not linked with Google.");
-      }
-    }
-  }, [errorParams]);
 
   async function handleAuth(type: AuthType) {
     // set loading
