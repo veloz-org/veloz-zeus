@@ -1,3 +1,4 @@
+import Head from "next/head";
 import SITE_CONFIG from "../config/site";
 import React from "react";
 
@@ -11,7 +12,7 @@ type SeoProps = {
 
 function Seo({ title, description, image, url, keywords }: SeoProps) {
   return (
-    <>
+    <Head>
       {/* General Meta Tags */}
       <title>{title ?? SITE_CONFIG.headline}</title>
       <meta
@@ -54,13 +55,19 @@ function Seo({ title, description, image, url, keywords }: SeoProps) {
       {/* Apple Touch Icon */}
       <meta name="apple-mobile-web-app-title" content="Veloz" />
 
+      {/* Google search indexing */}
+      <meta
+        name="google-site-verification"
+        content="ocD59DwPr5QESyBF5Mcje4y9ucq_I9ZCXN0cgJGAKBQ"
+      />
+
       {/* Microsoft Tiles */}
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta name="theme-color" content="#ffffff" />
       <meta name="application-name" content="Veloz" />
       <meta name="msapplication-TileImage" content="/images/logo/logo.png" />
       {/* <meta name="msapplication-config" content="/browserconfig.xml" /> */}
-    </>
+    </Head>
   );
 }
 
