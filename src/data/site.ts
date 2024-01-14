@@ -5,7 +5,7 @@ const SITE_CONFIG = {
   description: "ship your saas in weeks, not months.",
   keywords: "boilerplate, starter kit, saucecode",
   domain: "https://veloz-zeus.tryveloz.com/",
-  image: "/images/og/og-image.png",
+  image: "https://veloz-zeus.tryveloz.com/images/og/og-image.png",
 };
 
 export default SITE_CONFIG;
