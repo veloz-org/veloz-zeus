@@ -4,7 +4,7 @@ const SITE_CONFIG = {
   headline: "Veloz - Your saas launchpad",
   description: "ship your saas in weeks, not months.",
   keywords: "boilerplate, starter kit, saucecode",
-  domain: "",
+  domain: "https://veloz-zeus.tryveloz.com/",
   image: "/images/og/og-image.png",
 };
 
