@@ -9,6 +9,7 @@ import DataContextProvider from "@/context/DataContext";
 import NextTopLoader from "@/components/TopLoader";
 import useTheme from "@/hooks/useTheme";
 import Seo from "@/components/Seo";
+import Head from "next/head";
 
 // tanstack reqct query
 const queryClient = new QueryClient();
@@ -25,7 +26,9 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="dark">
-      <head>
+      <Head>
+        {/* Seo metatags */}
+        <Seo />
         <style jsx global>
           {`
             :root {
@@ -39,10 +42,7 @@ export default function RootLayout({
           `}
         </style>
 
-        {/* Seo metatags */}
-        <Seo />
-
-        {/* Analytics */}
+        {/* Pirsch Analytics */}
         <script
           defer
           type="text/javascript"
@@ -50,7 +50,7 @@ export default function RootLayout({
           id="pirschextendedjs"
           data-code="m1JWwnX2AnjyV6XJhZQPc6SkEvhepiub"
         ></script>
-      </head>
+      </Head>
       <body
         className="h-screen hideScrollBar2 scroll-smooth dark:bg-dark-100 bg-white-100"
         suppressHydrationWarning
