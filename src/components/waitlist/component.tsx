@@ -35,7 +35,7 @@ export default function WaitlistFormComponent() {
 
   return (
     <FlexRowCenter className="w-full">
-      <FlexRowStartCenter className="w-fit min-w-[400px] bg-white-300 dark:bg-dark-102 rounded-full py-2 px-2 relative border-[3px] border-dark-102 shadow-md scale-[.90] md:scale-[1] ">
+      <FlexRowStartCenter className="w-fit min-w-[400px] bg-white-300 dark:bg-dark-102 rounded-full py-2 px-2 relative border-[3px] border-dark-102 shadow-md scale-[.85] md:scale-[1] ">
         <FlexColCenter className="w-fit absolute left-[3em] top-[-1em] translate-y-1">
           <span className="text-[10px] text-white-100/40 font-ppReg px-2 py-[2px] rounded-full bg-dark-102">
             Email Address

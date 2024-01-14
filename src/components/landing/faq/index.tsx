@@ -17,7 +17,7 @@ function FAQ() {
         Frequently Asked Questions
       </h1>
       <br />
-      <FlexColCenter className="w-full max-w-[75%] mx-auto">
+      <FlexColCenter className="w-full max-w-[95%] md:max-w-[75%] mx-auto">
         <FlexColStart className="w-full border-[1px] border-white-400/30 dark:border-white-300/40 rounded-md">
           {FAQ_DATA.map((f, i) => (
             <FAQDropdown

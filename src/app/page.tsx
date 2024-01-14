@@ -8,7 +8,7 @@ import React from "react";
 
 export default function Home() {
   return (
-    <FlexColStart className="w-full h-screen hideScrollBar overflow-auto mt-[4.5em] scroll-smooth">
+    <FlexColStart className="w-full h-screen hideScrollBar overflow-auto overflow-x-hidden mt-[4.5em] scroll-smooth">
       {/* navigation section */}
       <TopBar />
 
