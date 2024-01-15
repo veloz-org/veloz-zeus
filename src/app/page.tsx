@@ -1,6 +1,7 @@
 "use client";
 import { FlexColStart } from "@/components/Flex";
 import Footer from "@/components/Footer";
+import Seo from "@/components/Seo";
 import { FAQ, Features, Hero, Pricing } from "@/components/landing";
 import TopBar from "@/components/landing/navigations/TopBar";
 import WaitlistPage from "@/components/waitlist/page";
