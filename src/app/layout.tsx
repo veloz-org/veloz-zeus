@@ -26,22 +26,8 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="dark">
+      <Seo />
       <Head>
-        {/* Seo metatags */}
-        <Seo />
-        <style jsx global>
-          {`
-            :root {
-              --font-ppReg: ${ppReg.style.fontFamily};
-              --font-ppB: ${ppB.style.fontFamily};
-              --font-ppEB: ${ppEB.style.fontFamily};
-              --font-ppSB: ${ppSB.style.fontFamily};
-              --font-ppL: ${ppL.style.fontFamily};
-              --font-blEB: ${blEB.style.fontFamily};
-            }
-          `}
-        </style>
-
         {/* Pirsch Analytics */}
         <script
           defer
@@ -55,6 +41,18 @@ export default function RootLayout({
         className="h-screen hideScrollBar2 scroll-smooth dark:bg-dark-100 bg-white-100"
         suppressHydrationWarning
       >
+        <style jsx global>
+          {`
+            :root {
+              --font-ppReg: ${ppReg.style.fontFamily};
+              --font-ppB: ${ppB.style.fontFamily};
+              --font-ppEB: ${ppEB.style.fontFamily};
+              --font-ppSB: ${ppSB.style.fontFamily};
+              --font-ppL: ${ppL.style.fontFamily};
+              --font-blEB: ${blEB.style.fontFamily};
+            }
+          `}
+        </style>
         <QueryClientProvider client={queryClient}>
           <NextAuthProvider>
             {/* LayoutContext (Needed for protected routes that need shared layout) */}
