@@ -1,29 +1,26 @@
 import { NextApiRequest } from "next";
 import { getServerSession } from "next-auth";
+import { getSession } from "next-auth/react";
 import { nextAuthOptions } from "../auth/[...nextauth]/options";
 import HttpException from "../utils/exception";
 import { RESPONSE_CODE } from "../types";
 import prisma from "../../../prisma/prisma";
+import { getToken } from "next-auth/jwt";
 
 export function isAuthenticated(fn: Function) {
   return async (req: NextApiRequest) => {
-    const session = await getServerSession(nextAuthOptions);
-    if (!session) {
+    const jwtToken = await getToken({
+      req,
+      secret: process.env.JWT_SECRET,
+    });
+
+    if (!jwtToken) {
       throw new HttpException(RESPONSE_CODE.UNAUTHORIZED, "Unauthorized", 401);
     }
 
-    let user = null;
-
-    // oauth provider like github sometimes dont include email
-    if (session.user.email) {
-      user = await prisma.users.findFirst({
-        where: { email: session.user?.email as string },
-      });
-    } else {
-      user = await prisma.users.findFirst({
-        where: { uId: session.user?.id as string },
-      });
-    }
+    let user = await prisma.users.findFirst({
+      where: { uId: jwtToken?.uId as string },
+    });
 
     if (!user) {
       throw new HttpException(
